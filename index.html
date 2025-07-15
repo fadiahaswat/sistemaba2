@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAP! - Sistem Informasi Aba-aba Peleton</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" xintegrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVBL5gI9kLmbG0C+wFjr8bCqwA2ag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-glass: rgba(38, 38, 38, 0.6); /* zinc-800 with opacity */
+            --border-glass: rgba(63, 63, 70, 0.5); /* zinc-700 with opacity */
+            --text-primary: #f4f4f5; /* zinc-100 */
+            --text-secondary: #a1a1aa; /* zinc-400 */
+            --accent-color: #f43f5e; /* rose-500 */
+            --focus-ring: #fb7185; /* rose-400 */
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 2rem 2rem;
+        }
+        
+        .glass-card {
+            background-color: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card:hover {
+            background-color: rgba(50, 50, 50, 0.7);
+            border-color: rgba(82, 82, 91, 0.6);
+        }
+
+        .form-input {
+            background-color: rgba(63, 63, 70, 0.5); /* zinc-700 */
+            border-color: var(--border-glass);
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .form-input:focus {
+            --tw-ring-color: var(--focus-ring);
+            background-color: rgba(38, 38, 38, 0.8);
+            border-color: var(--focus-ring);
+        }
+
+        .btn {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px) scale(1.05);
+            filter: brightness(1.15);
+        }
+        .btn:active:not(:disabled) {
+            transform: translateY(0) scale(1);
+        }
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            box-shadow: 0 4px 20px -5px var(--accent-color);
+        }
+        .btn:disabled {
+            background-color: #3f3f46;
+            color: #a1a1aa;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            filter: none;
+            opacity: 0.5;
+        }
+        
+        .modal-backdrop {
+            background-color: rgba(9, 9, 11, 0.5);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+        }
+
+        .anim-fade-in { animation: fadeIn 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards; }
+        .anim-fade-out { animation: fadeOut 0.3s cubic-bezier(0.550, 0.055, 0.675, 0.190) forwards; }
+        .anim-pop-in { animation: popIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .list-item-exit-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-zinc-900/70 backdrop-blur-lg border-b border-zinc-800/50 sticky top-0 z-30">
+            <div class="container mx-auto px-4 md:px-8 flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-rose-600 rounded-md text-white flex items-center justify-center text-2xl shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-200">
+                        SIAP! <span class="font-normal text-gray-400 hidden sm:inline">– Sistem Aba-aba Peleton</span>
+                    </h1>
+                </div>
+                <div class="flex items-center gap-3">
+                     <a href="https://wa.me/6285339213109" target="_blank" class="btn bg-green-600/80 hover:bg-green-500 text-white p-2.5 flex items-center justify-center" title="Hubungi via WhatsApp" aria-label="Hubungi via WhatsApp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943c-.049-.084-.182-.133-.38-.232z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/tontimuallimin/" target="_blank" class="btn bg-rose-600/80 hover:bg-rose-500 text-white p-2.5 flex items-center justify-center" title="Kunjungi Instagram" aria-label="Kunjungi Instagram">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.556 0 5.829 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.556 15.99 5.829 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372.526-.205.972-.478 1.417-.923.445-.444.718-.891.923-1.417.198-.509.333-1.09.372-1.942C15.99 10.444 16 10.173 16 8s-.01-2.444-.048-3.297c-.04-.852-.174-1.433-.372-1.942a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.09-.333-1.942-.372C10.444.01 10.173 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.233s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.92 2.5 2.5 0 0 1-.92.598c-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.598-.92c-.11-.282-.24-.705-.276-1.486-.038-.843-.046-1.096-.046-3.232s.008-2.389.046-3.233c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.843-.038 1.096-.047 3.232-.047zM8 3.882a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 6.774a2.667 2.667 0 1 1 0-5.334 2.667 2.667 0 0 1 0 5.334zM12.974 3.882a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 md:px-8 md:py-6 flex-grow">
+            <div id="manual-copy-area" class="hidden mb-6">
+                <textarea id="manual-copy-textarea" readonly class="w-full h-32 p-3 border-2 border-dashed border-zinc-600 rounded-lg bg-zinc-800 text-zinc-300 focus:outline-none focus:ring-2 focus:ring-rose-500"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <aside class="lg:col-span-1 xl:col-span-1 space-y-6">
+                    <div class="glass-card p-5 rounded-xl">
+                        <h2 class="text-lg font-bold mb-4 text-rose-500">Detail Informasi Aba-aba</h2>
+                        <div class="space-y-3">
+                            <input type="text" id="plan-title" placeholder="Nama Aba-aba" class="form-input w-full p-2 border rounded-md text-sm">
+                            <textarea id="plan-description" placeholder="Deskripsi singkat" class="form-input w-full p-2 border rounded-md text-sm" rows="2"></textarea>
+                            <input type="date" id="plan-date" class="form-input w-full p-2 border rounded-md text-slate-400 text-sm">
+                            <input type="text" id="plan-location" placeholder="Lokasi" class="form-input w-full p-2 border rounded-md text-sm">
+                        </div>
+                    </div>
+                    <div class="glass-card p-5 rounded-xl">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-bold text-rose-500">Daftar Pos</h2>
+                            <button id="add-post-btn" class="btn btn-primary text-sm font-semibold py-1 px-3 flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                                Pos
+                            </button>
+                        </div>
+                        <div id="posts-nav-list" class="space-y-2"></div>
+                    </div>
+                </aside>
+
+                <section id="workspace" class="lg:col-span-2 xl:col-span-3"></section>
+            </div>
+            
+             <!-- Asisten SIAP -->
+            <div id="helper-box" class="glass-card p-4 rounded-xl mt-8">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-shrink-0 flex items-center gap-3">
+                         <span class="text-3xl">💡</span>
+                         <p class="font-bold text-lg">Asisten SIAP!</p>
+                    </div>
+                    <div class="flex-grow">
+                        <p id="helper-text" class="text-sm text-zinc-400 mb-3">Selamat datang! Isi Detail Informasi, lalu klik 'Tambah Pos' untuk memulai.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button id="copy-text-btn" class="btn bg-sky-600/80 hover:bg-sky-500 text-white font-semibold py-2 px-4 text-sm flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" /><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h6a2 2 0 00-2-2H5z" /></svg>
+                                <span>Salin Teks</span>
+                            </button>
+                            <button id="export-pdf-btn" class="btn bg-green-600/80 hover:bg-green-500 text-white font-semibold py-2 px-4 text-sm flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>
+                                <span>Ekspor PDF</span>
+                            </button>
+                             <button id="share-btn" class="btn bg-indigo-600/80 hover:bg-indigo-500 text-white font-semibold py-2 px-4 text-sm flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" /></svg>
+                                <span>Bagikan</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        <footer class="text-center p-4 text-sm text-zinc-500 border-t border-zinc-800/50 flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+            Dikembangkan oleh 1nspektur - Tonti Mu'allimin
+        </footer>
+    </div>
+
+    <div id="modal-container"></div>
+    <div id="print-area" class="hidden"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- CONSTANTS & DATA ---
+        const PBB_COMMANDS = [
+            { category: 'Gerakan Tambahan', items: [
+                { id: 'custom_report_start', text: 'Laporan Pembuka' },
+                { id: 'custom_report_end', text: 'Laporan Penutup' },
+                { id: 'custom_start', text: 'Materi Mulai' },
+                { id: 'custom_end', text: 'Materi Selesai' },
+            ]},
+            { category: 'Sikap Sempurna & Istirahat', items: [ { id: 'siap_gerak', text: 'Siap = GERAK!' }, { id: 'parade_siap_gerak', text: 'Parade, Siap = GERAK!' }, { id: 'duduk_siap_gerak', text: 'Duduk Siap = GERAK!' }, { id: 'istirahat_ditempat_gerak', text: 'Istirahat di Tempat = GERAK!' }, { id: 'parade_istirahat_ditempat_gerak', text: 'Parade, Istirahat di Tempat = GERAK!' }, { id: 'untuk_perhatian', text: 'Untuk Perhatian!' } ] },
+            { category: 'Lencang & Tegak', items: [ { id: 'lencang_kanan_gerak', text: 'Lencang Kanan = GERAK!' }, { id: 'lencang_kiri_gerak', text: 'Lencang Kiri = GERAK!' }, { id: 'setengah_lengan_lencang_kanan_gerak', text: 'Setengah Lengan Lencang Kanan = GERAK!' }, { id: 'setengah_lengan_lencang_kiri_gerak', text: 'Setengah Lengan Lencang Kiri = GERAK!' }, { id: 'lencang_depan_gerak', text: 'Lencang Depan = GERAK!' }, { id: 'tegak_gerak', text: 'Tegak = GERAK!' } ] },
+            { category: 'Penghormatan', items: [ { id: 'hormat_gerak', text: 'Hormat = GERAK!' }, { id: 'hormat_kanan_gerak', text: 'Hormat Kanan = GERAK!' }, { id: 'hormat_kiri_gerak', text: 'Hormat Kiri = GERAK!' } ] },
+            { category: 'Berhitung', items: [ { id: 'hitung_mulai', text: 'Hitung = MULAI!' } ] },
+            { category: 'Periksa Kerapihan', items: [ { id: 'periksa_kerapian_mulai', text: 'Periksa Kerapian = MULAI!' }, { id: 'periksa_kerapian_selesai', text: 'SELESAI!' }, { id: 'parade_periksa_kerapian_mulai', text: 'Parade Periksa Kerapian = MULAI!' } ] },
+            { category: 'Buka & Tutup Barisan', items: [ { id: 'buka_barisan_jalan', text: 'Buka Barisan = JALAN!' }, { id: 'tutup_barisan_jalan', text: 'Tutup Barisan = JALAN!' } ] },
+            { category: 'Perubahan Arah (Di Tempat)', items: [ { id: 'hadap_kanan_gerak', text: 'Hadap Kanan = GERAK!' }, { id: 'hadap_kiri_gerak', text: 'Hadap Kiri = GERAK!' }, { id: 'hadap_serong_kanan_gerak', text: 'Hadap Serong Kanan = GERAK!' }, { id: 'hadap_serong_kiri_gerak', text: 'Hadap Serong Kiri = GERAK!' }, { id: 'balik_kanan_gerak', text: 'Balik Kanan = GERAK!' } ] },
+            { category: 'Bubar', items: [ { id: 'bubar_jalan', text: 'Bubar = JALAN!' } ] },
+            { category: 'Jalan di Tempat', items: [ { id: 'jalan_ditempat_gerak', text: 'Jalan di Tempat = GERAK!' }, { id: 'henti_gerak_ditempat', text: 'Henti = GERAK!' } ] },
+            { category: 'Gerakan Berjalan (Mulai & Berhenti)', items: [ { id: 'maju_jalan', text: 'Maju = JALAN!' }, { id: 'langkah_tegap_maju_jalan', text: 'Langkah Tegap Maju = JALAN!' }, { id: 'langkah_perlahan_maju_jalan', text: 'Langkah Perlahan Maju = JALAN!' }, { id: 'langkah_ke_kanan_jalan', text: 'Langkah ke Kanan = JALAN!', needsInput: true }, { id: 'langkah_ke_kiri_jalan', text: 'Langkah ke Kiri = JALAN!', needsInput: true }, { id: 'langkah_ke_belakang_jalan', text: 'Langkah ke Belakang = JALAN!', needsInput: true }, { id: 'langkah_ke_depan_jalan', text: 'Langkah ke Depan = JALAN!', needsInput: true }, { id: 'henti_gerak_berjalan', text: 'Henti = GERAK!' } ]},
+            { category: 'Gerakan Berlari (Mulai & Berhenti)', items: [ { id: 'lari_maju_jalan', text: 'Lari Maju = JALAN!' }, { id: 'lari_jalan', text: 'Lari = JALAN!' }, { id: 'henti_gerak_berlari', text: 'Henti = GERAK!' } ]},
+            { category: 'Gerakan Transisi (Berjalan & Berlari)', items: [ { id: 'langkah_tegap_jalan', text: 'Langkah Tegap = JALAN!' }, { id: 'langkah_biasa_jalan', text: 'Langkah Biasa = JALAN!' }, { id: 'langkah_perlahan_jalan', text: 'Langkah Perlahan = JALAN!' }, { id: 'langkah_merdeka_jalan', text: 'Langkah Merdeka = JALAN!' }, { id: 'ganti_langkah_jalan', text: 'Ganti Langkah = JALAN!' } ]},
+            { category: 'Perubahan Arah (Berjalan)', items: [ { id: 'hadap_kanan_maju_jalan', text: 'Hadap Kanan Maju = JALAN!' }, { id: 'hadap_kiri_maju_jalan', text: 'Hadap Kiri Maju = JALAN!' }, { id: 'hadap_serong_kanan_maju_jalan', text: 'Hadap Serong Kanan Maju = JALAN!' }, { id: 'hadap_serong_kiri_maju_jalan', text: 'Hadap Serong Kiri Maju = JALAN!' }, { id: 'balik_kanan_maju_jalan', text: 'Balik Kanan Maju = JALAN!' }, { id: 'belok_kanan_jalan', text: 'Belok Kanan = JALAN!' }, { id: 'belok_kiri_jalan', text: 'Belok Kiri = JALAN!' }, { id: 'dua_kali_belok_kanan_jalan', text: 'Dua Kali Belok Kanan = JALAN!' }, { id: 'dua_kali_belok_kiri_jalan', text: 'Dua Kali Belok Kiri = JALAN!' }, { id: 'tiap_tiap_banjar_2x_belok_kanan_jalan', text: 'Tiap-tiap Banjar Dua Kali Belok Kanan = JALAN!' }, { id: 'tiap_tiap_banjar_2x_belok_kiri_jalan', text: 'Tiap-tiap Banjar Dua Kali Belok Kiri = JALAN!' } ]},
+            { category: 'Perubahan Arah (Berjalan ke Berhenti)', items: [ { id: 'hadap_kanan_henti_gerak', text: 'Hadap Kanan Henti = GERAK!' }, { id: 'hadap_kiri_henti_gerak', text: 'Hadap Kiri Henti = GERAK!' }, { id: 'hadap_serong_kanan_henti_gerak', text: 'Hadap Serong Kanan Henti = GERAK!' }, { id: 'hadap_serong_kiri_henti_gerak', text: 'Hadap Serong Kiri Henti = GERAK!' }, { id: 'balik_kanan_henti_gerak', text: 'Balik Kanan Henti = GERAK!' } ]},
+            { category: 'Perubahan Arah (Berlari)', items: [ { id: 'hadap_kanan_lari_maju_jalan', text: 'Hadap Kanan Lari Maju = JALAN!' }, { id: 'hadap_kiri_lari_maju_jalan', text: 'Hadap Kiri Lari Maju = JALAN!' }, { id: 'hadap_serong_kanan_lari_maju_jalan', text: 'Hadap Serong Kanan Lari Maju = JALAN!' }, { id: 'hadap_serong_kiri_lari_maju_jalan', text: 'Hadap Serong Kiri Lari Maju = JALAN!' }, { id: 'balik_kanan_lari_maju_jalan', text: 'Balik Kanan Lari Maju = JALAN!' } ]},
+            { category: 'Perubahan Arah (Berlari ke Berhenti)', items: [ { id: 'hadap_kanan_lari_henti_gerak', text: 'Hadap Kanan Henti = GERAK!' }, { id: 'hadap_kiri_lari_henti_gerak', text: 'Hadap Kiri Henti = GERAK!' }, { id: 'hadap_serong_kanan_lari_henti_gerak', text: 'Hadap Serong Kanan Henti = GERAK!' }, { id: 'hadap_serong_kiri_lari_henti_gerak', text: 'Hadap Serong Kiri Henti = GERAK!' }, { id: 'balik_kanan_lari_henti_gerak', text: 'Balik Kanan Henti = GERAK!' } ]},
+            { category: 'Haluan & Melintang', items: [ { id: 'haluan_kanan_jalan', text: 'Haluan Kanan = JALAN!' }, { id: 'haluan_kiri_jalan', text: 'Haluan Kiri = JALAN!' }, { id: 'haluan_kanan_maju_jalan', text: 'Haluan Kanan Maju = JALAN!' }, { id: 'haluan_kiri_maju_jalan', text: 'Haluan Kiri Maju = JALAN!' }, { id: 'melintang_kanan_jalan', text: 'Melintang Kanan = JALAN!' }, { id: 'melintang_kiri_jalan', text: 'Melintang Kiri = JALAN!' }, { id: 'melintang_kanan_maju_jalan', text: 'Melintang Kanan Maju = JALAN!' }, { id: 'melintang_kiri_maju_jalan', text: 'Melintang Kiri Maju = JALAN!' } ]},
+            { category: 'Berhimpun & Berkumpul', items: [ { id: 'berhimpun_mulai', text: 'Berhimpun = MULAI!' }, { id: 'bersaf_kumpul_mulai', text: 'Bersaf Kumpul = MULAI!' }, { id: 'berbanjar_kumpul_mulai', text: 'Berbanjar Kumpul = MULAI!' }, { id: 'selesai_himpun_kumpul', text: 'SELESAI!' } ]}
+        ];
+        const ALL_COMMANDS_FLAT = PBB_COMMANDS.flatMap(c => c.items);
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            plan: { title: '', description: '', date: '', location: '', posts: [] },
+            activePostId: null,
+            modalContext: { type: null, targetId: null },
+        };
+
+        // --- DOM SELECTORS ---
+        const postsNavList = document.getElementById('posts-nav-list');
+        const workspace = document.getElementById('workspace');
+        const modalContainer = document.getElementById('modal-container');
+        const copyTextBtn = document.getElementById('copy-text-btn');
+        const exportPdfBtn = document.getElementById('export-pdf-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const helperText = document.getElementById('helper-text');
+        const manualCopyArea = document.getElementById('manual-copy-area');
+        const manualCopyTextarea = document.getElementById('manual-copy-textarea');
+
+        // --- HELPER FUNCTIONS ---
+        const showToast = (message) => {
+            const toastEl = document.createElement('div');
+            toastEl.className = "fixed bottom-5 right-5 bg-slate-900 text-white py-3 px-6 rounded-lg shadow-xl transition-all duration-300 transform translate-y-24 opacity-0 z-[100]";
+            toastEl.textContent = message;
+            document.body.appendChild(toastEl);
+            requestAnimationFrame(() => toastEl.classList.remove('translate-y-24', 'opacity-0'));
+            setTimeout(() => {
+                toastEl.classList.add('translate-y-24', 'opacity-0');
+                toastEl.addEventListener('transitionend', () => toastEl.remove());
+            }, 3000);
+        };
+
+        const getActivePost = () => state.plan.posts.find(p => p.id === state.activePostId);
+        const getMaterialById = (materialId) => {
+            for (const post of state.plan.posts) {
+                const material = post.materials.find(m => m.id === materialId);
+                if (material) return { post, material };
+            }
+            return { post: null, material: null };
+        };
+
+        // --- RENDER FUNCTIONS ---
+        const renderApp = () => {
+            renderPostsNav();
+            renderWorkspace();
+            updateActionButtonsState();
+        };
+
+        const renderPostsNav = () => {
+            postsNavList.innerHTML = '';
+            if (state.plan.posts.length === 0) {
+                postsNavList.innerHTML = `<p class="text-sm text-center text-slate-500 py-4">Belum ada pos.</p>`;
+                return;
+            }
+            state.plan.posts.forEach((post, index) => {
+                const isActive = post.id === state.activePostId;
+                const navItem = document.createElement('button');
+                navItem.dataset.postId = post.id;
+                navItem.className = `w-full text-left p-3 rounded-lg transition-all duration-200 flex justify-between items-center relative ${isActive ? 'bg-zinc-700' : 'hover:bg-zinc-700/50'}`;
+                navItem.innerHTML = `
+                    <span class="flex items-center gap-2 ${isActive ? 'font-semibold text-rose-400' : ''}">
+                        ${post.locked ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-sky-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" /></svg>' : ''}
+                        ${post.name || `POS ${index + 1}`}
+                    </span>
+                    ${isActive ? '<div class="absolute left-0 top-0 h-full w-1 bg-rose-500 rounded-r-full"></div>' : ''}
+                `;
+                postsNavList.appendChild(navItem);
+            });
+        };
+
+        const renderWorkspace = () => {
+            const activePost = getActivePost();
+            if (!activePost) {
+                workspace.innerHTML = `<div class="glass-card rounded-2xl shadow-lg flex flex-col items-center justify-center h-full min-h-[400px] text-center p-6 anim-fade-in">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-zinc-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <h3 class="text-xl font-bold text-slate-200">Tidak Ada Pos yang Dipilih</h3>
+                    <p class="mt-2 text-slate-400 max-w-xs">Silakan pilih pos dari daftar di sebelah kiri, atau buat pos baru.</p>
+                </div>`;
+                return;
+            }
+            
+            const isPostLocked = activePost.locked;
+            const postIndex = state.plan.posts.findIndex(p => p.id === state.activePostId);
+            const postTitleHTML = `<input type="text" value="${activePost.name || ''}" data-field="name" placeholder="Nama Pos ${postIndex + 1}" class="text-2xl font-bold text-rose-500 bg-transparent focus:bg-zinc-700 rounded p-2 w-full -ml-2" ${isPostLocked ? 'disabled' : ''}>`;
+            
+            let sizeParts = [];
+            if (activePost.size_p) sizeParts.push(activePost.size_p);
+            if (activePost.size_l) sizeParts.push(activePost.size_l);
+            if (activePost.turn_width) sizeParts.push(activePost.turn_width);
+            const sizeString = sizeParts.length > 0 ? `${sizeParts.join(' x ')} Meter` : '-';
+
+            const infoTags = `
+                <div class="flex flex-wrap gap-x-4 gap-y-2">
+                    <span class="text-sm text-zinc-300">Ukuran: <b class="font-semibold text-white">${sizeString}</b></span>
+                    <span class="text-sm text-zinc-300">Waktu: <b class="font-semibold text-white">${activePost.time || '-'}</b> Menit</span>
+                </div>`;
+            
+            const lockButtonIcon = isPostLocked 
+                ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd" /></svg>`
+                : `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1V7a5 5 0 00-5-5zm0 8h.01V7a3 3 0 00-5.98 0H4v2h6z" /></svg>`;
+
+            workspace.innerHTML = `
+                <div class="glass-card relative p-4 sm:p-6 rounded-2xl shadow-xl anim-pop-in ${isPostLocked ? 'locked-post' : ''}" data-post-id="${activePost.id}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-grow">${postTitleHTML}</div>
+                        <div class="flex items-center">
+                            <button class="post-lock-btn text-sky-400 hover:text-sky-300 transition-colors p-1" aria-label="${isPostLocked ? 'Buka Kunci Pos' : 'Kunci Pos'}">${lockButtonIcon}</button>
+                            <button class="delete-post-btn text-slate-400 hover:text-red-500 transition-colors p-1" aria-label="Hapus Pos Ini" ${isPostLocked ? 'disabled' : ''}>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-black/20 p-3 rounded-lg">
+                        ${infoTags}
+                        <button class="edit-size-btn btn btn-primary text-sm font-semibold py-1 px-3" ${isPostLocked ? 'disabled' : ''}>Atur</button>
+                    </div>
+                    <hr class="my-4 border-zinc-700/50">
+                    <div class="materials-container space-y-2"></div>
+                    <div class="mt-4">
+                        <button class="add-material-btn w-full bg-rose-900/50 text-rose-300 font-semibold py-2 px-4 rounded-lg hover:bg-rose-900/80 transition" ${isPostLocked ? 'disabled' : ''}>+ Tambah Baris Materi</button>
+                    </div>
+                </div>
+            `;
+            renderMaterials(workspace.querySelector('.materials-container'), activePost);
+        };
+
+        const renderMaterials = (container, postData) => {
+            container.innerHTML = '';
+            if (postData.materials.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-400 py-4">Belum ada materi. Klik tombol di bawah untuk menambahkan.</p>`;
+                return;
+            }
+            let numberedCounter = 0;
+            const isPostLocked = postData.locked;
+
+            postData.materials.forEach((material, index) => {
+                if (material.isNumbered) numberedCounter++;
+                const numberPrefix = material.isNumbered ? `${numberedCounter}.` : '•';
+                
+                const movementSpans = material.movements.map((mov, movIndex) => {
+                    const command = ALL_COMMANDS_FLAT.find(i => i.id === mov.id);
+                    if (!command) return '';
+                    const commandChipStyle = `bg-black/20 px-3 py-1 rounded-full shadow-sm flex items-center gap-2 text-sm`;
+                    const chipHTML = command.needsInput 
+                        ? `<input type="number" value="${mov.count || ''}" placeholder="..." data-movement-index="${movIndex}" class="movement-count-input w-10 text-center bg-transparent font-bold text-rose-400 focus:outline-none" ${isPostLocked ? 'disabled' : ''}> ${command.text}` 
+                        : command.text;
+                    return `<span class="${commandChipStyle}">${chipHTML}</span>`;
+                }).join('<span class="font-bold text-zinc-500 mx-1">–</span>');
+                
+                let movementContent = movementSpans.length > 0 ? movementSpans : `<button class="add-movement-btn text-rose-400 hover:underline" ${isPostLocked ? 'disabled' : ''}>Tambah gerakan...</button>`;
+                if(movementSpans.length > 0 && !isPostLocked) {
+                    movementContent += `<button class="add-movement-btn text-rose-400 p-1 rounded-full hover:bg-rose-900/50 ml-2" aria-label="Tambah Gerakan Lagi"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" /></svg></button>`;
+                }
+                const contentHTML = `<div class="movements-display flex-grow flex flex-wrap items-center gap-2">${movementContent}</div>`;
+
+                const materialRow = document.createElement('div');
+                materialRow.className = `material-row group relative bg-black/20 p-2 rounded-lg flex items-center gap-2 sm:gap-3 transition-all duration-300 ${material.commanderExecutes ? 'font-bold' : ''}`;
+                materialRow.dataset.materialId = material.id;
+
+                const moveUpBtn = index > 0 && !isPostLocked ? `<button class="move-material-btn" data-direction="up" aria-label="Naik"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>` : `<div class="w-5"></div>`;
+                const moveDownBtn = index < postData.materials.length - 1 && !isPostLocked ? `<button class="move-material-btn" data-direction="down" aria-label="Turun"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>` : `<div class="w-5"></div>`;
+
+                materialRow.innerHTML = `
+                    <div class="flex flex-col items-center text-zinc-500 group-hover:text-zinc-300 transition-colors">
+                        ${moveUpBtn}
+                        ${moveDownBtn}
+                    </div>
+                    <span class="font-bold text-slate-200 w-6 text-right">${numberPrefix}</span>
+                    ${contentHTML}
+                    <div class="flex items-center gap-2 sm:gap-3 ml-auto">
+                        ${material.note ? `<span class="text-yellow-500 cursor-help" title="Catatan: ${material.note}">★</span>` : ''}
+                        <button class="settings-btn text-zinc-400 hover:text-rose-400" aria-label="Opsi Materi" ${isPostLocked ? 'disabled' : ''}><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" /></svg></button>
+                        <button class="delete-material-btn text-zinc-500 hover:text-red-500" aria-label="Hapus Baris" ${isPostLocked ? 'disabled' : ''}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>`;
+                container.appendChild(materialRow);
+            });
+        };
+
+        // --- MODAL FUNCTIONS ---
+        const createModal = (id, title, bodyHTML, footerHTML = '') => {
+            const modalEl = document.createElement('div');
+            modalEl.id = id;
+            modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop anim-fade-in';
+            modalEl.innerHTML = `
+                <div class="glass-card w-full max-w-3xl max-h-[80vh] flex flex-col anim-pop-in rounded-xl" role="dialog" aria-modal="true" aria-labelledby="modal-title-${id}">
+                    <header class="p-4 border-b border-zinc-700/50 flex justify-between items-center">
+                        <h3 id="modal-title-${id}" class="text-xl font-bold text-rose-400">${title}</h3>
+                        <button class="modal-close-btn text-slate-400 hover:text-slate-100 text-2xl" aria-label="Tutup Modal">&times;</button>
+                    </header>
+                    <main class="p-4 flex-grow overflow-y-auto">${bodyHTML}</main>
+                    ${footerHTML ? `<footer class="p-4 bg-black/20 text-right rounded-b-xl">${footerHTML}</footer>` : ''}
+                </div>`;
+            modalContainer.appendChild(modalEl);
+            return modalEl;
+        };
+        
+        const closeModal = () => {
+            const modal = modalContainer.firstChild;
+            if (modal) {
+                modal.classList.remove('anim-fade-in');
+                modal.classList.add('anim-fade-out');
+                modal.querySelector('.glass-card').classList.remove('anim-pop-in');
+                modal.addEventListener('animationend', () => modal.remove(), { once: true });
+            }
+        };
+
+        const openCommandModal = (contextType, targetId) => {
+            state.modalContext = { type: contextType, targetId };
+            const body = `<input type="text" id="modal-search" placeholder="Cari gerakan..." class="form-input w-full p-2 border rounded-lg mb-4">
+                          <div id="modal-command-list"></div>`;
+            const modal = createModal('command-modal', 'Pilih Gerakan', body);
+            renderCommandModal();
+            modal.querySelector('#modal-search').addEventListener('input', (e) => renderCommandModal(e.target.value));
+            modal.querySelector('#modal-search').focus();
+        };
+
+        const renderCommandModal = (filter = '') => {
+            const listEl = document.getElementById('modal-command-list');
+            if (!listEl) return;
+            const lowerFilter = filter.toLowerCase();
+            let html = '';
+            PBB_COMMANDS.forEach(category => {
+                const filteredItems = category.items.filter(item => item.text.toLowerCase().includes(lowerFilter));
+                if (filteredItems.length > 0) {
+                    html += `<h4 class="text-md font-semibold text-rose-400 mb-2 border-b border-zinc-700/50 pb-1">${category.category}</h4>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">`;
+                    filteredItems.forEach(item => {
+                        html += `<button class="select-command-btn w-full text-left p-3 bg-zinc-700/50 rounded-lg border border-transparent hover:border-rose-500/50 hover:bg-rose-900/50 transition" data-command-id="${item.id}">${item.text}</button>`;
+                    });
+                    html += `</div>`;
+                }
+            });
+            listEl.innerHTML = html || `<p class="text-center text-slate-400">Tidak ada gerakan yang cocok dengan pencarian "${filter}".</p>`;
+        };
+
+        const openContextMenu = (materialId) => {
+            const { material } = getMaterialById(materialId);
+            if (!material) return;
+            const body = `
+                <div class="space-y-3">
+                    <label class="flex items-center justify-between p-3 bg-black/20 rounded-lg cursor-pointer"><span class="font-semibold">Dilaksanakan Danton</span><input type="checkbox" name="commanderExecutes" class="form-checkbox h-5 w-5 bg-zinc-600 border-zinc-500 text-rose-500 focus:ring-rose-500" ${material.commanderExecutes ? 'checked' : ''}/></label>
+                    <label class="flex items-center justify-between p-3 bg-black/20 rounded-lg cursor-pointer"><span class="font-semibold">Gunakan Penomoran</span><input type="checkbox" name="isNumbered" class="form-checkbox h-5 w-5 bg-zinc-600 border-zinc-500 text-rose-500 focus:ring-rose-500" ${material.isNumbered ? 'checked' : ''}/></label>
+                    <div class="pt-2">
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Catatan</label>
+                        <input type="text" name="note" class="form-input mt-1 w-full p-2 border rounded-md" value="${material.note || ''}" placeholder="misal: Waktu dimulai">
+                    </div>
+                </div>`;
+            const footer = `<button class="save-context-btn btn btn-primary py-2 px-4">Simpan & Tutup</button>`;
+            const modal = createModal('context-menu-modal', 'Opsi Materi', body, footer);
+            modal.dataset.materialId = materialId;
+        };
+        
+        const openSizeModal = (postId) => {
+            const post = state.plan.posts.find(p => p.id === postId);
+            if (!post) return;
+            const body = `<div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-medium text-slate-300 mb-1">Panjang (m)</label><input type="number" value="${post.size_p || ''}" name="size_p" class="form-input w-full p-2 border rounded-md"></div>
+                    <div><label class="block text-sm font-medium text-slate-300 mb-1">Lebar (m)</label><input type="number" value="${post.size_l || ''}" name="size_l" class="form-input w-full p-2 border rounded-md"></div>
+                </div>
+                <div><label class="block text-sm font-medium text-slate-300 mb-1">Lebar Belokan (m)</label><input type="number" value="${post.turn_width || ''}" name="turn_width" class="form-input w-full p-2 border rounded-md"></div>
+                <div><label class="block text-sm font-medium text-slate-300 mb-1">Alokasi Waktu (menit)</label><input type="number" value="${post.time || ''}" name="time" class="form-input w-full p-2 border rounded-md"></div>
+            </div>`;
+            const footer = `<button class="save-size-btn btn btn-primary py-2 px-4">Simpan & Tutup</button>`;
+            const modal = createModal('size-modal', 'Atur Ukuran & Waktu Pos', body, footer);
+            modal.dataset.postId = postId;
+        };
+
+        const showWelcomeModal = () => {
+            if (sessionStorage.getItem('welcomeShown')) return;
+            const body = `<div class="text-center">
+                <span class="text-4xl">👋</span>
+                <h3 class="text-xl font-bold mt-4">Selamat Datang di SIAP!</h3>
+                <h4 class="text-lg font-semibold text-rose-400">Sistem Informasi Aba-aba Peleton</h4>
+                <p class="text-sm text-slate-400 mt-2">
+                    Aplikasi ini masih dan akan terus dalam masa pengembangan. 
+                    Jika menemukan kekeliruan, error, atau memiliki saran, jangan ragu untuk menghubungi kami melalui tombol di pojok kanan atas.
+                </p>
+            </div>`;
+            const footer = `<button class="modal-close-btn btn btn-primary py-2 px-6">Mengerti</button>`;
+            createModal('welcome-modal', '', body, footer);
+            sessionStorage.setItem('welcomeShown', 'true');
+        };
+
+        // --- ACTIONS (COPY, EXPORT, VALIDATE) ---
+        const getPlanValidationErrors = () => {
+            if (!state.plan.title) return "Judul aba-aba belum diisi.";
+            if (state.plan.posts.length === 0) return "Belum ada pos yang dibuat.";
+            for (const [index, post] of state.plan.posts.entries()) {
+                const postName = post.name || `Pos ${index + 1}`;
+                if (!post.size_p || !post.size_l || !post.time) return `Ukuran atau waktu untuk '${postName}' belum lengkap.`;
+                if (post.materials.length === 0) return `Pos '${postName}' belum memiliki materi.`;
+            }
+            return null;
+        };
+        
+        const updateActionButtonsState = () => {
+            const error = getPlanValidationErrors();
+            const isValid = error === null;
+            copyTextBtn.disabled = !isValid;
+            exportPdfBtn.disabled = !isValid;
+            shareBtn.disabled = !isValid;
+            manualCopyArea.classList.add('hidden');
+
+            if (isValid) {
+                helperText.textContent = "Rencana sudah lengkap! Anda sekarang dapat menyalin, mengekspor, atau membagikan rencana.";
+            } else {
+                helperText.textContent = error;
+            }
+        };
+
+        const generatePlanContent = (format = 'text') => {
+            let output = '';
+            const { title, description, date, location, posts } = state.plan;
+
+            if (format === 'html') {
+                output += `<h1>${title || 'Rencana Latihan'}</h1>`;
+                if (description) output += `<p><i>${description}</i></p>`;
+                if (date || location) output += `<p><b>Tanggal:</b> ${date || '-'} | <b>Lokasi:</b> ${location || '-'}</p>`;
+            } else {
+                const details = [title ? title.toUpperCase() : '', description, date ? `Tanggal: ${date}` : '', location ? `Lokasi: ${location}` : ''].filter(Boolean);
+                if (details.length > 0) output += details.join('\n') + '\n\n';
+            }
+
+            posts.forEach((post, index) => {
+                const postTitle = post.name || `POS ${index + 1}`;
+                let sizeParts = [];
+                if (post.size_p) sizeParts.push(post.size_p);
+                if (post.size_l) sizeParts.push(post.size_l);
+                if (post.turn_width) sizeParts.push(post.turn_width);
+                const sizeString = sizeParts.length > 0 ? `${sizeParts.join(' x ')} Meter` : '-';
+                let sizeDetails = `Ukuran: ${sizeString} | Waktu: ${post.time || '-'} Menit`;
+
+                if (format === 'html') {
+                    output += `<hr style="margin: 10px 0;"><h2>${postTitle}</h2><p>${sizeDetails}</p><div style="margin-left: 5mm;">`;
+                } else {
+                    output += `--- ${postTitle} ---\n${sizeDetails}\n\n`;
+                }
+
+                let numberedCounter = 0;
+                post.materials.forEach(material => {
+                    if (material.isNumbered) numberedCounter++;
+                    
+                    const line = material.movements.map(mov => {
+                        const command = ALL_COMMANDS_FLAT.find(i => i.id === mov.id);
+                        if (!command) return null;
+                        let text = command.text;
+                        return command.needsInput && mov.count ? `${mov.count} ${text}` : text;
+                    }).filter(Boolean).join(' – ');
+
+                    let finalLine = line;
+                    if (material.note) finalLine += ` (${material.note})`;
+                    if (material.commanderExecutes) finalLine = format === 'html' ? `<b>${finalLine}</b>` : `*${finalLine}*`;
+                    
+                    if (finalLine) {
+                        const prefix = material.isNumbered ? `${numberedCounter}.` : '•';
+                        output += format === 'html' ? `<p>${prefix} ${finalLine}</p>` : `${prefix}\t${finalLine}\n`;
+                    }
+                });
+                output += format === 'html' ? '</div>' : '\n';
+            });
+            return output.trim();
+        };
+
+        const copyToClipboard = async () => {
+            const error = getPlanValidationErrors();
+            if (error) { showToast(`Gagal: ${error}`); return; }
+            const textToCopy = generatePlanContent('text');
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                showToast('Rencana berhasil disalin!');
+            } catch (err) {
+                helperText.innerHTML = `<strong>Gagal menyalin otomatis!</strong><br>Silakan salin teks dari kotak di bawah ini.`;
+                manualCopyTextarea.value = textToCopy;
+                manualCopyArea.classList.remove('hidden');
+                manualCopyTextarea.select();
+            }
+        };
+
+        const exportToPDF = () => {
+            const error = getPlanValidationErrors();
+            if (error) { showToast(`Gagal: ${error}`); return; }
+            showToast('Membuat PDF...');
+            const { jsPDF } = window.jspdf;
+            document.getElementById('print-area').innerHTML = generatePlanContent('html');
+            
+            html2canvas(document.getElementById('print-area'), { scale: 2, useCORS: true }).then(canvas => {
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgData = canvas.toDataURL('image/png');
+                const pageHeight = pdf.internal.pageSize.getHeight() - 20;
+                const pdfWidth = pdf.internal.pageSize.getWidth() - 20;
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+                let heightLeft = pdfHeight;
+                let position = 10;
+                pdf.addImage(imgData, 'PNG', 10, position, pdfWidth, pdfHeight);
+                heightLeft -= pageHeight;
+                while (heightLeft > 0) {
+                    position = -heightLeft;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 10, position, pdfWidth, pdfHeight);
+                    heightLeft -= pageHeight;
+                }
+                pdf.save(`${state.plan.title || 'rencana-latihan'}.pdf`);
+            }).catch(err => {
+                showToast('Gagal membuat PDF.');
+                console.error("PDF Export error:", err);
+            });
+        };
+        
+        const handleShare = async () => {
+            const error = getPlanValidationErrors();
+            if (error) { showToast(`Gagal: ${error}`); return; }
+            const shareData = {
+                title: `Rencana Latihan: ${state.plan.title || 'Tanpa Judul'}`,
+                text: generatePlanContent('text'),
+            };
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    showToast('Rencana berhasil dibagikan!');
+                } catch (err) {
+                    showToast('Gagal membagikan: ' + err.message);
+                }
+            } else {
+                showToast('Browser Anda tidak mendukung fitur berbagi.');
+                copyToClipboard();
+            }
+        };
+
+        // --- EVENT HANDLERS & ACTIONS ---
+        const handleGlobalInput = (e) => {
+            const { id, value } = e.target;
+            if (['plan-title', 'plan-description', 'plan-date', 'plan-location'].includes(id)) {
+                state.plan[id.split('-')[1]] = value;
+                updateActionButtonsState();
+            }
+        };
+        
+        const handleWorkspaceInput = (e) => {
+            const post = getActivePost();
+            if (!post || post.locked) return;
+            if (e.target.dataset.field === 'name') {
+                post.name = e.target.value;
+                renderPostsNav();
+            }
+            const materialRow = e.target.closest('.material-row');
+            if (materialRow) {
+                const { material } = getMaterialById(materialRow.dataset.materialId);
+                if (!material) return;
+                if (e.target.matches('.movement-count-input')) {
+                    material.movements[parseInt(e.target.dataset.movementIndex, 10)].count = e.target.value;
+                }
+            }
+            updateActionButtonsState();
+        };
+
+        const handleSaveSizeModal = (modal) => {
+            const postId = modal.dataset.postId;
+            const post = state.plan.posts.find(p => p.id === postId);
+            if(post) {
+                modal.querySelectorAll('input[name]').forEach(input => {
+                    post[input.name] = input.value;
+                });
+                showToast("Ukuran pos disimpan.");
+                renderApp();
+            }
+            closeModal();
+        };
+
+        const handleSaveContextMenu = (modal) => {
+            const materialId = modal.dataset.materialId;
+            const { material } = getMaterialById(materialId);
+            if (material) {
+                modal.querySelectorAll('input[name]').forEach(input => {
+                    material[input.name] = input.type === 'checkbox' ? input.checked : input.value;
+                });
+                showToast("Opsi materi disimpan.");
+                renderApp();
+            }
+            closeModal();
+        };
+
+        const handleClick = (e) => {
+            const target = e.target;
+            const postEl = target.closest('[data-post-id]');
+            const materialRow = target.closest('.material-row');
+
+            // Global Actions
+            if (target.closest('#add-post-btn')) handleAddPost();
+            if (target.closest('#copy-text-btn')) copyToClipboard();
+            if (target.closest('#export-pdf-btn')) exportToPDF();
+            if (target.closest('#share-btn')) handleShare();
+            if (target.closest('#posts-nav-list button')) handleSelectPost(target.closest('button').dataset.postId);
+            
+            // Workspace Actions
+            if (postEl) {
+                if (target.closest('.post-lock-btn')) handleToggleLock(postEl.dataset.postId);
+                if (target.closest('.delete-post-btn')) handleDeletePost(postEl.dataset.postId);
+                if (target.closest('.edit-size-btn')) openSizeModal(postEl.dataset.postId);
+                if (target.closest('.add-material-btn')) openCommandModal('newMaterial', postEl.dataset.postId);
+            }
+            if (materialRow) {
+                if (target.closest('.delete-material-btn')) handleDeleteMaterial(materialRow.dataset.materialId);
+                if (target.closest('.move-material-btn')) handleMoveMaterial(materialRow.dataset.materialId, target.closest('button').dataset.direction);
+                if (target.closest('.add-movement-btn')) openCommandModal('addMovement', materialRow.dataset.materialId);
+                if (target.closest('.settings-btn')) openContextMenu(materialRow.dataset.materialId);
+            }
+
+            // Modal Actions
+            if (target.closest('.select-command-btn')) handleSelectCommand(target.closest('button').dataset.commandId);
+            if (target.closest('.save-size-btn')) handleSaveSizeModal(target.closest('#size-modal'));
+            if (target.closest('.save-context-btn')) handleSaveContextMenu(target.closest('#context-menu-modal'));
+            if (target.closest('.modal-close-btn') && !target.closest('.save-size-btn') && !target.closest('.save-context-btn')) {
+                closeModal();
+            }
+            if (target.matches('.modal-backdrop')) {
+                closeModal();
+            }
+        };
+
+        const handleAddPost = () => {
+            const newPost = { id: crypto.randomUUID(), name: '', locked: false, materials: [] };
+            state.plan.posts.push(newPost);
+            state.activePostId = newPost.id;
+            renderApp();
+            showToast('Pos baru ditambahkan!');
+        };
+        
+        const handleSelectPost = (postId) => {
+            state.activePostId = postId;
+            renderApp();
+        };
+
+        const handleToggleLock = (postId) => {
+            const post = state.plan.posts.find(p => p.id === postId);
+            if (post) {
+                post.locked = !post.locked;
+                showToast(post.locked ? 'Pos dikunci.' : 'Kunci pos dibuka.');
+                renderApp();
+            }
+        };
+
+        const handleDeletePost = (postId) => {
+            const postNavEl = document.querySelector(`#posts-nav-list [data-post-id="${postId}"]`);
+            if (postNavEl) postNavEl.classList.add('list-item-exit-active');
+            const workspaceEl = document.querySelector(`#workspace [data-post-id="${postId}"]`);
+            if (workspaceEl) workspaceEl.classList.add('list-item-exit-active');
+            
+            setTimeout(() => {
+                state.plan.posts = state.plan.posts.filter(p => p.id !== postId);
+                if (state.activePostId === postId) {
+                    state.activePostId = state.plan.posts.length > 0 ? state.plan.posts[0].id : null;
+                }
+                renderApp();
+                showToast('Pos berhasil dihapus.');
+            }, 300);
+        };
+
+        const handleDeleteMaterial = (materialId) => {
+            const materialRow = document.querySelector(`[data-material-id="${materialId}"]`);
+            if (materialRow) {
+                materialRow.classList.add('list-item-exit-active');
+                materialRow.addEventListener('transitionend', () => {
+                    const post = getActivePost();
+                    if (post) {
+                        post.materials = post.materials.filter(m => m.id !== materialId);
+                        renderWorkspace();
+                        updateActionButtonsState();
+                        showToast('Materi dihapus.');
+                    }
+                }, { once: true });
+            }
+        };
+        
+        const handleMoveMaterial = (materialId, direction) => {
+            const post = getActivePost();
+            if (!post) return;
+            const index = post.materials.findIndex(m => m.id === materialId);
+            if (direction === 'up' && index > 0) {
+                [post.materials[index], post.materials[index - 1]] = [post.materials[index - 1], post.materials[index]];
+            } else if (direction === 'down' && index < post.materials.length - 1) {
+                [post.materials[index], post.materials[index + 1]] = [post.materials[index + 1], post.materials[index]];
+            }
+            renderWorkspace();
+            showToast('Urutan materi diubah.');
+        };
+
+        const handleSelectCommand = (commandId) => {
+            const command = ALL_COMMANDS_FLAT.find(i => i.id === commandId);
+            if (!command) return;
+
+            const newMovement = { id: commandId };
+            if (command.needsInput) newMovement.count = '';
+
+            if (state.modalContext.type === 'newMaterial') {
+                const post = state.plan.posts.find(p => p.id === state.modalContext.targetId);
+                if (!post) return;
+                const newMaterial = { 
+                    id: crypto.randomUUID(),
+                    movements: [newMovement],
+                    commanderExecutes: false, 
+                    note: '', 
+                    isNumbered: true,
+                };
+                post.materials.push(newMaterial);
+                showToast('Materi baru ditambahkan.');
+            } else if (state.modalContext.type === 'addMovement') {
+                const { material } = getMaterialById(state.modalContext.targetId);
+                if (material) {
+                    material.movements.push(newMovement);
+                    showToast('Gerakan ditambahkan.');
+                }
+            }
+            
+            renderApp();
+            closeModal();
+            updateActionButtonsState();
+        };
+
+        // --- INITIALIZATION ---
+        document.addEventListener('input', (e) => {
+            handleGlobalInput(e);
+            handleWorkspaceInput(e);
+        });
+        document.addEventListener('click', handleClick);
+
+        renderApp();
+        showWelcomeModal();
+    });
+    </script>
+</body>
+</html>
