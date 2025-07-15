@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAP! - Sistem Informasi Aba-aba Peleton</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" xintegrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVBL5gI9kLmbG0C+wFjr8bCqwA2ag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #18181b; /* zinc-900 */
+            --bg-secondary: #27272a; /* zinc-800 */
+            --bg-tertiary: #3f3f46; /* zinc-700 */
+            --bg-muted: #3f3f46; /* zinc-700 */
+            --text-primary: #f4f4f5; /* zinc-100 */
+            --text-secondary: #a1a1aa; /* zinc-400 */
+            --border-color: #3f3f46; /* zinc-700 */
+            --accent-color: #f43f5e; /* rose-500 */
+            --accent-hover: #e11d48; /* rose-600 */
+            --focus-ring: #fb7185; /* rose-400 */
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        
+        .card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-input {
+            background-color: var(--bg-tertiary);
+            border-color: var(--border-color);
+        }
+        .form-input:focus {
+            --tw-ring-color: var(--focus-ring);
+            background-color: var(--bg-secondary);
+            border-color: var(--focus-ring);
+        }
+
+        .btn {
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            box-shadow: 0 4px 15px -5px var(--accent-color);
+        }
+        .btn-action:disabled {
+            background-color: #3f3f46;
+            color: #a1a1aa;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            filter: none;
+            opacity: 0.8;
+        }
+        
+        .modal-backdrop {
+            background-color: rgba(9, 9, 11, 0.5);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+        }
+
+        .anim-pop-in { animation: popIn 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* PERBAIKAN 3: Toggle Switch yang lebih stabil */
+        .toggle-label {
+            transition: background-color 0.2s ease;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: var(--accent-color);
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-zinc-900/80 backdrop-blur-lg border-b border-zinc-800 sticky top-0 z-30">
+            <div class="container mx-auto px-4 md:px-8 flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-rose-600 to-rose-800 text-white flex items-center justify-center text-xl shadow-md">
+                        <p class="font-black">S!</p>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-200">
+                        SIAP! <span class="text-rose-500 font-normal hidden sm:inline">–</span> <span class="font-normal text-gray-400 hidden sm:inline">Sistem Aba-aba Peleton</span>
+                    </h1>
+                </div>
+                 <div class="flex items-center gap-2">
+                    <button id="copy-text-btn" class="btn btn-action bg-sky-600 text-white font-semibold py-2 px-4 text-sm flex items-center justify-center gap-2 transition-all duration-200">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" /><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h6a2 2 0 00-2-2H5z" /></svg>
+                        <span class="hidden sm:inline">Salin</span>
+                    </button>
+                    <button id="export-pdf-btn" class="btn btn-action bg-green-600 text-white font-semibold py-2 px-4 text-sm flex items-center justify-center gap-2 transition-all duration-200">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" /></svg>
+                        <span class="hidden sm:inline">Ekspor</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 md:px-8 md:py-6 flex-grow">
+            <div id="helper-box" class="bg-sky-900/50 border-l-4 border-sky-500 text-sky-200 p-4 rounded-r-lg mb-6 transition-all duration-300">
+                <div class="flex">
+                    <div class="py-1"><span class="text-2xl">💡</span></div>
+                    <div class="ml-3">
+                        <p class="font-bold">Asisten SIAP!</p>
+                        <p id="helper-text" class="text-sm">Selamat datang! Isi Detail Informasi di atas, lalu klik tombol 'Tambah Pos' untuk memulai.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="manual-copy-area" class="hidden mb-6">
+                <textarea id="manual-copy-textarea" readonly class="w-full h-32 p-3 border-2 border-dashed border-zinc-600 rounded-lg bg-zinc-800 text-zinc-300"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <aside class="lg:col-span-1 xl:col-span-1 space-y-6">
+                    <div class="card p-5 rounded-xl">
+                        <h2 class="text-lg font-bold mb-4 text-rose-500">Detail Informasi Aba-aba</h2>
+                        <div class="space-y-3">
+                            <input type="text" id="plan-title" placeholder="Nama Aba-aba" class="form-input w-full p-2 border rounded-md text-sm">
+                            <textarea id="plan-description" placeholder="Deskripsi singkat" class="form-input w-full p-2 border rounded-md text-sm" rows="2"></textarea>
+                            <input type="date" id="plan-date" class="form-input w-full p-2 border rounded-md text-slate-400 text-sm">
+                            <input type="text" id="plan-location" placeholder="Lokasi" class="form-input w-full p-2 border rounded-md text-sm">
+                        </div>
+                    </div>
+                    <div class="card p-5 rounded-xl">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-bold text-rose-500">Daftar Pos</h2>
+                            <button id="add-post-btn" class="btn btn-primary text-sm font-semibold py-1 px-3 rounded-md flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                                Pos
+                            </button>
+                        </div>
+                        <div id="posts-nav-list" class="space-y-2"></div>
+                    </div>
+                </aside>
+
+                <section id="workspace" class="lg:col-span-2 xl:col-span-3"></section>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-container"></div>
+    <div id="print-area" class="hidden"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DATA ---
+        const PBB_COMMANDS = [
+            { category: 'Sikap Sempurna & Istirahat', items: [ { id: 'siap_gerak', text: 'Siap = GERAK!' }, { id: 'parade_siap_gerak', text: 'Parade, Siap = GERAK!' }, { id: 'duduk_siap_gerak', text: 'Duduk Siap = GERAK!' }, { id: 'istirahat_ditempat_gerak', text: 'Istirahat di Tempat = GERAK!' }, { id: 'parade_istirahat_ditempat_gerak', text: 'Parade, Istirahat di Tempat = GERAK!' }, { id: 'untuk_perhatian', text: 'Untuk Perhatian!' } ] },
+            { category: 'Lencang & Tegak', items: [ { id: 'lencang_kanan_gerak', text: 'Lencang Kanan = GERAK!' }, { id: 'lencang_kiri_gerak', text: 'Lencang Kiri = GERAK!' }, { id: 'setengah_lengan_lencang_kanan_gerak', text: 'Setengah Lengan Lencang Kanan = GERAK!' }, { id: 'setengah_lengan_lencang_kiri_gerak', text: 'Setengah Lengan Lencang Kiri = GERAK!' }, { id: 'lencang_depan_gerak', text: 'Lencang Depan = GERAK!' }, { id: 'tegak_gerak', text: 'Tegak = GERAK!' } ] },
+            { category: 'Penghormatan', items: [ { id: 'hormat_gerak', text: 'Hormat = GERAK!' }, { id: 'hormat_kanan_gerak', text: 'Hormat Kanan = GERAK!' }, { id: 'hormat_kiri_gerak', text: 'Hormat Kiri = GERAK!' } ] },
+            { category: 'Berhitung', items: [ { id: 'hitung_mulai', text: 'Hitung = MULAI!' } ] },
+            { category: 'Periksa Kerapihan', items: [ { id: 'periksa_kerapian_mulai', text: 'Periksa Kerapian = MULAI!' }, { id: 'periksa_kerapian_selesai', text: 'SELESAI!' }, { id: 'parade_periksa_kerapian_mulai', text: 'Parade Periksa Kerapian = MULAI!' } ] },
+            { category: 'Buka & Tutup Barisan', items: [ { id: 'buka_barisan_jalan', text: 'Buka Barisan = JALAN!' }, { id: 'tutup_barisan_jalan', text: 'Tutup Barisan = JALAN!' } ] },
+            { category: 'Perubahan Arah (Di Tempat)', items: [ { id: 'hadap_kanan_gerak', text: 'Hadap Kanan = GERAK!' }, { id: 'hadap_kiri_gerak', text: 'Hadap Kiri = GERAK!' }, { id: 'hadap_serong_kanan_gerak', text: 'Hadap Serong Kanan = GERAK!' }, { id: 'hadap_serong_kiri_gerak', text: 'Hadap Serong Kiri = GERAK!' }, { id: 'balik_kanan_gerak', text: 'Balik Kanan = GERAK!' } ] },
+            { category: 'Bubar', items: [ { id: 'bubar_jalan', text: 'Bubar = JALAN!' } ] },
+            { category: 'Jalan di Tempat', items: [ { id: 'jalan_ditempat_gerak', text: 'Jalan di Tempat = GERAK!' }, { id: 'henti_gerak_ditempat', text: 'Henti = GERAK!' } ] },
+            { category: 'Gerakan Berjalan (Mulai & Berhenti)', items: [
+                { id: 'maju_jalan', text: 'Maju = JALAN!' },
+                { id: 'langkah_tegap_maju_jalan', text: 'Langkah Tegap Maju = JALAN!' },
+                { id: 'langkah_perlahan_maju_jalan', text: 'Langkah Perlahan Maju = JALAN!' },
+                { id: 'langkah_ke_kanan_jalan', text: 'Langkah ke Kanan = JALAN!', needsInput: true },
+                { id: 'langkah_ke_kiri_jalan', text: 'Langkah ke Kiri = JALAN!', needsInput: true },
+                { id: 'langkah_ke_belakang_jalan', text: 'Langkah ke Belakang = JALAN!', needsInput: true },
+                { id: 'langkah_ke_depan_jalan', text: 'Langkah ke Depan = JALAN!', needsInput: true },
+                { id: 'henti_gerak_berjalan', text: 'Henti = GERAK!' },
+            ]},
+            { category: 'Gerakan Berlari (Mulai & Berhenti)', items: [
+                { id: 'lari_maju_jalan', text: 'Lari Maju = JALAN!' },
+                { id: 'lari_jalan', text: 'Lari = JALAN!' },
+                { id: 'henti_gerak_berlari', text: 'Henti = GERAK!' },
+            ]},
+            { category: 'Gerakan Transisi (Berjalan & Berlari)', items: [
+                { id: 'langkah_tegap_jalan', text: 'Langkah Tegap = JALAN!' },
+                { id: 'langkah_biasa_jalan', text: 'Langkah Biasa = JALAN!' },
+                { id: 'langkah_perlahan_jalan', text: 'Langkah Perlahan = JALAN!' },
+                { id: 'langkah_merdeka_jalan', text: 'Langkah Merdeka = JALAN!' },
+                { id: 'ganti_langkah_jalan', text: 'Ganti Langkah = JALAN!' },
+            ]},
+            { category: 'Perubahan Arah (Berjalan)', items: [
+                { id: 'hadap_kanan_maju_jalan', text: 'Hadap Kanan Maju = JALAN!' },
+                { id: 'hadap_kiri_maju_jalan', text: 'Hadap Kiri Maju = JALAN!' },
+                { id: 'hadap_serong_kanan_maju_jalan', text: 'Hadap Serong Kanan Maju = JALAN!' },
+                { id: 'hadap_serong_kiri_maju_jalan', text: 'Hadap Serong Kiri Maju = JALAN!' },
+                { id: 'balik_kanan_maju_jalan', text: 'Balik Kanan Maju = JALAN!' },
+                { id: 'belok_kanan_jalan', text: 'Belok Kanan = JALAN!' },
+                { id: 'belok_kiri_jalan', text: 'Belok Kiri = JALAN!' },
+                { id: 'dua_kali_belok_kanan_jalan', text: 'Dua Kali Belok Kanan = JALAN!' },
+                { id: 'dua_kali_belok_kiri_jalan', text: 'Dua Kali Belok Kiri = JALAN!' },
+                { id: 'tiap_tiap_banjar_2x_belok_kanan_jalan', text: 'Tiap-tiap Banjar Dua Kali Belok Kanan = JALAN!' },
+                { id: 'tiap_tiap_banjar_2x_belok_kiri_jalan', text: 'Tiap-tiap Banjar Dua Kali Belok Kiri = JALAN!' },
+            ]},
+            { category: 'Perubahan Arah (Berjalan ke Berhenti)', items: [
+                { id: 'hadap_kanan_henti_gerak', text: 'Hadap Kanan Henti = GERAK!' },
+                { id: 'hadap_kiri_henti_gerak', text: 'Hadap Kiri Henti = GERAK!' },
+                { id: 'hadap_serong_kanan_henti_gerak', text: 'Hadap Serong Kanan Henti = GERAK!' },
+                { id: 'hadap_serong_kiri_henti_gerak', text: 'Hadap Serong Kiri Henti = GERAK!' },
+                { id: 'balik_kanan_henti_gerak', text: 'Balik Kanan Henti = GERAK!' },
+            ]},
+             { category: 'Perubahan Arah (Berlari)', items: [
+                { id: 'hadap_kanan_lari_maju_jalan', text: 'Hadap Kanan Lari Maju = JALAN!' },
+                { id: 'hadap_kiri_lari_maju_jalan', text: 'Hadap Kiri Lari Maju = JALAN!' },
+                { id: 'hadap_serong_kanan_lari_maju_jalan', text: 'Hadap Serong Kanan Lari Maju = JALAN!' },
+                { id: 'hadap_serong_kiri_lari_maju_jalan', text: 'Hadap Serong Kiri Lari Maju = JALAN!' },
+                { id: 'balik_kanan_lari_maju_jalan', text: 'Balik Kanan Lari Maju = JALAN!' },
+            ]},
+             { category: 'Perubahan Arah (Berlari ke Berhenti)', items: [
+                { id: 'hadap_kanan_lari_henti_gerak', text: 'Hadap Kanan Henti = GERAK!' },
+                { id: 'hadap_kiri_lari_henti_gerak', text: 'Hadap Kiri Henti = GERAK!' },
+                { id: 'hadap_serong_kanan_lari_henti_gerak', text: 'Hadap Serong Kanan Henti = GERAK!' },
+                { id: 'hadap_serong_kiri_lari_henti_gerak', text: 'Hadap Serong Kiri Henti = GERAK!' },
+                { id: 'balik_kanan_lari_henti_gerak', text: 'Balik Kanan Henti = GERAK!' },
+            ]},
+            { category: 'Haluan & Melintang', items: [
+                { id: 'haluan_kanan_jalan', text: 'Haluan Kanan = JALAN!' },
+                { id: 'haluan_kiri_jalan', text: 'Haluan Kiri = JALAN!' },
+                { id: 'haluan_kanan_maju_jalan', text: 'Haluan Kanan Maju = JALAN!' },
+                { id: 'haluan_kiri_maju_jalan', text: 'Haluan Kiri Maju = JALAN!' },
+                { id: 'melintang_kanan_jalan', text: 'Melintang Kanan = JALAN!' },
+                { id: 'melintang_kiri_jalan', text: 'Melintang Kiri = JALAN!' },
+                { id: 'melintang_kanan_maju_jalan', text: 'Melintang Kanan Maju = JALAN!' },
+                { id: 'melintang_kiri_maju_jalan', text: 'Melintang Kiri Maju = JALAN!' },
+            ]},
+            { category: 'Berhimpun & Berkumpul', items: [
+                { id: 'berhimpun_mulai', text: 'Berhimpun = MULAI!' },
+                { id: 'bersaf_kumpul_mulai', text: 'Bersaf Kumpul = MULAI!' },
+                { id: 'berbanjar_kumpul_mulai', text: 'Berbanjar Kumpul = MULAI!' },
+                { id: 'selesai_himpun_kumpul', text: 'SELESAI!' }
+            ]}
+        ];
+
+        let plan = { title: '', description: '', date: '', location: '', posts: [] };
+        let activePostId = null;
+        let currentTargetMaterialId = null;
+
+        const postsNavList = document.getElementById('posts-nav-list');
+        const workspace = document.getElementById('workspace');
+        const modalContainer = document.getElementById('modal-container');
+        const copyTextBtn = document.getElementById('copy-text-btn');
+        const exportPdfBtn = document.getElementById('export-pdf-btn');
+        const helperText = document.getElementById('helper-text');
+        const manualCopyArea = document.getElementById('manual-copy-area');
+        const manualCopyTextarea = document.getElementById('manual-copy-textarea');
+        
+        const showToast = (message) => {
+            const toastEl = document.createElement('div');
+            toastEl.className = "fixed bottom-5 right-5 bg-slate-900 text-white py-3 px-6 rounded-lg shadow-xl transition-all duration-300 transform translate-y-24 opacity-0 z-[100]";
+            toastEl.innerHTML = `<p>${message}</p>`;
+            document.body.appendChild(toastEl);
+            requestAnimationFrame(() => toastEl.classList.remove('translate-y-24', 'opacity-0'));
+            setTimeout(() => {
+                toastEl.classList.add('translate-y-24', 'opacity-0');
+                toastEl.addEventListener('transitionend', () => toastEl.remove());
+            }, 3000);
+        };
+        
+        const updateActionButtonsState = () => {
+            const isPlanValid = plan.title && plan.posts.length > 0 && plan.posts.every(p => p.size_p && p.size_l && p.time && p.materials.length > 0);
+            copyTextBtn.disabled = !isPlanValid;
+            exportPdfBtn.disabled = !isPlanValid;
+            if (manualCopyArea) manualCopyArea.classList.add('hidden');
+            if (isPlanValid) {
+                 helperText.textContent = "Rencana sudah lengkap! Anda sekarang dapat menyalin teks atau mengekspor ke PDF.";
+            } else if (plan.posts.length > 0) {
+                 helperText.textContent = "Lengkapi Judul Aba-aba, Ukuran setiap Pos (P, L, Waktu), dan tambahkan minimal 1 materi untuk mengaktifkan tombol Salin & Ekspor.";
+            } else {
+                 helperText.textContent = "Selamat datang! Isi Detail Informasi di atas, lalu klik tombol 'Tambah Pos' untuk memulai.";
+            }
+        };
+
+        const renderApp = () => {
+            renderPostsNav();
+            renderWorkspace();
+            updateActionButtonsState();
+        }
+
+        const renderPostsNav = () => {
+            postsNavList.innerHTML = '';
+            if (plan.posts.length === 0) {
+                postsNavList.innerHTML = `<p class="text-sm text-center text-slate-500 py-4">Belum ada pos.</p>`;
+            }
+            plan.posts.forEach((post, index) => {
+                const isActive = post.id === activePostId;
+                const navItem = document.createElement('button');
+                navItem.dataset.postId = post.id;
+                navItem.className = `w-full text-left p-3 rounded-lg transition-colors duration-200 flex justify-between items-center ${isActive ? 'bg-rose-100 dark:bg-rose-900/50 text-rose-800 dark:text-rose-300 font-semibold' : 'hover:bg-slate-100 dark:hover:bg-zinc-700'}`;
+                navItem.innerHTML = `
+                    <span>${plan.posts.length > 1 ? `POS ${index + 1}` : (post.name || 'Pos Utama')}</span>
+                    ${isActive ? `<span class="w-2 h-2 bg-rose-500 rounded-full"></span>` : ''}
+                `;
+                postsNavList.appendChild(navItem);
+            });
+        };
+
+        const renderWorkspace = () => {
+            const activePost = plan.posts.find(p => p.id === activePostId);
+
+            if (!activePost) {
+                workspace.innerHTML = `<div class="card rounded-2xl shadow-lg flex flex-col items-center justify-center h-full min-h-[400px] text-center p-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <h3 class="text-xl font-bold text-slate-700 dark:text-slate-200">Tidak Ada Pos yang Dipilih</h3>
+                    <p class="mt-2 text-slate-500 dark:text-slate-400 max-w-xs">Silakan pilih pos dari daftar di sebelah kiri, atau buat pos baru.</p>
+                </div>`;
+                return;
+            }
+
+            const postIndex = plan.posts.findIndex(p => p.id === activePostId);
+            const postEl = document.createElement('div');
+            postEl.className = "card relative p-4 sm:p-6 rounded-2xl shadow-xl anim-pop-in";
+            postEl.dataset.postId = activePost.id;
+
+            const postTitleHTML = plan.posts.length > 1 
+                ? `<h2 class="text-2xl font-bold text-rose-700 dark:text-rose-500">POS ${postIndex + 1}</h2>`
+                : `<input type="text" value="${activePost.name || ''}" data-field="name" placeholder="Nama Pos Utama" class="text-2xl font-bold text-rose-700 dark:text-rose-500 bg-transparent focus:bg-slate-100 dark:focus:bg-zinc-700 rounded p-2 w-full">`;
+
+            postEl.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    ${postTitleHTML}
+                    <button class="delete-post-btn text-slate-400 hover:text-red-500 transition-colors" title="Hapus Pos Ini">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>
+                
+                <div class="flex items-center justify-between bg-slate-50 dark:bg-zinc-700/50 p-4 rounded-lg">
+                    <div class="text-sm">
+                        <p class="font-semibold text-slate-600 dark:text-slate-300">Ukuran & Waktu Pos</p>
+                        <p class="text-xs text-slate-400 dark:text-slate-500">P: ${activePost.size_p || '-'}m, L: ${activePost.size_l || '-'}m, W: ${activePost.time || '-'}min</p>
+                    </div>
+                    <button class="edit-size-btn btn btn-primary text-sm font-semibold py-1 px-3 rounded-md">Atur</button>
+                </div>
+
+                <hr class="my-4 border-slate-200 dark:border-zinc-700">
+                <div class="materials-container space-y-2"></div>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <button data-type="numbered" class="add-material-option flex-grow bg-rose-100 dark:bg-rose-900/50 text-rose-800 dark:text-rose-300 font-semibold py-2 px-4 rounded-lg hover:bg-rose-200 dark:hover:bg-rose-900/80 transition">+ Baris Materi</button>
+                    <button data-type="adjustment" class="add-material-option p-2 rounded-lg bg-slate-200 dark:bg-zinc-700 hover:bg-slate-300 dark:hover:bg-zinc-600" title="Gerakan Penyesuaian"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg></button>
+                    <button data-type="report" class="add-material-option p-2 rounded-lg bg-slate-200 dark:bg-zinc-700 hover:bg-slate-300 dark:hover:bg-zinc-600" title="Laporan"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg></button>
+                    <button data-type="start_end" class="add-material-option p-2 rounded-lg bg-slate-200 dark:bg-zinc-700 hover:bg-slate-300 dark:hover:bg-zinc-600" title="Materi Mulai/Selesai"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" /></svg></button>
+                </div>
+            `;
+            workspace.innerHTML = '';
+            workspace.appendChild(postEl);
+            renderMaterials(postEl, activePost);
+        };
+
+        const renderMaterials = (postEl, postData) => {
+            const materialsContainer = postEl.querySelector('.materials-container');
+            materialsContainer.innerHTML = '';
+            if (postData.materials.length === 0) {
+                materialsContainer.innerHTML = `<p class="text-center text-slate-500 dark:text-slate-400 py-4">Belum ada materi. Klik tombol di bawah untuk menambahkan.</p>`;
+            }
+            let numberedCounter = 0;
+            postData.materials.forEach((material, index) => {
+                const materialRow = document.createElement('div');
+                materialRow.className = `material-row group relative bg-slate-50 dark:bg-zinc-700/50 p-2 rounded-lg flex items-center gap-2 sm:gap-3 transition-all duration-300 anim-pop-in ${material.commanderExecutes ? 'font-bold' : ''}`;
+                materialRow.dataset.materialId = material.id;
+                
+                let numberPrefix = '&nbsp;';
+                if (material.isNumbered) {
+                    numberedCounter++;
+                    numberPrefix = `${numberedCounter}.`;
+                } else {
+                    numberPrefix = '•';
+                }
+
+                let contentHTML = '';
+                const commandChipStyle = `bg-white dark:bg-zinc-700 px-3 py-1 rounded-full shadow-sm flex items-center gap-2 text-sm`;
+
+                switch(material.type) {
+                    case 'report':
+                    case 'start_end':
+                        contentHTML = `<span class="${commandChipStyle} flex-grow justify-center font-semibold text-slate-600 dark:text-slate-300">${material.content || '...'}</span>`;
+                        break;
+                    default:
+                        const movementSpans = material.movements.map((mov, movIndex) => {
+                            const command = PBB_COMMANDS.flatMap(c => c.items).find(i => i.id === mov.id);
+                            if (!command) return '';
+                            let chipHTML = command.needsInput 
+                                ? `<input type="number" value="${mov.count || ''}" placeholder="..." data-movement-index="${movIndex}" class="movement-count-input w-10 text-center bg-transparent font-bold"> ${command.text}` 
+                                : command.text;
+                            return `<span class="${commandChipStyle}">${chipHTML}</span>`;
+                        }).join('<span class="font-bold text-slate-400 dark:text-zinc-500 mx-1">–</span>');
+                        
+                        let movementContent = movementSpans;
+                        if (movementSpans.length === 0) {
+                            movementContent = `<button class="add-movement-btn text-rose-600 dark:text-rose-400 hover:underline">Tambah gerakan...</button>`;
+                        } else {
+                            movementContent += `<button class="add-movement-btn text-rose-600 dark:text-rose-400 p-1 rounded-full hover:bg-rose-100 dark:hover:bg-rose-900/50 ml-2" title="Tambah Gerakan Lagi"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" /></svg></button>`;
+                        }
+                        contentHTML = `<div class="movements-display flex-grow flex flex-wrap items-center gap-2">${movementContent}</div>`;
+                }
+
+                const moveUpBtn = index > 0 ? `<button class="move-material-btn" data-direction="up" title="Naik"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>` : `<div class="w-5"></div>`;
+                const moveDownBtn = index < postData.materials.length - 1 ? `<button class="move-material-btn" data-direction="down" title="Turun"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>` : `<div class="w-5"></div>`;
+
+                materialRow.innerHTML = `
+                    <div class="flex flex-col items-center text-slate-400 dark:text-zinc-500 group-hover:text-slate-600 dark:group-hover:text-zinc-300">
+                        ${moveUpBtn}
+                        ${moveDownBtn}
+                    </div>
+                    <span class="font-bold text-slate-800 dark:text-slate-200 w-6 text-right">${numberPrefix}</span>
+                    ${contentHTML}
+                    <div class="contextual-controls flex items-center gap-2 sm:gap-3 ml-auto">
+                        ${material.note ? `<span class="text-yellow-500 cursor-help" title="Catatan: ${material.note}">★</span>` : ''}
+                        <button class="settings-btn text-slate-500 dark:text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400" title="Opsi Materi"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" /></svg></button>
+                        <button class="delete-material-btn text-slate-400 dark:text-zinc-500 hover:text-red-500" title="Hapus Baris">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                `;
+                materialsContainer.appendChild(materialRow);
+            });
+        };
+        
+        const openCommandModal = (materialId) => {
+            currentTargetMaterialId = materialId;
+            const modalEl = document.createElement('div');
+            modalEl.id = 'command-modal';
+            modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop';
+            modalEl.innerHTML = `
+                <div class="card w-full max-w-3xl max-h-[80vh] flex flex-col anim-pop-in rounded-xl">
+                    <div class="p-4 border-b border-slate-200 dark:border-zinc-700 flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-rose-800 dark:text-rose-400">Pilih Gerakan</h3>
+                        <button class="modal-close-btn text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 text-2xl">&times;</button>
+                    </div>
+                    <div class="p-4"><input type="text" id="modal-search" placeholder="Cari gerakan..." class="form-input w-full p-2 border rounded-lg"></div>
+                    <div id="modal-command-list" class="p-4 pt-0 overflow-y-auto"></div>
+                </div>`;
+            modalContainer.appendChild(modalEl);
+            renderCommandModal();
+            document.getElementById('modal-search').focus();
+            document.getElementById('modal-search').addEventListener('input', (e) => renderCommandModal(e.target.value));
+        };
+
+        const renderCommandModal = (filter = '') => {
+            const modalCommandList = document.getElementById('modal-command-list');
+            if (!modalCommandList) return;
+            modalCommandList.innerHTML = '';
+            const lowerCaseFilter = filter.toLowerCase();
+            PBB_COMMANDS.forEach(category => {
+                const filteredItems = category.items.filter(item => item.text.toLowerCase().includes(lowerCaseFilter));
+                if (filteredItems.length === 0) return;
+
+                const categoryWrapper = document.createElement('div');
+                categoryWrapper.className = 'mb-4';
+                categoryWrapper.innerHTML = `<h4 class="text-md font-semibold text-rose-700 dark:text-rose-400 mb-2 border-b border-slate-200 dark:border-zinc-700 pb-1">${category.category}</h4>`;
+                const itemsWrapper = document.createElement('div');
+                itemsWrapper.className = 'grid grid-cols-1 md:grid-cols-2 gap-2';
+                
+                filteredItems.forEach(item => {
+                    const card = document.createElement('button');
+                    card.className = 'select-command-btn w-full text-left p-3 bg-slate-50 dark:bg-zinc-700 rounded-lg border border-slate-200 dark:border-zinc-600 hover:bg-rose-100 dark:hover:bg-rose-900/50 hover:border-rose-400 dark:hover:border-rose-600 transition';
+                    card.dataset.commandId = item.id;
+                    card.textContent = item.text;
+                    itemsWrapper.appendChild(card);
+                });
+                
+                categoryWrapper.appendChild(itemsWrapper);
+                modalCommandList.appendChild(categoryWrapper);
+            });
+        };
+
+        const openContextMenu = (materialId) => {
+            const material = plan.posts.flatMap(p => p.materials).find(m => m.id === materialId);
+            if (!material) return;
+
+            const modalEl = document.createElement('div');
+            modalEl.id = 'context-menu-modal';
+            modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop';
+            modalEl.dataset.materialId = materialId;
+            modalEl.innerHTML = `
+                <div class="card w-full max-w-sm anim-pop-in rounded-xl">
+                    <div class="p-4 border-b border-slate-200 dark:border-zinc-700 flex justify-between items-center">
+                        <h3 class="text-lg font-bold">Opsi Materi</h3>
+                        <button class="modal-close-btn text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 text-2xl">&times;</button>
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <label class="flex items-center justify-between p-3 bg-slate-50 dark:bg-zinc-700/50 rounded-lg cursor-pointer">
+                            <span class="flex items-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-600 dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                                <span class="font-semibold">Dilaksanakan Danton</span>
+                            </span>
+                            <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                <input type="checkbox" name="danton" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" ${material.commanderExecutes ? 'checked' : ''}/>
+                                <label for="danton" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-zinc-600 cursor-pointer"></label>
+                            </div>
+                        </label>
+                         <label class="flex items-center justify-between p-3 bg-slate-50 dark:bg-zinc-700/50 rounded-lg cursor-pointer">
+                            <span class="flex items-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-rose-600 dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                                <span class="font-semibold">Gunakan Penomoran</span>
+                            </span>
+                            <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                                <input type="checkbox" name="numbered" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" ${material.isNumbered ? 'checked' : ''} ${material.type === 'adjustment' ? 'disabled' : ''}/>
+                                <label for="numbered" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 dark:bg-zinc-600 cursor-pointer"></label>
+                            </div>
+                        </label>
+                        <div class="pt-2">
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Catatan</label>
+                            <input type="text" class="context-note-input mt-1 w-full p-2 border rounded-md form-input" value="${material.note || ''}" placeholder="misal: Waktu dimulai">
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-100 dark:bg-zinc-800/50 text-right rounded-b-xl">
+                        <button class="modal-close-btn btn btn-primary py-2 px-4 rounded-lg">Tutup</button>
+                    </div>
+                </div>`;
+            modalContainer.appendChild(modalEl);
+        };
+        
+        const openSizeModal = (postId) => {
+            const post = plan.posts.find(p => p.id === postId);
+            if (!post) return;
+            const modalEl = document.createElement('div');
+            modalEl.id = 'size-modal';
+            modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop';
+            modalEl.dataset.postId = postId;
+            modalEl.innerHTML = `
+                <div class="card w-full max-w-md anim-pop-in rounded-xl">
+                    <div class="p-4 border-b border-zinc-200 dark:border-zinc-700">
+                        <h3 class="text-lg font-bold">Atur Ukuran & Waktu Pos</h3>
+                    </div>
+                    <div class="p-4 space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Panjang (m)</label>
+                                <input type="number" value="${post.size_p || ''}" data-field="size_p" class="form-input w-full p-2 border rounded-md">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Lebar (m)</label>
+                                <input type="number" value="${post.size_l || ''}" data-field="size_l" class="form-input w-full p-2 border rounded-md">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Lebar Belokan (m)</label>
+                            <input type="number" value="${post.turn_width || ''}" data-field="turn_width" class="form-input w-full p-2 border rounded-md">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Alokasi Waktu (menit)</label>
+                            <input type="number" value="${post.time || ''}" data-field="time" class="form-input w-full p-2 border rounded-md">
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-100 dark:bg-zinc-800/50 text-right rounded-b-xl">
+                        <button class="modal-close-btn btn btn-primary py-2 px-4 rounded-lg">Simpan</button>
+                    </div>
+                </div>
+            `;
+            modalContainer.appendChild(modalEl);
+        };
+
+        const showWelcomeModal = () => {
+            if (sessionStorage.getItem('welcomeShown')) return;
+            const modalEl = document.createElement('div');
+            modalEl.id = 'welcome-modal';
+            modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop';
+            modalEl.innerHTML = `
+                <div class="card w-full max-w-md anim-pop-in rounded-xl">
+                    <div class="p-5 text-center">
+                        <span class="text-4xl">👋</span>
+                        <h3 class="text-xl font-bold mt-4">Selamat Datang di SIAP!</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+                            Aplikasi ini masih dan akan terus dalam masa pengembangan. Jika menemukan kekeliruan, error, atau memiliki saran, jangan ragu untuk menghubungi kami.
+                        </p>
+                        <a href="https://wa.me/6285339213109" target="_blank" class="mt-4 inline-block text-green-500 font-semibold hover:underline">
+                            Tonti Mu'allimin (1nspektur)
+                        </a>
+                    </div>
+                    <div class="p-4 bg-slate-100 dark:bg-zinc-800/50 text-center rounded-b-xl">
+                        <button class="modal-close-btn btn btn-primary py-2 px-6 rounded-lg">Mengerti</button>
+                    </div>
+                </div>
+            `;
+            modalContainer.appendChild(modalEl);
+            sessionStorage.setItem('welcomeShown', 'true');
+        };
+
+        const closeModal = () => {
+            const modal = modalContainer.querySelector('.fixed');
+            if (modal) {
+                modal.remove();
+            }
+        };
+        
+        const generatePlanText = () => {
+            let text = '';
+            const planDetails = [
+                plan.title ? plan.title.toUpperCase() : '',
+                plan.description ? plan.description : '',
+                plan.date ? `Tanggal: ${plan.date}` : '',
+                plan.location ? `Lokasi: ${plan.location}` : ''
+            ].filter(Boolean);
+
+            if (planDetails.length > 0) {
+                text += planDetails.join('\n') + '\n\n';
+            }
+
+            plan.posts.forEach((post, index) => {
+                const title = plan.posts.length > 1 ? `POS ${index + 1}` : (post.name || 'Pos Utama');
+                text += `--- ${title} ---\n`;
+                let sizeDetails = `Ukuran: ${post.size_p || '-'}m x ${post.size_l || '-'}m`;
+                if(post.turn_width) {
+                    sizeDetails += ` | Belokan: ${post.turn_width}m`;
+                }
+                sizeDetails += ` | Waktu: ${post.time || '-'} Menit\n\n`;
+                text += sizeDetails;
+                
+                let numberedCounter = 0;
+                post.materials.forEach(material => {
+                    let isNumbered = material.isNumbered;
+                    if (isNumbered) numberedCounter++;
+
+                    let line = '';
+                    if (material.type === 'report' || material.type === 'start_end') {
+                        line = material.content || '...';
+                    } else {
+                        const movementTexts = material.movements.map(mov => {
+                            const command = PBB_COMMANDS.flatMap(c => c.items).find(i => i.id === mov.id);
+                            if (!command) return null;
+                            let commandText = command.text.replace('!', '');
+                            if (command.needsInput && mov.count) {
+                                commandText = `${mov.count} ${commandText}`;
+                            }
+                            return commandText;
+                        }).filter(Boolean);
+                        line = movementTexts.join(' – ');
+                    }
+
+                    if (material.note) line += ` (${material.note})`;
+                    if (material.commanderExecutes) line = `*${line}*`;
+
+                    if (line) {
+                        text += `${isNumbered ? `${numberedCounter}.` : '•'}\t${line}\n`;
+                    }
+                });
+                text += '\n';
+            });
+            return text.trim();
+        };
+
+        const copyToClipboard = () => {
+            if (copyTextBtn.disabled) {
+                showToast('Lengkapi data pos dan materi terlebih dahulu.');
+                return;
+            }
+            const textToCopy = generatePlanText();
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showToast('Rencana berhasil disalin!');
+                    helperText.textContent = "Teks berhasil disalin ke clipboard!";
+                    manualCopyArea.classList.add('hidden');
+                }).catch(err => {
+                    console.error('Clipboard API error:', err);
+                    fallbackCopyToClipboard(textToCopy);
+                });
+            } else {
+                fallbackCopyToClipboard(textToCopy);
+            }
+        };
+
+        const fallbackCopyToClipboard = (textToCopy) => {
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            textArea.style.position = "fixed";
+            textArea.style.top = "-9999px";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast('Rencana berhasil disalin!');
+                    helperText.textContent = "Teks berhasil disalin ke clipboard!";
+                    manualCopyArea.classList.add('hidden');
+                } else {
+                    throw new Error('Copy command failed');
+                }
+            } catch (err) {
+                console.error('execCommand error:', err);
+                helperText.innerHTML = `<strong>Gagal menyalin otomatis!</strong><br>Ini mungkin karena batasan keamanan browser. Silakan salin teks secara manual dari kotak di bawah ini (Ctrl+C).`;
+                manualCopyTextarea.value = textToCopy;
+                manualCopyArea.classList.remove('hidden');
+                manualCopyTextarea.select();
+            }
+            document.body.removeChild(textArea);
+        };
+
+        const exportToPDF = () => {
+            if (exportPdfBtn.disabled) {
+                showToast('Lengkapi data pos dan materi terlebih dahulu.');
+                return;
+            }
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const printArea = document.getElementById('print-area');
+            
+            let content = `<h1>${plan.title || 'Rencana Latihan'}</h1>`;
+            if (plan.description) content += `<p><i>${plan.description}</i></p>`;
+            if (plan.date || plan.location) {
+                 content += `<p><b>Tanggal:</b> ${plan.date || '-'} | <b>Lokasi:</b> ${plan.location || '-'}</p>`;
+            }
+
+            plan.posts.forEach((post, index) => {
+                const title = plan.posts.length > 1 ? `POS ${index + 1}` : (post.name || 'Pos Utama');
+                content += `<hr style="margin: 10px 0;"><h2>${title}</h2>`;
+                
+                let sizeDetails = `<b>Ukuran:</b> ${post.size_p || '-'}m x ${post.size_l || '-'}m`;
+                if(post.turn_width) {
+                    sizeDetails += ` | <b>Belokan:</b> ${post.turn_width}m`;
+                }
+                sizeDetails += ` | <b>Alokasi Waktu:</b> ${post.time || '-'} Menit`;
+                content += `<p>${sizeDetails}</p>`;
+                
+                let numberedCounter = 0;
+                let listContent = '<div style="margin-left: 5mm;">';
+                post.materials.forEach(material => {
+                    let isNumbered = material.isNumbered;
+                    if (isNumbered) numberedCounter++;
+
+                    let line = '';
+                     if (material.type === 'report' || material.type === 'start_end') {
+                          line = `<i>${material.content || '...'}</i>`;
+                    } else {
+                        const movementTexts = material.movements.map(mov => {
+                            const command = PBB_COMMANDS.flatMap(c => c.items).find(i => i.id === mov.id);
+                            if (!command) return null;
+                            let commandText = command.text.replace('!', '');
+                            if (command.needsInput && mov.count) {
+                                commandText = `${mov.count} ${commandText}`;
+                            }
+                            return commandText;
+                        }).filter(Boolean);
+                        line = movementTexts.join(' – ');
+                    }
+
+                    if (material.note) line += ` (${material.note})`;
+                    if (material.commanderExecutes) line = `<b>${line}</b>`;
+
+                    if (line) {
+                        listContent += `<p>${isNumbered ? `${numberedCounter}. ` : '• '}${line}</p>`;
+                    }
+                });
+                listContent += '</div>';
+                content += listContent;
+            });
+
+            printArea.innerHTML = content;
+            showToast('Membuat PDF...');
+            
+            html2canvas(printArea, { scale: 2, useCORS: true }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdfWidth = pdf.internal.pageSize.getWidth() - 20;
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+                let heightLeft = pdfHeight;
+                let position = 10;
+                pdf.addImage(imgData, 'PNG', 10, position, pdfWidth, pdfHeight);
+                heightLeft -= pdf.internal.pageSize.getHeight();
+                while (heightLeft > 0) {
+                    position = heightLeft - pdfHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 10, position, pdfWidth, pdfHeight);
+                    heightLeft -= pdf.internal.pageSize.getHeight();
+                }
+                pdf.save(`${plan.title || 'rencana-latihan'}.pdf`);
+            }).catch(err => {
+                showToast('Gagal membuat PDF.');
+                console.error("PDF Export error:", err);
+            });
+        };
+
+        // --- EVENT HANDLERS ---
+        document.addEventListener('input', (e) => {
+            // Global details
+            if (e.target.id === 'plan-title') plan.title = e.target.value;
+            if (e.target.id === 'plan-description') plan.description = e.target.value;
+            if (e.target.id === 'plan-date') plan.date = e.target.value;
+            if (e.target.id === 'plan-location') plan.location = e.target.value;
+
+            const postEl = e.target.closest('[data-post-id]');
+            if (postEl) {
+                const postId = postEl.dataset.postId;
+                const post = plan.posts.find(p => p.id === postId);
+                if (!post) return;
+
+                const field = e.target.dataset.field;
+                if (field) {
+                    post[field] = e.target.value;
+                    if (field === 'name') renderPostsNav(); // Update nav if name changes
+                }
+
+                const materialRow = e.target.closest('.material-row');
+                if (materialRow) {
+                    const materialId = materialRow.dataset.materialId;
+                    const material = post.materials.find(m => m.id === materialId);
+                    if (!material) return;
+                    if (e.target.matches('.report-input, .start-end-input')) {
+                        material.content = e.target.value;
+                    }
+                    if (e.target.matches('.movement-count-input')) {
+                        const movementIndex = parseInt(e.target.dataset.movementIndex, 10);
+                        if(material.movements[movementIndex]) {
+                            material.movements[movementIndex].count = e.target.value;
+                        }
+                    }
+                }
+            }
+            
+            const contextMenu = document.querySelector('#context-menu-modal');
+            if (contextMenu && e.target.matches('.context-note-input')) {
+                const materialId = contextMenu.dataset.materialId;
+                const material = plan.posts.flatMap(p => p.materials).find(m => m.id === materialId);
+                if (material) {
+                    material.note = e.target.value;
+                }
+            }
+            updateActionButtonsState();
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#add-post-btn')) {
+                const newPost = { id: `post_${Date.now()}`, materials: [] };
+                plan.posts.push(newPost);
+                activePostId = newPost.id;
+                renderApp();
+                showToast('Pos baru ditambahkan!');
+            }
+
+            const navItem = e.target.closest('#posts-nav-list button');
+            if (navItem) {
+                activePostId = navItem.dataset.postId;
+                renderApp();
+            }
+
+            const postEl = e.target.closest('[data-post-id]');
+            
+            const deletePostBtn = e.target.closest('.delete-post-btn');
+            if (deletePostBtn && postEl) {
+                const postId = postEl.dataset.postId;
+                plan.posts = plan.posts.filter(p => p.id !== postId);
+                if (activePostId === postId) {
+                    activePostId = plan.posts.length > 0 ? plan.posts[0].id : null;
+                }
+                renderApp();
+                showToast('Pos berhasil dihapus.');
+            }
+
+            const addMaterialOption = e.target.closest('.add-material-option');
+            if(addMaterialOption && postEl) {
+                const postId = postEl.dataset.postId;
+                const post = plan.posts.find(p => p.id === postId);
+                if(post) {
+                    const type = addMaterialOption.dataset.type;
+                    const newMaterial = { id: `mat_${Date.now()}`, type: type, movements: [], commanderExecutes: false, note: '' };
+                    newMaterial.isNumbered = type !== 'adjustment';
+                    
+                    if (type === 'report') {
+                        const reportCount = post.materials.filter(m => m.type === 'report').length;
+                        newMaterial.content = reportCount === 0 ? "LAPOR!" : "LAPORAN SELESAI!";
+                    } else if (type === 'start_end') {
+                        const lastStartEnd = [...post.materials].reverse().find(m => m.type === 'start_end');
+                        newMaterial.content = (lastStartEnd && lastStartEnd.content.toUpperCase().includes('MULAI')) ? 'MATERI SELESAI' : 'MATERI MULAI';
+                    }
+
+                    post.materials.push(newMaterial);
+                    renderApp();
+                    showToast('Materi ditambahkan.');
+                }
+            }
+
+            const deleteMaterialBtn = e.target.closest('.delete-material-btn');
+            if (deleteMaterialBtn && postEl) {
+                const materialRow = deleteMaterialBtn.closest('.material-row');
+                const postId = postEl.dataset.postId;
+                const post = plan.posts.find(p => p.id === postId);
+                if (post) {
+                    post.materials = post.materials.filter(m => m.id !== materialRow.dataset.materialId);
+                    renderApp();
+                    showToast('Materi dihapus.');
+                }
+            }
+
+            const moveMaterialBtn = e.target.closest('.move-material-btn');
+            if (moveMaterialBtn && postEl) {
+                const direction = moveMaterialBtn.dataset.direction;
+                const materialRow = moveMaterialBtn.closest('.material-row');
+                const materialId = materialRow.dataset.materialId;
+                const post = plan.posts.find(p => p.id === activePostId);
+                if (!post) return;
+
+                const index = post.materials.findIndex(m => m.id === materialId);
+                if (direction === 'up' && index > 0) {
+                    [post.materials[index], post.materials[index - 1]] = [post.materials[index - 1], post.materials[index]];
+                } else if (direction === 'down' && index < post.materials.length - 1) {
+                    [post.materials[index], post.materials[index + 1]] = [post.materials[index + 1], post.materials[index]];
+                }
+                renderWorkspace();
+                showToast('Urutan materi diubah.');
+            }
+
+            const selectCommandBtn = e.target.closest('.select-command-btn');
+            if (selectCommandBtn) {
+                const commandId = selectCommandBtn.dataset.commandId;
+                const post = plan.posts.find(p => p.materials.some(m => m.id === currentTargetMaterialId));
+                if (!post) return;
+                const material = post.materials.find(m => m.id === currentTargetMaterialId);
+                if (!material) return;
+                
+                const command = PBB_COMMANDS.flatMap(c => c.items).find(i => i.id === commandId);
+                const newMovement = { id: commandId };
+                if (command.needsInput) newMovement.count = '';
+                material.movements.push(newMovement);
+                
+                renderApp();
+                closeModal();
+            }
+            
+            if(e.target.closest('.modal-close-btn') || e.target.matches('.modal-backdrop')) {
+                if(e.target.closest('#context-menu-modal') || e.target.closest('#size-modal')) {
+                    renderApp();
+                }
+                closeModal();
+            }
+            
+            if(e.target.closest('#export-pdf-btn')) exportToPDF();
+            if(e.target.closest('#copy-text-btn')) copyToClipboard();
+
+            const addMovementBtn = e.target.closest('.add-movement-btn');
+            if (addMovementBtn && postEl) {
+                const materialId = addMovementBtn.closest('.material-row').dataset.materialId;
+                openCommandModal(materialId);
+            }
+            
+            const settingsBtn = e.target.closest('.settings-btn');
+            if(settingsBtn && postEl) {
+                const materialId = settingsBtn.closest('.material-row').dataset.materialId;
+                openContextMenu(materialId);
+            }
+
+            const editSizeBtn = e.target.closest('.edit-size-btn');
+            if (editSizeBtn && postEl) {
+                openSizeModal(postEl.dataset.postId);
+            }
+
+            const toggle = e.target.closest('.toggle-checkbox');
+            if(toggle) {
+                const contextMenu = toggle.closest('#context-menu-modal');
+                if(!contextMenu) return;
+                const materialId = contextMenu.dataset.materialId;
+                const material = plan.posts.flatMap(p => p.materials).find(m => m.id === materialId);
+                if(!material) return;
+
+                if (toggle.name === 'danton') {
+                    material.commanderExecutes = toggle.checked;
+                } else if (toggle.name === 'numbered') {
+                    material.isNumbered = toggle.checked;
+                }
+            }
+        });
+
+        // --- INITIALIZATION ---
+        renderApp();
+        showWelcomeModal();
+    });
+    </script>
+</body>
+</html>
