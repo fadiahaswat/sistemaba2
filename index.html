@@ -180,8 +180,11 @@
                         <div class="w-10 h-10 rounded-lg text-white flex items-center justify-center text-2xl shadow-md" style="background-color: #9f1239;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                         </div>
-                        <h1 class="text-xl font-bold text-gray-200 sm:block">SIAP!</h1>
+                        <h1 class="text-xl font-bold text-gray-200 hidden sm:block">SIAP!</h1>
                     </div>
+
+                    <!-- Mobile Header Title -->
+                    <h2 id="mobile-header-title" class="text-lg font-bold text-gray-200 md:hidden absolute left-1/2 -translate-x-1/2"></h2>
                     
                     <!-- Desktop Navigation -->
                     <nav class="hidden md:flex items-center gap-2 sm:gap-4 text-sm font-semibold ml-auto">
@@ -298,25 +301,25 @@
                     <!-- Visualisasi Page Content -->
                     <div id="page-visualisasi" class="page-content hidden">
                          <div class="text-center py-8 anim-fade-in">
-                            <h1 class="text-3xl md:text-4xl font-bold text-theme flex items-center justify-center gap-3">
+                            <h1 class="text-3xl md:text-4xl font-bold text-theme flex flex-col sm:flex-row items-center justify-center gap-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                                Baca Dokumen Perpang
+                                <span>Baca Dokumen Perpang</span>
                             </h1>
                             <p class="mt-4 text-zinc-400 max-w-2xl mx-auto">Pilih dokumen Peraturan Panglima TNI untuk dibaca. Dokumen akan ditampilkan dalam format PDF.</p>
                             <div id="perpang-cards-container" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                                <!-- Card 1: PERPANG 58 -->
-                                <div class="glass-card rounded-xl p-6 text-left flex flex-col">
-                                    <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 58 Th 2018</h3>
-                                    <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Baris Berbaris (PBB) Tentara Nasional Indonesia.</p>
-                                    <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/13_lH4YlqfXQJobfTm8TBsTSa7Rp5RXYD/view?usp=sharing" data-pdf-title="Perpang TNI No. 58 Th 2018 - PBB">
-                                        Baca Dokumen
-                                    </button>
-                                </div>
-                                <!-- Card 2: PERPANG 57 -->
+                                <!-- Card 1: PERPANG 57 -->
                                  <div class="glass-card rounded-xl p-6 text-left flex flex-col">
                                     <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 57 Th 2018</h3>
                                     <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Penghormatan Militer (PPM) Tentara Nasional Indonesia.</p>
                                     <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/1sTDe64-dQCAw25INF5kfbMt6GtlMNyrc/view?usp=sharing" data-pdf-title="Perpang TNI No. 57 Th 2018 - PPM">
+                                        Baca Dokumen
+                                    </button>
+                                </div>
+                                <!-- Card 2: PERPANG 58 -->
+                                <div class="glass-card rounded-xl p-6 text-left flex flex-col">
+                                    <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 58 Th 2018</h3>
+                                    <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Baris Berbaris (PBB) Tentara Nasional Indonesia.</p>
+                                    <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/13_lH4YlqfXQJobfTm8TBsTSa7Rp5RXYD/view?usp=sharing" data-pdf-title="Perpang TNI No. 58 Th 2018 - PBB">
                                         Baca Dokumen
                                     </button>
                                 </div>
@@ -359,7 +362,7 @@
             
             <!-- Footer -->
             <footer class="bg-zinc-900/80 border-t border-zinc-800/50 mt-auto p-4 text-sm text-zinc-500">
-                <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
                     <p>&copy; 2025 SIAP! - Dikembangkan oleh 1nspektur Tonti Mu'allimin.</p>
                      <div class="flex items-center gap-3">
                         <a href="https://wa.me/6285339213109" target="_blank" class="btn bg-green-600/80 hover:bg-green-500 text-white p-2.5 rounded-lg flex items-center justify-center" title="Hubungi via WhatsApp" aria-label="Hubungi via WhatsApp">
@@ -434,6 +437,7 @@
                 currentPage: 'beranda'
             },
             elements: {},
+            lastScrollPosition: 0,
             init() {
                 this.ALL_COMMANDS_FLAT = this.PBB_COMMANDS.flatMap(c => c.items);
                 this.state.plan = this.getInitialPlan();
@@ -468,6 +472,7 @@
                     newPlanBtn: document.getElementById('new-plan-btn'),
                     duplicatePlanBtn: document.getElementById('duplicate-plan-btn'),
                     deletePlanBtn: document.getElementById('delete-plan-btn'),
+                    mobileHeaderTitle: document.getElementById('mobile-header-title'),
                 };
             },
             bindEventListeners() {
@@ -513,6 +518,15 @@
                 document.querySelectorAll('.page-content').forEach(page => page.classList.add('hidden'));
                 const activePage = document.getElementById(`page-${this.state.currentPage}`);
                 if (activePage) activePage.classList.remove('hidden');
+
+                const pageTitles = {
+                    beranda: "Beranda",
+                    editor: "Editor",
+                    riwayat: "Riwayat",
+                    visualisasi: "Perpang"
+                };
+                this.elements.mobileHeaderTitle.textContent = pageTitles[this.state.currentPage] || "SIAP!";
+
 
                 const allNavButtons = [...this.elements.navButtons, ...this.elements.bottomNavButtons];
                 allNavButtons.forEach(btn => {
@@ -667,15 +681,22 @@
                     return;
                 }
                 riwayat.forEach(plan => {
+                    const totalPosts = plan.posts.length;
+                    const totalMaterials = plan.posts.reduce((acc, post) => acc + post.materials.length, 0);
+
                     const item = document.createElement('div');
-                    item.className = 'glass-card p-4 rounded-xl text-left flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4';
+                    item.className = 'glass-card p-4 rounded-xl text-left flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-l-4 border-theme-focus';
                     item.innerHTML = `
                         <div class="flex-grow">
                             <h3 class="font-bold text-zinc-100">${plan.title || 'Rencana Tanpa Judul'}</h3>
-                            <p class="text-sm text-zinc-400">${plan.description || 'Tidak ada deskripsi'}</p>
-                            <p class="text-xs text-zinc-500 mt-1">Disimpan pada: ${new Date(plan.savedAt).toLocaleString('id-ID')}</p>
+                            <p class="text-sm text-zinc-400 mt-1">${plan.description || 'Tidak ada deskripsi'}</p>
+                            <div class="text-xs text-zinc-500 mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                                <span>Disimpan: ${new Date(plan.savedAt).toLocaleString('id-ID')}</span>
+                                <span class="font-semibold">${totalPosts} Pos</span>
+                                <span class="font-semibold">${totalMaterials} Materi</span>
+                            </div>
                         </div>
-                        <div class="flex gap-2 self-end sm:self-center">
+                        <div class="flex gap-2 self-end sm:self-center flex-shrink-0">
                             <button class="load-riwayat-btn btn btn-primary text-white px-4 py-2 text-sm rounded-lg" data-id="${plan.id}">Muat</button>
                             <button class="delete-riwayat-btn btn bg-zinc-700/80 text-white px-4 py-2 text-sm rounded-lg" data-id="${plan.id}">Hapus</button>
                         </div>
@@ -684,6 +705,7 @@
                 });
             },
             createModal(id, title, bodyHTML, footerHTML = '', isPdf = false) {
+                this.lastScrollPosition = window.scrollY;
                 const modalEl = document.createElement('div');
                 modalEl.id = id;
                 modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop anim-fade-in';
@@ -708,7 +730,10 @@
                     modal.classList.remove('anim-fade-in');
                     modal.classList.add('anim-fade-out');
                     modal.querySelector('.glass-card').classList.remove('anim-pop-in');
-                    modal.addEventListener('animationend', () => modal.remove(), { once: true });
+                    modal.addEventListener('animationend', () => {
+                        modal.remove();
+                        window.scrollTo(0, this.lastScrollPosition);
+                    }, { once: true });
                 }
             },
             openCommandModal(contextType, targetId) {
