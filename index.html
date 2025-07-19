@@ -82,6 +82,14 @@
             background-color: rgba(38, 38, 38, 0.8);
             border-color: var(--theme-color-focus);
         }
+        /* Custom styling for date input */
+        input[type="date"] {
+            color-scheme: dark;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.8);
+        }
+
 
         .btn { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
         .btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.05); filter: brightness(1.15); }
@@ -175,33 +183,45 @@
             <!-- Header for All Screens -->
             <header class="bg-zinc-900/70 backdrop-blur-lg border-b border-zinc-800/50 sticky top-0 z-30">
                 <div class="container mx-auto px-4 md:px-8 flex items-center justify-between h-16">
-                    <!-- Logo and Title -->
+                    <!-- Left Side: Page Title (Mobile) / Logo (Desktop) -->
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-lg text-white flex items-center justify-center text-2xl shadow-md" style="background-color: #9f1239;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        </div>
-                        <h1 class="text-xl font-bold text-gray-200 hidden sm:block">SIAP!</h1>
+                        <!-- Desktop Logo -->
+                        <a href="#" data-page="beranda" class="nav-btn hidden md:flex items-center gap-3">
+                            <div id="header-logo-bg-desktop" class="w-10 h-10 rounded-lg text-white flex items-center justify-center text-2xl shadow-md transition-colors duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </div>
+                            <h1 class="text-xl font-bold text-gray-200">SIAP!</h1>
+                        </a>
+                        <!-- Mobile Page Title -->
+                        <h2 id="mobile-header-title" class="text-lg font-bold text-gray-200 md:hidden"></h2>
                     </div>
 
-                    <!-- Mobile Header Title -->
-                    <h2 id="mobile-header-title" class="text-lg font-bold text-gray-200 md:hidden absolute left-1/2 -translate-x-1/2"></h2>
-                    
-                    <!-- Desktop Navigation -->
-                    <nav class="hidden md:flex items-center gap-2 sm:gap-4 text-sm font-semibold ml-auto">
-                        <button data-page="beranda" class="nav-btn px-3 py-2 rounded-lg transition-colors">Beranda</button>
-                        <button data-page="editor" class="nav-btn px-3 py-2 rounded-lg transition-colors">Editor</button>
-                        <button data-page="riwayat" class="nav-btn px-3 py-2 rounded-lg transition-colors">Riwayat</button>
-                        <button data-page="visualisasi" class="nav-btn px-3 py-2 rounded-lg transition-colors">Baca Perpang</button>
-                    </nav>
+                    <!-- Right Side: Logo (Mobile) / Nav (Desktop) -->
+                    <div class="flex items-center">
+                        <!-- Desktop Navigation -->
+                        <nav class="hidden md:flex items-center gap-2 sm:gap-4 text-sm font-semibold">
+                            <button data-page="beranda" class="nav-btn px-3 py-2 rounded-lg transition-colors">Beranda</button>
+                            <button data-page="editor" class="nav-btn px-3 py-2 rounded-lg transition-colors">Editor</button>
+                            <button data-page="riwayat" class="nav-btn px-3 py-2 rounded-lg transition-colors">Riwayat</button>
+                            <button data-page="visualisasi" class="nav-btn px-3 py-2 rounded-lg transition-colors">Baca Perpang</button>
+                        </nav>
+                        <!-- Mobile Logo -->
+                        <a href="#" data-page="beranda" class="nav-btn flex items-center gap-3 md:hidden">
+                            <h1 class="text-lg font-bold text-gray-200">SIAP!</h1>
+                            <div id="header-logo-bg-mobile" class="w-10 h-10 rounded-lg text-white flex items-center justify-center text-2xl shadow-md transition-colors duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </header>
 
-            <main class="container mx-auto p-4 md:px-8 md:py-6 flex-grow">
+            <main class="container mx-auto p-4 md:px-8 flex-grow">
                 
                 <div id="page-container">
                     <!-- Beranda Page Content -->
                     <div id="page-beranda" class="page-content">
-                        <section id="hero" class="text-center py-16 md:py-24 anim-fade-in">
+                        <section id="hero" class="text-center py-12 md:py-24 anim-fade-in">
                             <div class="w-20 h-20 mx-auto rounded-2xl text-white flex items-center justify-center text-5xl shadow-md mb-6" style="background-color: #9f1239;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                             </div>
@@ -251,7 +271,7 @@
 
                     <!-- Editor Page Content -->
                     <div id="page-editor" class="page-content hidden">
-                        <div class="text-center mb-8 anim-fade-in">
+                        <div class="text-center py-8 anim-fade-in">
                             <h1 class="text-3xl md:text-4xl font-bold text-theme flex items-center justify-center gap-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                                 Editor Rencana
@@ -265,7 +285,7 @@
                                     <div class="space-y-3">
                                         <input type="text" id="plan-title" placeholder="Nama Aba-aba" class="form-input w-full p-2 border rounded-lg text-sm">
                                         <textarea id="plan-description" placeholder="Deskripsi singkat" class="form-input w-full p-2 border rounded-lg text-sm" rows="2"></textarea>
-                                        <input type="date" id="plan-date" class="form-input w-full p-2 border rounded-lg text-slate-400 text-sm">
+                                        <input type="date" id="plan-date" class="form-input w-full p-2 border rounded-lg text-zinc-400 text-sm">
                                         <input type="text" id="plan-location" placeholder="Lokasi" class="form-input w-full p-2 border rounded-lg text-sm">
                                     </div>
                                 </div>
@@ -308,18 +328,22 @@
                             <p class="mt-4 text-zinc-400 max-w-2xl mx-auto">Pilih dokumen Peraturan Panglima TNI untuk dibaca. Dokumen akan ditampilkan dalam format PDF.</p>
                             <div id="perpang-cards-container" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                                 <!-- Card 1: PERPANG 57 -->
-                                 <div class="glass-card rounded-xl p-6 text-left flex flex-col">
-                                    <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 57 Th 2018</h3>
-                                    <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Penghormatan Militer (PPM) Tentara Nasional Indonesia.</p>
-                                    <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/1sTDe64-dQCAw25INF5kfbMt6GtlMNyrc/view?usp=sharing" data-pdf-title="Perpang TNI No. 57 Th 2018 - PPM">
+                                 <div class="glass-card rounded-xl p-6 text-left flex flex-col overflow-hidden relative theme-riwayat-cta">
+                                    <div class="absolute -top-8 -right-8 w-24 h-24 bg-theme-focus/20 rounded-full z-0"></div>
+                                    <div class="absolute -bottom-12 -left-4 w-24 h-24 bg-theme-focus/10 rounded-full z-0"></div>
+                                    <h3 class="text-lg font-bold text-zinc-100 z-10">Perpang TNI No. 57 Th 2018</h3>
+                                    <p class="text-sm text-zinc-400 mt-2 flex-grow z-10">Tentang Peraturan Penghormatan Militer (PPM) Tentara Nasional Indonesia.</p>
+                                    <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm z-10" data-pdf-url="https://drive.google.com/file/d/1sTDe64-dQCAw25INF5kfbMt6GtlMNyrc/view?usp=sharing" data-pdf-title="Perpang TNI No. 57 Th 2018 - PPM">
                                         Baca Dokumen
                                     </button>
                                 </div>
                                 <!-- Card 2: PERPANG 58 -->
-                                <div class="glass-card rounded-xl p-6 text-left flex flex-col">
-                                    <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 58 Th 2018</h3>
-                                    <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Baris Berbaris (PBB) Tentara Nasional Indonesia.</p>
-                                    <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/13_lH4YlqfXQJobfTm8TBsTSa7Rp5RXYD/view?usp=sharing" data-pdf-title="Perpang TNI No. 58 Th 2018 - PBB">
+                                <div class="glass-card rounded-xl p-6 text-left flex flex-col overflow-hidden relative theme-visualisasi-cta">
+                                    <div class="absolute -top-8 -right-8 w-24 h-24 bg-theme-focus/20 rounded-full z-0"></div>
+                                    <div class="absolute -bottom-12 -left-4 w-24 h-24 bg-theme-focus/10 rounded-full z-0"></div>
+                                    <h3 class="text-lg font-bold text-zinc-100 z-10">Perpang TNI No. 58 Th 2018</h3>
+                                    <p class="text-sm text-zinc-400 mt-2 flex-grow z-10">Tentang Peraturan Baris Berbaris (PBB) Tentara Nasional Indonesia.</p>
+                                    <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm z-10" data-pdf-url="https://drive.google.com/file/d/13_lH4YlqfXQJobfTm8TBsTSa7Rp5RXYD/view?usp=sharing" data-pdf-title="Perpang TNI No. 58 Th 2018 - PBB">
                                         Baca Dokumen
                                     </button>
                                 </div>
@@ -418,15 +442,15 @@
                 { category: 'Perubahan Arah (Di Tempat)', items: [ { id: 'hadap_kanan_gerak', text: 'Hadap Kanan = GERAK!' }, { id: 'hadap_kiri_gerak', text: 'Hadap Kiri = GERAK!' }, { id: 'hadap_serong_kanan_gerak', text: 'Hadap Serong Kanan = GERAK!' }, { id: 'hadap_serong_kiri_gerak', text: 'Hadap Serong Kiri = GERAK!' }, { id: 'balik_kanan_gerak', text: 'Balik Kanan = GERAK!' } ] },
                 { category: 'Bubar', items: [ { id: 'bubar_jalan', text: 'Bubar = JALAN!' } ] },
                 { category: 'Jalan di Tempat', items: [ { id: 'jalan_ditempat_gerak', text: 'Jalan di Tempat = GERAK!' }, { id: 'henti_gerak_ditempat', text: 'Henti = GERAK!' } ] },
-                { category: 'Gerakan Berjalan (Mulai & Berhenti)', items: [ { id: 'maju_jalan', text: 'Maju = JALAN!' }, { id: 'langkah_tegap_maju_jalan', text: 'Langkah Tegap Maju = JALAN!' }, { id: 'langkah_perlahan_maju_jalan', text: 'Langkah Perlahan Maju = JALAN!' }, { id: 'langkah_ke_kanan_jalan', text: 'Langkah ke Kanan = JALAN!', needsInput: true }, { id: 'langkah_ke_kiri_jalan', text: 'Langkah ke Kiri = JALAN!', needsInput: true }, { id: 'langkah_ke_belakang_jalan', text: 'Langkah ke Belakang = JALAN!', needsInput: true }, { id: 'langkah_ke_depan_jalan', text: 'Langkah ke Depan = JALAN!', needsInput: true }, { id: 'henti_gerak_berjalan', text: 'Henti = GERAK!' } ]},
-                { category: 'Gerakan Berlari (Mulai & Berhenti)', items: [ { id: 'lari_maju_jalan', text: 'Lari Maju = JALAN!' }, { id: 'lari_jalan', text: 'Lari = JALAN!' }, { id: 'henti_gerak_berlari', text: 'Henti = GERAK!' } ]},
+                { category: 'Gerakan Berjalan (Berhenti ke Berjalan)', items: [ { id: 'maju_jalan', text: 'Maju = JALAN!' }, { id: 'langkah_tegap_maju_jalan', text: 'Langkah Tegap Maju = JALAN!' }, { id: 'langkah_perlahan_maju_jalan', text: 'Langkah Perlahan Maju = JALAN!' }, { id: 'langkah_ke_kanan_jalan', text: 'Langkah ke Kanan = JALAN!', needsInput: true, max: 4 }, { id: 'langkah_ke_kiri_jalan', text: 'Langkah ke Kiri = JALAN!', needsInput: true, max: 4 }, { id: 'langkah_ke_belakang_jalan', text: 'Langkah ke Belakang = JALAN!', needsInput: true, max: 4 }, { id: 'langkah_ke_depan_jalan', text: 'Langkah ke Depan = JALAN!', needsInput: true, max: 4 }, { id: 'henti_gerak_berjalan', text: 'Henti = GERAK!' } ]},
+                { category: 'Gerakan Berlari (Berhenti ke Berlari & Berjalan ke Berlari)', items: [ { id: 'lari_maju_jalan', text: 'Lari Maju = JALAN!' }, { id: 'lari_jalan', text: 'Lari = JALAN!' }, { id: 'henti_gerak_berlari', text: 'Henti = GERAK!' } ]},
                 { category: 'Gerakan Transisi (Berjalan & Berlari)', items: [ { id: 'langkah_tegap_jalan', text: 'Langkah Tegap = JALAN!' }, { id: 'langkah_biasa_jalan', text: 'Langkah Biasa = JALAN!' }, { id: 'langkah_perlahan_jalan', text: 'Langkah Perlahan = JALAN!' }, { id: 'langkah_merdeka_jalan', text: 'Langkah Merdeka = JALAN!' }, { id: 'ganti_langkah_jalan', text: 'Ganti Langkah = JALAN!' } ]},
                 { category: 'Perubahan Arah (Berjalan)', items: [ { id: 'hadap_kanan_maju_jalan', text: 'Hadap Kanan Maju = JALAN!' }, { id: 'hadap_kiri_maju_jalan', text: 'Hadap Kiri Maju = JALAN!' }, { id: 'hadap_serong_kanan_maju_jalan', text: 'Hadap Serong Kanan Maju = JALAN!' }, { id: 'hadap_serong_kiri_maju_jalan', text: 'Hadap Serong Kiri Maju = JALAN!' }, { id: 'balik_kanan_maju_jalan', text: 'Balik Kanan Maju = JALAN!' }, { id: 'belok_kanan_jalan', text: 'Belok Kanan = JALAN!' }, { id: 'belok_kiri_jalan', text: 'Belok Kiri = JALAN!' }, { id: 'dua_kali_belok_kanan_jalan', text: 'Dua Kali Belok Kanan = JALAN!' }, { id: 'dua_kali_belok_kiri_jalan', text: 'Dua Kali Belok Kiri = JALAN!' }, { id: 'tiap_tiap_banjar_2x_belok_kanan_jalan', text: 'Tiap-tiap Banjar Dua Kali Belok Kanan = JALAN!' }, { id: 'tiap_tiap_banjar_2x_belok_kiri_jalan', text: 'Tiap-tiap Banjar Dua Kali Belok Kiri = JALAN!' } ]},
                 { category: 'Perubahan Arah (Berjalan ke Berhenti)', items: [ { id: 'hadap_kanan_henti_gerak', text: 'Hadap Kanan Henti = GERAK!' }, { id: 'hadap_kiri_henti_gerak', text: 'Hadap Kiri Henti = GERAK!' }, { id: 'hadap_serong_kanan_henti_gerak', text: 'Hadap Serong Kanan Henti = GERAK!' }, { id: 'hadap_serong_kiri_henti_gerak', text: 'Hadap Serong Kiri Henti = GERAK!' }, { id: 'balik_kanan_henti_gerak', text: 'Balik Kanan Henti = GERAK!' } ]},
                 { category: 'Perubahan Arah (Berlari)', items: [ { id: 'hadap_kanan_lari_maju_jalan', text: 'Hadap Kanan Lari Maju = JALAN!' }, { id: 'hadap_kiri_lari_maju_jalan', text: 'Hadap Kiri Lari Maju = JALAN!' }, { id: 'hadap_serong_kanan_lari_maju_jalan', text: 'Hadap Serong Kanan Lari Maju = JALAN!' }, { id: 'hadap_serong_kiri_lari_maju_jalan', text: 'Hadap Serong Kiri Lari Maju = JALAN!' }, { id: 'balik_kanan_lari_maju_jalan', text: 'Balik Kanan Lari Maju = JALAN!' } ]},
                 { category: 'Perubahan Arah (Berlari ke Berhenti)', items: [ { id: 'hadap_kanan_lari_henti_gerak', text: 'Hadap Kanan Henti = GERAK!' }, { id: 'hadap_kiri_lari_henti_gerak', text: 'Hadap Kiri Henti = GERAK!' }, { id: 'hadap_serong_kanan_lari_henti_gerak', text: 'Hadap Serong Kanan Henti = GERAK!' }, { id: 'hadap_serong_kiri_lari_henti_gerak', text: 'Hadap Serong Kiri Henti = GERAK!' }, { id: 'balik_kanan_lari_henti_gerak', text: 'Balik Kanan Henti = GERAK!' } ]},
                 { category: 'Haluan & Melintang', items: [ { id: 'haluan_kanan_jalan', text: 'Haluan Kanan = JALAN!' }, { id: 'haluan_kiri_jalan', text: 'Haluan Kiri = JALAN!' }, { id: 'haluan_kanan_maju_jalan', text: 'Haluan Kanan Maju = JALAN!' }, { id: 'haluan_kiri_maju_jalan', text: 'Haluan Kiri Maju = JALAN!' }, { id: 'melintang_kanan_jalan', text: 'Melintang Kanan = JALAN!' }, { id: 'melintang_kiri_jalan', text: 'Melintang Kiri = JALAN!' }, { id: 'melintang_kanan_maju_jalan', text: 'Melintang Kanan Maju = JALAN!' }, { id: 'melintang_kiri_maju_jalan', text: 'Melintang Kiri Maju = JALAN!' } ]},
-                { category: 'Berhimpun & Berkumpul', items: [ { id: 'berhimpun_mulai', text: 'Berhimpun = MULAI!' }, { id: 'bersaf_kumpul_mulai', text: 'Bersaf Kumpul = MULAI!' }, { id: 'berbanjar_kumpul_mulai', text: 'Berbanjar Kumpul = MULAI!' }, { id: 'selesai_himpun_kumpul', text: 'SELESAI!' } ]}
+                { category: 'Berhimpun & Berkumpul', items: [ { id: 'custom_penjuru', text: '(...) Sebagai Penjuru!', needsInput: true, isCustomText: true }, { id: 'berhimpun_mulai', text: 'Berhimpun = MULAI!' }, { id: 'bersaf_kumpul_mulai', text: 'Bersaf Kumpul = MULAI!' }, { id: 'berbanjar_kumpul_mulai', text: 'Berbanjar Kumpul = MULAI!' }, { id: 'selesai_himpun_kumpul', text: 'SELESAI!' } ]}
             ],
             ALL_COMMANDS_FLAT: null,
             state: {
@@ -444,7 +468,7 @@
                 this.cacheDOMElements();
                 this.loadStateFromLocalStorage();
                 this.bindEventListeners();
-                this.renderApp();
+                this.renderApp(true);
                 this.showWelcomeModal();
             },
             cacheDOMElements() {
@@ -473,6 +497,8 @@
                     duplicatePlanBtn: document.getElementById('duplicate-plan-btn'),
                     deletePlanBtn: document.getElementById('delete-plan-btn'),
                     mobileHeaderTitle: document.getElementById('mobile-header-title'),
+                    headerLogoBgDesktop: document.getElementById('header-logo-bg-desktop'),
+                    headerLogoBgMobile: document.getElementById('header-logo-bg-mobile'),
                 };
             },
             bindEventListeners() {
@@ -491,8 +517,10 @@
                     this.state.riwayat = JSON.parse(savedRiwayat);
                 }
             },
-            renderApp() {
-                window.scrollTo(0, 0);
+            renderApp(isPageChange = false) {
+                if (isPageChange) {
+                    window.scrollTo(0, 0);
+                }
                 this.renderPage();
                 if (this.state.currentPage === 'editor') {
                     this.renderEditorUI();
@@ -512,6 +540,17 @@
                 // Remove previous theme classes
                 appContainer.className = Array.from(appContainer.classList).filter(c => !c.startsWith('theme-')).join(' ');
                 appContainer.classList.add(themeClass);
+
+                // Update header logo color after theme is set
+                setTimeout(() => {
+                    const themeColor = getComputedStyle(this.elements.appContainer).getPropertyValue('--theme-color-hex').trim();
+                    if (this.elements.headerLogoBgDesktop) {
+                        this.elements.headerLogoBgDesktop.style.backgroundColor = themeColor;
+                    }
+                    if (this.elements.headerLogoBgMobile) {
+                        this.elements.headerLogoBgMobile.style.backgroundColor = themeColor;
+                    }
+                }, 0);
             },
             renderPage() {
                 this.updateTheme();
@@ -638,10 +677,22 @@
                     const movementSpans = material.movements.map((mov, movIndex) => {
                         const command = this.ALL_COMMANDS_FLAT.find(i => i.id === mov.id);
                         if (!command) return '';
-                        const chipHTML = command.needsInput 
-                            ? `<input type="number" value="${mov.count || ''}" placeholder="..." data-movement-index="${movIndex}" class="movement-count-input w-10 text-center bg-transparent font-bold text-theme-focus focus:outline-none"> ${command.text}` 
-                            : command.text;
-                        return `<span class="bg-black/20 px-3 py-1 rounded-full shadow-sm flex items-center gap-2 text-sm">${chipHTML}</span>`;
+                        
+                        let chipHTML;
+                        if (command.isCustomText) {
+                             chipHTML = `<input type="text" value="${mov.count || ''}" placeholder="..." data-movement-index="${movIndex}" class="movement-count-input w-20 text-center bg-transparent font-bold text-theme-focus focus:outline-none"> ${command.text.replace('(...)', '')}`;
+                        } else if (command.needsInput) {
+                            chipHTML = `<input type="number" value="${mov.count || ''}" placeholder="..." data-movement-index="${movIndex}" class="movement-count-input w-10 text-center bg-transparent font-bold text-theme-focus focus:outline-none" ${command.max ? `max="${command.max}"` : ''} min="1"> ${command.text}`;
+                        } else {
+                            chipHTML = command.text;
+                        }
+
+                        return `<span class="bg-black/20 px-3 py-1 rounded-full shadow-sm flex items-center gap-2 text-sm relative group/chip">
+                                    ${chipHTML}
+                                    <button class="delete-movement-btn absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center opacity-0 group-hover/chip:opacity-100 transition-opacity" data-movement-index="${movIndex}" aria-label="Hapus Gerakan">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                    </button>
+                                </span>`;
                     }).join('<span class="font-bold text-zinc-500 mx-1">–</span>');
                     
                     let movementContent = movementSpans.length > 0 ? movementSpans : `<button class="add-movement-btn text-theme-focus hover:underline">Tambah gerakan...</button>`;
@@ -721,6 +772,9 @@
                         <main class="p-4 flex-grow overflow-y-auto">${bodyHTML}</main>
                         ${footerHTML ? `<footer class="p-4 bg-black/20 text-right rounded-b-xl flex-shrink-0">${footerHTML}</footer>` : ''}
                     </div>`;
+                
+                modalEl.querySelector('.glass-card').classList.add(`theme-${this.state.currentPage}`);
+
                 this.elements.modalContainer.appendChild(modalEl);
                 return modalEl;
             },
@@ -878,7 +932,14 @@
                 if (materialRow) {
                     const { material } = this.getMaterialById(materialRow.dataset.materialId);
                     if (material && e.target.matches('.movement-count-input')) {
-                        material.movements[parseInt(e.target.dataset.movementIndex, 10)].count = e.target.value;
+                        const input = e.target;
+                        const max = parseInt(input.getAttribute('max'), 10);
+                        let value = input.value;
+                        if (max && parseInt(value, 10) > max) {
+                            value = max;
+                            input.value = value;
+                        }
+                        material.movements[parseInt(input.dataset.movementIndex, 10)].count = value;
                     }
                 }
                 this.updateActionButtonsState();
@@ -889,7 +950,7 @@
                 const openPdfBtn = target.closest('.open-pdf-btn');
                 if (navBtn && navBtn.dataset.page) {
                     this.state.currentPage = navBtn.dataset.page;
-                    this.renderApp();
+                    this.renderApp(true);
                     return;
                 }
                 if (openPdfBtn) {
@@ -927,6 +988,7 @@
                 }
                 if (materialRow) {
                     if (target.closest('.delete-material-btn')) this.handleDeleteMaterial(materialRow.dataset.materialId);
+                    if (target.closest('.delete-movement-btn')) this.handleDeleteMovement(materialRow.dataset.materialId, target.closest('button').dataset.movementIndex);
                     if (target.closest('.move-material-btn')) this.handleMoveMaterial(materialRow.dataset.materialId, target.closest('button').dataset.direction);
                     if (target.closest('.add-movement-btn')) this.openCommandModal('addMovement', materialRow.dataset.materialId);
                     if (target.closest('.settings-btn')) this.openContextMenu(materialRow.dataset.materialId);
@@ -941,7 +1003,7 @@
             handleNewPlan() {
                 this.state.plan = this.getInitialPlan();
                 this.state.activePostId = null;
-                this.renderApp();
+                this.renderApp(true);
                 this.showToast("Lembar kerja baru telah disiapkan.");
             },
             handleAddPost() {
@@ -989,6 +1051,20 @@
                     }, { once: true });
                 }
             },
+            handleDeleteMovement(materialId, movementIndex) {
+                const { material } = this.getMaterialById(materialId);
+                if (material && material.movements[movementIndex]) {
+                    material.movements.splice(movementIndex, 1);
+                    // If no movements are left, remove the whole material row
+                    if (material.movements.length === 0) {
+                        this.handleDeleteMaterial(materialId);
+                    } else {
+                        this.renderWorkspace();
+                        this.updateActionButtonsState();
+                        this.showToast('Gerakan dihapus.');
+                    }
+                }
+            },
             handleMoveMaterial(materialId, direction) {
                 const post = this.getActivePost();
                 if (!post) return;
@@ -1004,24 +1080,73 @@
             handleSelectCommand(commandId) {
                 const command = this.ALL_COMMANDS_FLAT.find(i => i.id === commandId);
                 if (!command) return;
+
                 const newMovement = { id: commandId, ...(command.needsInput && { count: '' }) };
+                let targetMaterial, targetPost;
+
                 if (this.state.modalContext.type === 'newMaterial') {
-                    const post = this.state.plan.posts.find(p => p.id === this.state.modalContext.targetId);
-                    if (post) {
+                    targetPost = this.state.plan.posts.find(p => p.id === this.state.modalContext.targetId);
+                    if (targetPost) {
                         const newMaterial = { id: crypto.randomUUID(), movements: [newMovement], commanderExecutes: false, note: '', isNumbered: true };
-                        post.materials.push(newMaterial);
+                        targetPost.materials.push(newMaterial);
+                        targetMaterial = newMaterial;
                         this.showToast('Materi baru ditambahkan.');
                     }
                 } else if (this.state.modalContext.type === 'addMovement') {
-                    const { material } = this.getMaterialById(this.state.modalContext.targetId);
+                    const { post, material } = this.getMaterialById(this.state.modalContext.targetId);
                     if (material) {
                         material.movements.push(newMovement);
+                        targetMaterial = material;
+                        targetPost = post;
                         this.showToast('Gerakan ditambahkan.');
                     }
                 }
-                this.renderApp();
+
+                // Apply automatic command logic
+                if (targetMaterial && targetPost) {
+                    this.applyCommandLogic(commandId, targetMaterial, targetPost);
+                }
+                
+                this.renderWorkspace();
                 this.closeModal();
                 this.updateActionButtonsState();
+            },
+            applyCommandLogic(commandId, material, post) {
+                const addChainedCommand = (id) => {
+                    const chainedCommand = this.ALL_COMMANDS_FLAT.find(c => c.id === id);
+                    if (chainedCommand) {
+                        material.movements.push({ id: chainedCommand.id });
+                    }
+                };
+                
+                // Logic 1 & 2: Hormat/Lencang -> Tegak (Same Line)
+                if (commandId.startsWith('hormat_') || commandId.startsWith('lencang_') || commandId.startsWith('setengah_lengan_lencang_')) {
+                    addChainedCommand('tegak_gerak');
+                }
+
+                // Logic 3: MULAI! -> SELESAI! (Same Line)
+                const commandMapping = {
+                    'periksa_kerapian_mulai': 'periksa_kerapian_selesai',
+                    'parade_periksa_kerapian_mulai': 'periksa_kerapian_selesai',
+                    'berhimpun_mulai': 'selesai_himpun_kumpul',
+                    'bersaf_kumpul_mulai': 'selesai_himpun_kumpul',
+                    'berbanjar_kumpul_mulai': 'selesai_himpun_kumpul',
+                };
+                if (commandMapping[commandId]) {
+                    addChainedCommand(commandMapping[commandId]);
+                }
+
+                // Logic 4: Untuk Perhatian -> Istirahat (Same Line)
+                if (commandId === 'untuk_perhatian') {
+                    addChainedCommand('istirahat_ditempat_gerak');
+                }
+
+                // Logic 6: Berkumpul -> Penjuru (New Line Before)
+                if (commandId === 'bersaf_kumpul_mulai' || commandId === 'berbanjar_kumpul_mulai') {
+                    const penjuruMaterial = { id: crypto.randomUUID(), movements: [{ id: 'custom_penjuru', count: '' }], commanderExecutes: false, note: '', isNumbered: true };
+                    const currentMaterialIndex = post.materials.findIndex(m => m.id === material.id);
+                    post.materials.splice(currentMaterialIndex, 0, penjuruMaterial);
+                }
             },
             handleSaveSizeModal(modal) {
                 const postId = modal.dataset.postId;
@@ -1029,7 +1154,7 @@
                 if(post) {
                     modal.querySelectorAll('input[name]').forEach(input => { post[input.name] = input.value; });
                     this.showToast("Ukuran pos disimpan.");
-                    this.renderApp();
+                    this.renderWorkspace();
                 }
                 this.closeModal();
             },
@@ -1039,7 +1164,7 @@
                 if (material) {
                     modal.querySelectorAll('input[name]').forEach(input => { material[input.name] = input.type === 'checkbox' ? input.checked : input.value; });
                     this.showToast("Opsi materi disimpan.");
-                    this.renderApp();
+                    this.renderWorkspace();
                 }
                 this.closeModal();
             },
@@ -1067,7 +1192,7 @@
                     this.state.plan = JSON.parse(JSON.stringify(planToLoad));
                     this.state.activePostId = this.state.plan.posts.length > 0 ? this.state.plan.posts[0].id : null;
                     this.state.currentPage = 'editor';
-                    this.renderApp();
+                    this.renderApp(true);
                     this.showToast(`Rencana "${this.state.plan.title}" dimuat.`);
                 }
             },
@@ -1092,7 +1217,7 @@
                 this.saveStateToLocalStorage();
                 this.state.plan = newPlan;
                 this.state.activePostId = this.state.plan.posts.length > 0 ? this.state.plan.posts[0].id : null;
-                this.renderApp();
+                this.renderApp(true);
                 this.showToast(`Rencana diduplikasi dan dimuat sebagai "${newPlan.title}".`);
             },
             handleDeletePlan() {
@@ -1158,6 +1283,9 @@
                         const line = material.movements.map(mov => {
                             const command = this.ALL_COMMANDS_FLAT.find(i => i.id === mov.id);
                             if (!command) return null;
+                            if(command.isCustomText) {
+                                return command.text.replace('(...)', `(${mov.count || '...'})`);
+                            }
                             return command.needsInput && mov.count ? `${mov.count} ${command.text}` : command.text;
                         }).filter(Boolean).join(' – ');
                         let finalLine = line;
