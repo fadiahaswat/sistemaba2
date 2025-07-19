@@ -25,31 +25,31 @@
             --text-secondary: #a1a1aa; /* zinc-400 */
             
             /* Default Theme (Maroon) */
-            --theme-color-hex: #9f1239; /* rose-800 */
+            --theme-color-hex: #9f1239; /* New Maroon - rose-800 */
             --theme-color-focus: #e11d48; /* rose-600 */
             --theme-color-aurora: rgba(159, 18, 57, 0.2);
         }
         
         /* Theme definitions */
-        .theme-beranda {
+        .theme-beranda, .theme-beranda-cta {
             --theme-color-hex: #9f1239;
             --theme-color-focus: #e11d48;
             --theme-color-aurora: rgba(159, 18, 57, 0.2);
         }
-        .theme-editor {
+        .theme-editor, .theme-editor-cta {
             --theme-color-hex: #f97316; /* orange-500 */
             --theme-color-focus: #fb923c; /* orange-400 */
             --theme-color-aurora: rgba(249, 115, 22, 0.15);
         }
-        .theme-riwayat {
-            --theme-color-hex: #059669; /* emerald-600 */
-            --theme-color-focus: #10b981; /* emerald-500 */
-            --theme-color-aurora: rgba(5, 150, 105, 0.15);
-        }
-        .theme-visualisasi {
+        .theme-riwayat, .theme-riwayat-cta {
             --theme-color-hex: #1d4ed8; /* blue-700 */
             --theme-color-focus: #3b82f6; /* blue-500 */
             --theme-color-aurora: rgba(29, 78, 216, 0.15);
+        }
+        .theme-visualisasi, .theme-visualisasi-cta {
+            --theme-color-hex: #059669; /* emerald-600 */
+            --theme-color-focus: #10b981; /* emerald-500 */
+            --theme-color-aurora: rgba(5, 150, 105, 0.15);
         }
 
         html { scroll-behavior: smooth; }
@@ -107,9 +107,9 @@
             backdrop-filter: blur(8px);
         }
 
-        .anim-fade-in { animation: fadeIn 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards; }
+        .anim-fade-in { animation: fadeIn 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards; }
         .anim-fade-out { animation: fadeOut 0.3s cubic-bezier(0.550, 0.055, 0.675, 0.190) forwards; }
-        .anim-pop-in { animation: popIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .anim-pop-in { animation: popIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
@@ -159,6 +159,10 @@
         .text-theme-focus { color: var(--theme-color-focus); }
         .border-theme-focus { border-color: var(--theme-color-focus); }
         .gradient-theme { background-image: linear-gradient(to right, var(--theme-color-focus), var(--theme-color-hex)); }
+
+        .page-content {
+            transition: opacity 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -168,16 +172,18 @@
         <div id="aurora-container" class="aurora-background"></div>
 
         <div class="min-h-screen flex flex-col relative z-10 pb-20 md:pb-0">
-            <!-- Header for Desktop -->
-            <header class="bg-zinc-900/70 backdrop-blur-lg border-b border-zinc-800/50 sticky top-0 z-30 hidden md:block">
+            <!-- Header for All Screens -->
+            <header class="bg-zinc-900/70 backdrop-blur-lg border-b border-zinc-800/50 sticky top-0 z-30">
                 <div class="container mx-auto px-4 md:px-8 flex items-center justify-between h-16">
+                    <!-- Logo and Title -->
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-lg text-white flex items-center justify-center text-2xl shadow-md" style="background-color: #9f1239;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                         </div>
-                        <h1 class="text-xl font-bold text-gray-200 hidden sm:block">SIAP!</h1>
+                        <h1 class="text-xl font-bold text-gray-200 sm:block">SIAP!</h1>
                     </div>
                     
+                    <!-- Desktop Navigation -->
                     <nav class="hidden md:flex items-center gap-2 sm:gap-4 text-sm font-semibold">
                         <button data-page="beranda" class="nav-btn px-3 py-2 rounded-lg transition-colors">Beranda</button>
                         <button data-page="editor" class="nav-btn px-3 py-2 rounded-lg transition-colors">Editor</button>
@@ -185,14 +191,8 @@
                         <button data-page="visualisasi" class="nav-btn px-3 py-2 rounded-lg transition-colors">Baca Perpang</button>
                     </nav>
 
-                    <div class="flex items-center gap-3">
-                        <a href="https://wa.me/6285339213109" target="_blank" class="btn bg-green-600/80 hover:bg-green-500 text-white p-2.5 rounded-lg flex items-center justify-center" title="Hubungi via WhatsApp" aria-label="Hubungi via WhatsApp">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943c-.049-.084-.182-.133-.38-.232z"/></svg>
-                        </a>
-                        <a href="https://www.instagram.com/tontimuallimin/" target="_blank" class="btn bg-rose-600/80 hover:bg-rose-500 text-white p-2.5 rounded-lg flex items-center justify-center" title="Kunjungi Instagram" aria-label="Kunjungi Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.556 0 5.829 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.556 15.99 5.829 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372.526-.205.972-.478 1.417-.923.445-.444.718-.891.923-1.417.198-.509.333-1.09.372-1.942C15.99 10.444 16 10.173 16 8s-.01-2.444-.048-3.297c-.04-.852-.174-1.433-.372-1.942a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.09-.333-1.942-.372C10.444.01 10.173 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.233s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.92 2.5 2.5 0 0 1-.92.598c-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.598-.92c-.11-.282-.24-.705-.276-1.486-.038-.843-.046-1.096-.046-3.232s.008-2.389.046-3.233c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.843-.038 1.096-.047 3.232-.047zM8 3.882a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 6.774a2.667 2.667 0 1 1 0-5.334 2.667 2.667 0 0 1 0 5.334zM12.974 3.882a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z"/></svg>
-                        </a>
-                    </div>
+                    <!-- Placeholder for alignment -->
+                     <div class="hidden md:flex items-center gap-3" style="width: 88px;"></div>
                 </div>
             </header>
 
@@ -202,7 +202,7 @@
                     <!-- Beranda Page Content -->
                     <div id="page-beranda" class="page-content">
                         <section id="hero" class="text-center py-16 md:py-24 anim-fade-in">
-                            <div class="w-20 h-20 mx-auto bg-zinc-800 rounded-2xl text-white flex items-center justify-center text-5xl shadow-md mb-6" style="color: #9f1239;">
+                            <div class="w-20 h-20 mx-auto rounded-2xl text-white flex items-center justify-center text-5xl shadow-md mb-6" style="background-color: #9f1239;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                             </div>
                             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text gradient-theme">
@@ -212,10 +212,10 @@
                                 Alat bantu modern untuk merancang, menyimpan, dan membagikan skenario aba-aba baris-berbaris dengan detail dan akurasi tinggi.
                             </p>
                             <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                                <button data-page="editor" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2">
+                                <button data-page="editor" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2 theme-editor-cta">
                                     <div class="flex items-center gap-4">
                                         <div class="w-12 h-12 bg-theme-20 text-theme-focus rounded-lg flex items-center justify-center">
-                                            <span>📝</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                                         </div>
                                         <div>
                                             <h3 class="text-lg font-bold text-zinc-100">Buka Editor</h3>
@@ -223,10 +223,10 @@
                                         </div>
                                     </div>
                                 </button>
-                                <button data-page="riwayat" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2">
+                                <button data-page="riwayat" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2 theme-riwayat-cta">
                                     <div class="flex items-center gap-4">
                                         <div class="w-12 h-12 bg-theme-20 text-theme-focus rounded-lg flex items-center justify-center">
-                                           <span>📂</span>
+                                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                         </div>
                                         <div>
                                             <h3 class="text-lg font-bold text-zinc-100">Riwayat Aba-aba</h3>
@@ -234,10 +234,10 @@
                                         </div>
                                     </div>
                                 </button>
-                                <button data-page="visualisasi" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2">
+                                <button data-page="visualisasi" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2 theme-visualisasi-cta">
                                     <div class="flex items-center gap-4">
                                         <div class="w-12 h-12 bg-theme-20 text-theme-focus rounded-lg flex items-center justify-center">
-                                            <span>📖</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                                         </div>
                                         <div>
                                             <h3 class="text-lg font-bold text-zinc-100">Baca Perpang</h3>
@@ -251,13 +251,16 @@
 
                     <!-- Editor Page Content -->
                     <div id="page-editor" class="page-content hidden">
-                        <div id="manual-copy-area" class="hidden mb-6">
-                            <textarea id="manual-copy-textarea" readonly class="w-full h-32 p-3 border-2 border-dashed border-zinc-600 rounded-lg bg-zinc-800 text-zinc-300 focus:outline-none focus:ring-2 focus:ring-rose-500"></textarea>
+                        <div class="text-center mb-8 anim-fade-in">
+                            <h1 class="text-3xl md:text-4xl font-bold text-theme flex items-center justify-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                                Editor Rencana
+                            </h1>
                         </div>
                         <div id="app-editor" class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             <aside class="lg:col-span-1 xl:col-span-1 space-y-6">
                                 <div class="glass-card p-5 rounded-xl">
-                                    <h2 class="text-lg font-bold mb-4 text-theme">🎨 Detail Informasi Aba-aba</h2>
+                                    <h2 class="text-lg font-bold mb-4 text-theme">Detail Informasi</h2>
                                     <div class="space-y-3">
                                         <input type="text" id="plan-title" placeholder="Nama Aba-aba" class="form-input w-full p-2 border rounded-lg text-sm">
                                         <textarea id="plan-description" placeholder="Deskripsi singkat" class="form-input w-full p-2 border rounded-lg text-sm" rows="2"></textarea>
@@ -267,7 +270,7 @@
                                 </div>
                                 <div class="glass-card p-5 rounded-xl">
                                     <div class="flex justify-between items-center mb-4">
-                                        <h2 class="text-lg font-bold text-theme">📍 Daftar Pos</h2>
+                                        <h2 class="text-lg font-bold text-theme">Daftar Pos</h2>
                                         <button id="add-post-btn" class="btn btn-primary text-sm font-semibold py-1 px-3 flex items-center gap-1 rounded-lg">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
                                             Pos
@@ -282,8 +285,11 @@
 
                     <!-- Riwayat Page Content -->
                     <div id="page-riwayat" class="page-content hidden">
-                        <div class="text-center py-16 anim-fade-in">
-                            <h1 class="text-3xl md:text-4xl font-bold text-theme">📜 Riwayat Aba-aba</h1>
+                        <div class="text-center py-8 anim-fade-in">
+                            <h1 class="text-3xl md:text-4xl font-bold text-theme flex items-center justify-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                Riwayat Aba-aba
+                            </h1>
                             <p class="mt-4 text-zinc-400">Daftar rencana yang telah Anda simpan akan muncul di sini.</p>
                             <div id="riwayat-list" class="mt-8 max-w-3xl mx-auto space-y-4">
                                <!-- Riwayat items will be rendered here by JS -->
@@ -293,8 +299,11 @@
 
                     <!-- Visualisasi Page Content -->
                     <div id="page-visualisasi" class="page-content hidden">
-                         <div class="text-center py-16 anim-fade-in">
-                            <h1 class="text-3xl md:text-4xl font-bold text-theme">📚 Baca Dokumen Perpang</h1>
+                         <div class="text-center py-8 anim-fade-in">
+                            <h1 class="text-3xl md:text-4xl font-bold text-theme flex items-center justify-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                                Baca Dokumen Perpang
+                            </h1>
                             <p class="mt-4 text-zinc-400 max-w-2xl mx-auto">Pilih dokumen Peraturan Panglima TNI untuk dibaca. Dokumen akan ditampilkan dalam format PDF.</p>
                             <div id="perpang-cards-container" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                                 <!-- Card 1: PERPANG 58 -->
@@ -323,21 +332,27 @@
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                         <div class="lg:col-span-5 flex items-center gap-4">
                             <div class="flex-shrink-0 w-16 h-16 bg-theme-20 text-theme-focus rounded-full flex items-center justify-center icon-pulse">
-                               <span class="text-4xl">💡</span>
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                             </div>
                             <div class="flex-grow">
                                  <p class="font-bold text-lg text-zinc-100">Asisten SIAP!</p>
                                  <p id="helper-text" class="text-sm text-zinc-400 transition-all duration-300">Selamat datang!</p>
                             </div>
                         </div>
-                        <div class="lg:col-span-7 grid grid-cols-4 gap-2">
-                            <button id="new-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Rencana Baru">🆕<span>Baru</span></button>
-                            <button id="save-plan-btn" class="btn bg-rose-600/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Simpan">💾<span>Simpan</span></button>
-                            <button id="copy-text-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Salin Teks">📋<span>Salin</span></button>
-                            <button id="export-pdf-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Ekspor PDF">📄<span>PDF</span></button>
-                            <button id="duplicate-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Duplikat">✨<span>Duplikat</span></button>
-                            <button id="share-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Bagikan">📤<span>Bagikan</span></button>
-                            <button id="delete-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Hapus">🗑️<span>Hapus</span></button>
+                        <div class="lg:col-span-7">
+                            <div class="grid grid-cols-4 gap-2">
+                                <button id="new-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Rencana Baru"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg><span>Baru</span></button>
+                                <button id="save-plan-btn" class="btn bg-rose-600/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Simpan"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg><span>Simpan</span></button>
+                                <button id="copy-text-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Salin Teks"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg><span>Salin</span></button>
+                                <button id="export-pdf-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Ekspor PDF"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg><span>PDF</span></button>
+                                <button id="duplicate-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Duplikat"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16a2 2 0 002 2h8a2 2 0 002-2V8a2 2 0 00-2-2h-3l-4-4-4 4H8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg><span>Duplikat</span></button>
+                                <button id="share-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Bagikan"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg><span>Bagikan</span></button>
+                                <button id="delete-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg><span>Hapus</span></button>
+                            </div>
+                             <!-- Manual Copy Area (was missing) -->
+                            <div id="manual-copy-area" class="mt-4 hidden">
+                                <textarea id="manual-copy-textarea" class="form-input w-full p-2 border rounded-lg text-sm bg-zinc-800 text-zinc-200" rows="4"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -345,41 +360,16 @@
             </main>
             
             <!-- Footer -->
-            <footer class="bg-zinc-900/50 border-t border-zinc-800/50 mt-auto">
-                <div class="container mx-auto px-8 py-8">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-                        <div class="flex flex-col items-center md:items-start">
-                            <div class="flex items-center gap-3 justify-center md:justify-start">
-                                 <div class="w-10 h-10 rounded-lg text-white flex items-center justify-center text-2xl shadow-md" style="background-color: #9f1239;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                                </div>
-                                <h1 class="text-xl font-bold text-gray-200">SIAP!</h1>
-                            </div>
-                            <p class="text-zinc-400 text-sm mt-4">Dikembangkan oleh 1nspektur - Tonti Mu'allimin.</p>
-                        </div>
-                        <div class="flex flex-col items-center md:items-start">
-                            <h4 class="font-semibold text-zinc-200 mb-4">Tautan Cepat</h4>
-                            <nav class="flex flex-col gap-2 text-sm">
-                                <button data-page="beranda" class="nav-btn text-zinc-400 hover:text-rose-400 transition-colors">🏠 Beranda</button>
-                                <button data-page="editor" class="nav-btn text-zinc-400 hover:text-rose-400 transition-colors">🎨 Editor</button>
-                                <button data-page="riwayat" class="nav-btn text-zinc-400 hover:text-rose-400 transition-colors">📜 Riwayat</button>
-                                <button data-page="visualisasi" class="nav-btn text-zinc-400 hover:text-rose-400 transition-colors">📚 Baca Perpang</button>
-                            </nav>
-                        </div>
-                        <div class="flex flex-col items-center md:items-start">
-                            <h4 class="font-semibold text-zinc-200 mb-4">Hubungi Kami</h4>
-                            <div class="flex items-center justify-center md:justify-start gap-4">
-                                 <a href="https://wa.me/6285339213109" target="_blank" class="text-zinc-400 hover:text-green-500 transition-colors" title="Hubungi via WhatsApp" aria-label="Hubungi via WhatsApp">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943c-.049-.084-.182-.133-.38-.232z"/></svg>
-                                </a>
-                                <a href="https://www.instagram.com/tontimuallimin/" target="_blank" class="text-zinc-400 hover:text-rose-500 transition-colors" title="Kunjungi Instagram" aria-label="Kunjungi Instagram">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.556 0 5.829 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.556 15.99 5.829 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372.526-.205.972-.478 1.417-.923.445-.444.718-.891.923-1.417.198-.509.333-1.09.372-1.942C15.99 10.444 16 10.173 16 8s-.01-2.444-.048-3.297c-.04-.852-.174-1.433-.372-1.942a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.09-.333-1.942-.372C10.444.01 10.173 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.233s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.92 2.5 2.5 0 0 1-.92.598c-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.598-.92c-.11-.282-.24-.705-.276-1.486-.038-.843-.046-1.096-.046-3.232s.008-2.389.046-3.233c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.843-.038 1.096-.047 3.232-.047zM8 3.882a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 6.774a2.667 2.667 0 1 1 0-5.334 2.667 2.667 0 0 1 0 5.334zM12.974 3.882a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z"/></svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center text-xs text-zinc-600 mt-8 pt-4 border-t border-zinc-800/50">
-                        &copy; 2024 SIAP! - Tonti Mu'allimin. All rights reserved.
+            <footer class="bg-zinc-900/80 border-t border-zinc-800/50 mt-auto p-4 text-sm text-zinc-500">
+                <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <p>&copy; 2025 SIAP! - Dikembangkan oleh 1nspektur Tonti Mu'allimin.</p>
+                     <div class="flex items-center gap-3">
+                        <a href="https://wa.me/6285339213109" target="_blank" class="btn bg-green-600/80 hover:bg-green-500 text-white p-2.5 rounded-lg flex items-center justify-center" title="Hubungi via WhatsApp" aria-label="Hubungi via WhatsApp">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943c-.049-.084-.182-.133-.38-.232z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/tontimuallimin/" target="_blank" class="btn bg-rose-600/80 hover:bg-rose-500 text-white p-2.5 rounded-lg flex items-center justify-center" title="Kunjungi Instagram" aria-label="Kunjungi Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.556 0 5.829 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.556 15.99 5.829 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372.526-.205.972-.478 1.417-.923.445-.444.718-.891.923-1.417.198-.509.333-1.09.372-1.942C15.99 10.444 16 10.173 16 8s-.01-2.444-.048-3.297c-.04-.852-.174-1.433-.372-1.942a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.09-.333-1.942-.372C10.444.01 10.173 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.233s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.92 2.5 2.5 0 0 1-.92.598c-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.598-.92c-.11-.282-.24-.705-.276-1.486-.038-.843-.046-1.096-.046-3.232s.008-2.389.046-3.233c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.843-.038 1.096-.047 3.232-.047zM8 3.882a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 6.774a2.667 2.667 0 1 1 0-5.334 2.667 2.667 0 0 1 0 5.334zM12.974 3.882a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z"/></svg>
+                        </a>
                     </div>
                 </div>
             </footer>
@@ -410,7 +400,7 @@
 
     <!-- Modal & Print Area -->
     <div id="modal-container"></div>
-    <div id="print-area" class="hidden"></div>
+    <div id="print-area" class="hidden" style="font-family: 'Inter', sans-serif; color: black; background: white; padding: 20px;"></div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -499,6 +489,7 @@
                 }
             },
             renderApp() {
+                window.scrollTo(0, 0);
                 this.renderPage();
                 if (this.state.currentPage === 'editor') {
                     this.renderEditorUI();
@@ -515,7 +506,8 @@
             updateTheme() {
                 const themeClass = `theme-${this.state.currentPage}`;
                 const appContainer = this.elements.appContainer;
-                appContainer.className = ''; // Clear previous themes
+                // Remove previous theme classes
+                appContainer.className = Array.from(appContainer.classList).filter(c => !c.startsWith('theme-')).join(' ');
                 appContainer.classList.add(themeClass);
             },
             renderPage() {
@@ -529,14 +521,17 @@
                     const page = btn.dataset.page;
                     if (page) {
                         const icon = btn.querySelector('svg');
+                        const text = btn.querySelector('span');
                         if (page === this.state.currentPage) {
-                            btn.classList.remove('text-zinc-400');
                             btn.classList.add('text-theme-focus');
                             if(icon) icon.classList.add('text-theme-focus');
+                            if(text) text.classList.add('text-theme-focus');
+                            btn.classList.remove('text-zinc-400');
                         } else {
-                            btn.classList.add('text-zinc-400');
                             btn.classList.remove('text-theme-focus');
-                             if(icon) icon.classList.remove('text-theme-focus');
+                            if(icon) icon.classList.remove('text-theme-focus');
+                            if(text) text.classList.remove('text-theme-focus');
+                            btn.classList.add('text-zinc-400');
                         }
                     }
                 });
@@ -563,10 +558,10 @@
                     navItem.dataset.postId = post.id;
                     navItem.className = `w-full text-left p-3 rounded-lg transition-all duration-200 flex justify-between items-center relative ${isActive ? 'bg-zinc-700' : 'hover:bg-zinc-700/50'}`;
                     navItem.innerHTML = `
-                        <span class="flex items-center gap-2 ${isActive ? 'font-semibold text-theme' : ''}">
+                        <span class="flex items-center gap-2 ${isActive ? 'font-semibold text-theme-focus' : 'text-zinc-200'}">
                             ${post.name || `POS ${index + 1}`}
                         </span>
-                        ${isActive ? '<div class="absolute left-0 top-0 h-full w-1 bg-theme rounded-r-full" style="background-color: var(--theme-color-hex)"></div>' : ''}
+                        ${isActive ? '<div class="absolute left-0 top-0 h-full w-1 bg-theme rounded-r-full" style="background-color: var(--theme-color-focus)"></div>' : ''}
                     `;
                     postsNavList.appendChild(navItem);
                 });
@@ -610,7 +605,7 @@
                         <hr class="my-4 border-zinc-700/50">
                         <div class="materials-container space-y-2"></div>
                         <div class="mt-4">
-                            <button class="add-material-btn w-full bg-theme-20 text-theme-focus font-semibold py-2 px-4 rounded-lg hover:bg-opacity-40 transition">+ Tambah Baris Materi</button>
+                            <button class="add-material-btn btn btn-primary w-full font-semibold py-2 px-4 rounded-lg">+ Tambah Baris Materi</button>
                         </div>
                     </div>
                 `;
@@ -657,7 +652,7 @@
                         <span class="font-bold text-slate-200 w-6 text-right">${numberPrefix}</span>
                         <div class="movements-display flex-grow flex flex-wrap items-center gap-2">${movementContent}</div>
                         <div class="flex items-center gap-2 sm:gap-3 ml-auto">
-                            ${material.note ? `<span class="text-yellow-500 cursor-help" title="Catatan: ${material.note}">★</span>` : ''}
+                            ${material.note ? `<span class="text-yellow-500 cursor-help" title="Catatan: ${material.note}"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 112 0v4a1 1 0 11-2 0V9zm1-4a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" /></svg></span>` : ''}
                             <button class="settings-btn text-zinc-400 hover:text-theme-focus rounded-full p-1" aria-label="Opsi Materi"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" /></svg></button>
                             <button class="delete-material-btn text-zinc-500 hover:text-red-500 rounded-full p-1" aria-label="Hapus Baris">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -694,12 +689,14 @@
                 const modalEl = document.createElement('div');
                 modalEl.id = id;
                 modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop anim-fade-in';
-                const modalSize = isPdf ? 'max-w-4xl w-full h-full max-h-[90vh]' : 'max-w-3xl';
+                const modalSize = isPdf ? 'max-w-4xl w-full h-full max-h-[90vh]' : 'max-w-3xl w-full';
                 modalEl.innerHTML = `
                     <div class="glass-card ${modalSize} flex flex-col anim-pop-in rounded-xl" role="dialog" aria-modal="true" aria-labelledby="modal-title-${id}">
                         <header class="p-4 border-b border-zinc-700/50 flex justify-between items-center flex-shrink-0">
                             <h3 id="modal-title-${id}" class="text-xl font-bold text-theme">${title}</h3>
-                            <button class="modal-close-btn text-slate-400 hover:text-slate-100 text-2xl" aria-label="Tutup Modal">&times;</button>
+                            <button class="modal-close-btn text-slate-400 hover:text-slate-100" aria-label="Tutup Modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
                         </header>
                         <main class="p-4 flex-grow overflow-y-auto">${bodyHTML}</main>
                         ${footerHTML ? `<footer class="p-4 bg-black/20 text-right rounded-b-xl flex-shrink-0">${footerHTML}</footer>` : ''}
@@ -719,7 +716,7 @@
             openCommandModal(contextType, targetId) {
                 this.state.modalContext = { type: contextType, targetId };
                 const body = `<input type="text" id="modal-search" placeholder="Cari gerakan..." class="form-input w-full p-2 border rounded-lg mb-4">
-                              <div id="modal-command-list"></div>`;
+                                <div id="modal-command-list" class="max-h-[50vh] overflow-y-auto pr-2"></div>`;
                 const modal = this.createModal('command-modal', 'Pilih Gerakan', body);
                 this.renderCommandModal();
                 modal.querySelector('#modal-search').addEventListener('input', (e) => this.renderCommandModal(e.target.value));
@@ -734,7 +731,7 @@
                     const filteredItems = category.items.filter(item => item.text.toLowerCase().includes(lowerFilter));
                     if (filteredItems.length > 0) {
                         html += `<h4 class="text-md font-semibold text-theme mb-2 border-b border-zinc-700/50 pb-1">${category.category}</h4>
-                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">`;
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">`;
                         filteredItems.forEach(item => {
                             html += `<button class="select-command-btn w-full text-left p-3 bg-zinc-700/50 rounded-lg border border-transparent hover:border-theme-focus hover:bg-theme-20 transition" data-command-id="${item.id}">${item.text}</button>`;
                         });
@@ -789,10 +786,13 @@
             openPdfModal(url, title) {
                 let embedUrl = url;
                 if (url.includes('drive.google.com')) {
-                    const fileId = url.split('/d/')[1].split('/')[0];
-                    embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                    const fileIdMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                    if (fileIdMatch && fileIdMatch[1]) {
+                        const fileId = fileIdMatch[1];
+                        embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                    }
                 } else {
-                    embedUrl = `https://docs.google.com/gview?url=${url}&embedded=true`;
+                    embedUrl = `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
                 }
                 const body = `<iframe src="${embedUrl}" class="w-full h-full border-0 rounded-lg" frameborder="0"></iframe>`;
                 this.createModal('pdf-viewer-modal', title, body, '', true);
@@ -800,12 +800,17 @@
             showWelcomeModal() {
                 if (sessionStorage.getItem('welcomeShown')) return;
                 const body = `<div class="text-center">
-                    <span class="text-4xl">👋</span>
+                    <span class="text-4xl inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 001.414 1.414L10 9.414l.293.293a1 1 0 001.414-1.414l-1-1z" clip-rule="evenodd" />
+                            <path d="M10 2a.75.75 0 01.75.75v.01a.75.75 0 01-1.5 0V2.75A.75.75 0 0110 2zM5.22 5.22a.75.75 0 011.06 0l.01.01a.75.75 0 01-1.06 1.06l-.01-.01a.75.75 0 010-1.06zM2 10a.75.75 0 01.75-.75h.01a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm3.22 4.78a.75.75 0 010 1.06l-.01.01a.75.75 0 01-1.06-1.06l.01-.01a.75.75 0 011.06 0zm9.56-9.56a.75.75 0 010 1.06l-.01.01a.75.75 0 01-1.06-1.06l.01-.01a.75.75 0 011.06 0zM18 10a.75.75 0 01-.75.75h-.01a.75.75 0 010-1.5h.01A.75.75 0 0118 10zm-4.78 4.78a.75.75 0 01-1.06 0l-.01-.01a.75.75 0 011.06-1.06l.01.01a.75.75 0 010 1.06z" />
+                        </svg>
+                    </span>
                     <h3 class="text-xl font-bold mt-4">Selamat Datang di SIAP!</h3>
                     <h4 class="text-lg font-semibold text-theme">Sistem Informasi Aba-aba Peleton</h4>
                     <p class="text-sm text-slate-400 mt-2">
                         Aplikasi ini masih dan akan terus dalam masa pengembangan. 
-                        Jika menemukan kekeliruan, error, atau memiliki saran, jangan ragu untuk menghubungi kami melalui tombol di pojok kanan atas.
+                        Jika menemukan kekeliruan, error, atau memiliki saran, jangan ragu untuk menghubungi kami melalui tombol di footer.
                     </p>
                 </div>`;
                 const footer = `<button class="modal-close-btn btn btn-primary py-2 px-6 rounded-lg">Mengerti</button>`;
@@ -1085,12 +1090,17 @@
                 return null;
             },
             updateActionButtonsState() {
+                if (this.state.currentPage !== 'editor' || !this.elements.savePlanBtn) return;
                 const error = this.getPlanValidationErrors();
                 const isValid = error === null;
                 const activePost = this.getActivePost();
                 const buttonsToToggle = [ this.elements.savePlanBtn, this.elements.copyTextBtn, this.elements.exportPdfBtn, this.elements.shareBtn, this.elements.duplicatePlanBtn ];
                 buttonsToToggle.forEach(btn => { if (btn) { btn.disabled = !isValid; } });
-                this.elements.manualCopyArea.classList.add('hidden');
+                
+                if (this.elements.manualCopyArea) {
+                    this.elements.manualCopyArea.classList.add('hidden');
+                }
+
                 let message = "Selamat datang! Siap untuk merancang?";
                 if (error) { message = error; } 
                 else { message = "Rencana sudah lengkap! Anda dapat menyimpan atau mengekspor sekarang."; }
@@ -1103,9 +1113,9 @@
                 let output = '';
                 const { title, description, date, location, posts } = this.state.plan;
                 if (format === 'html') {
-                    output += `<h1>${title || 'Rencana Latihan'}</h1>`;
-                    if (description) output += `<p><i>${description}</i></p>`;
-                    if (date || location) output += `<p><b>Tanggal:</b> ${date || '-'} | <b>Lokasi:</b> ${location || '-'}</p>`;
+                    output += `<h1 style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">${title || 'Rencana Latihan'}</h1>`;
+                    if (description) output += `<p style="font-style: italic; margin-bottom: 10px;">${description}</p>`;
+                    if (date || location) output += `<p style="font-size: 14px; margin-bottom: 15px;"><b>Tanggal:</b> ${date || '-'} | <b>Lokasi:</b> ${location || '-'}</p>`;
                 } else {
                     const details = [title ? title.toUpperCase() : '', description, date ? `Tanggal: ${date}` : '', location ? `Lokasi: ${location}` : ''].filter(Boolean);
                     if (details.length > 0) output += details.join('\n') + '\n\n';
@@ -1116,7 +1126,7 @@
                     const sizeString = sizeParts.length > 0 ? `${sizeParts.join(' x ')} Meter` : '-';
                     let sizeDetails = `Ukuran: ${sizeString} | Waktu: ${post.time || '-'} Menit`;
                     if (format === 'html') {
-                        output += `<hr style="margin: 10px 0;"><h2>${postTitle}</h2><p>${sizeDetails}</p><div style="margin-left: 5mm;">`;
+                        output += `<hr style="margin: 15px 0;"><h2 style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">${postTitle}</h2><p style="font-size: 14px; margin-bottom: 10px;">${sizeDetails}</p><div style="margin-left: 5mm;">`;
                     } else {
                         output += `--- ${postTitle} ---\n${sizeDetails}\n\n`;
                     }
@@ -1133,7 +1143,7 @@
                         if (material.commanderExecutes) finalLine = format === 'html' ? `<b>${finalLine}</b>` : `*${finalLine}*`;
                         if (finalLine) {
                             const prefix = material.isNumbered ? `${numberedCounter}.` : '•';
-                            output += format === 'html' ? `<p>${prefix} ${finalLine}</p>` : `${prefix}\t${finalLine}\n`;
+                            output += format === 'html' ? `<p style="font-size: 16px; margin-bottom: 5px;">${prefix} ${finalLine}</p>` : `${prefix}\t${finalLine}\n`;
                         }
                     });
                     output += format === 'html' ? '</div>' : '\n';
@@ -1159,8 +1169,11 @@
                 if (error) { this.showToast(`Gagal: ${error}`); return; }
                 this.showToast('Membuat PDF...');
                 const { jsPDF } = window.jspdf;
-                document.getElementById('print-area').innerHTML = this.generatePlanContent('html');
-                html2canvas(document.getElementById('print-area'), { scale: 2, useCORS: true }).then(canvas => {
+                const printArea = document.getElementById('print-area');
+                printArea.innerHTML = this.generatePlanContent('html');
+                printArea.classList.remove('hidden');
+
+                html2canvas(printArea, { scale: 2, useCORS: true }).then(canvas => {
                     const pdf = new jsPDF('p', 'mm', 'a4');
                     const imgData = canvas.toDataURL('image/png');
                     const pageHeight = pdf.internal.pageSize.getHeight() - 20;
@@ -1177,9 +1190,11 @@
                         heightLeft -= pageHeight;
                     }
                     pdf.save(`${this.state.plan.title || 'rencana-latihan'}.pdf`);
+                    printArea.classList.add('hidden');
                 }).catch(err => {
                     this.showToast('Gagal membuat PDF.');
                     console.error("PDF Export error:", err);
+                    printArea.classList.add('hidden');
                 });
             },
             async handleShare() {
