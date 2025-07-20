@@ -5,32 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIAP! - Sistem Informasi Aba-aba Peleton</title>
     
-    <!-- External Libraries -->
+    <!-- Pustaka Eksternal -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" xintegrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVBL5gI9kLmbG0C+wFjr8bCqwA2ag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
-    <!-- Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Custom Styles -->
+    <!-- Gaya Kustom -->
     <style>
+        /* Variabel Warna Global & Tema Default (Maroon) */
         :root {
             --bg-primary: #0a0a0a;
-            --bg-glass: rgba(23, 23, 23, 0.6); /* zinc-900 with opacity */
-            --border-glass: rgba(63, 63, 70, 0.3); /* zinc-700 with opacity */
+            --bg-glass: rgba(23, 23, 23, 0.6); /* zinc-900 dengan opasitas */
+            --border-glass: rgba(63, 63, 70, 0.3); /* zinc-700 dengan opasitas */
             --text-primary: #f4f4f5; /* zinc-100 */
             --text-secondary: #a1a1aa; /* zinc-400 */
             
-            /* Default Theme (Maroon) */
-            --theme-color-hex: #9f1239; /* New Maroon - rose-800 */
+            /* Tema Default (Beranda - Maroon) */
+            --theme-color-hex: #9f1239; /* rose-800 */
             --theme-color-focus: #e11d48; /* rose-600 */
             --theme-color-aurora: rgba(159, 18, 57, 0.2);
         }
         
-        /* Theme definitions */
+        /* Definisi Tema per Halaman */
         .theme-beranda, .theme-beranda-cta {
             --theme-color-hex: #9f1239;
             --theme-color-focus: #e11d48;
@@ -52,6 +53,7 @@
             --theme-color-aurora: rgba(5, 150, 105, 0.15);
         }
 
+        /* Gaya Dasar */
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
@@ -60,6 +62,7 @@
             overflow-x: hidden;
         }
         
+        /* Komponen UI Kustom */
         .glass-card {
             background-color: var(--bg-glass);
             border: 1px solid var(--border-glass);
@@ -70,6 +73,9 @@
         .glass-card:hover {
             background-color: rgba(39, 39, 42, 0.7);
             border-color: rgba(82, 82, 91, 0.5);
+        }
+        .riwayat-card:hover {
+            transform: translateY(-4px);
         }
 
         .form-input {
@@ -82,14 +88,8 @@
             background-color: rgba(38, 38, 38, 0.8);
             border-color: var(--theme-color-focus);
         }
-        /* Custom styling for date input */
-        input[type="date"] {
-            color-scheme: dark;
-        }
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(0.8);
-        }
-
+        input[type="date"] { color-scheme: dark; }
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.8); }
 
         .btn { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
         .btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.05); filter: brightness(1.15); }
@@ -115,9 +115,11 @@
             backdrop-filter: blur(8px);
         }
 
+        /* Animasi */
         .anim-fade-in { animation: fadeIn 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards; }
         .anim-fade-out { animation: fadeOut 0.3s cubic-bezier(0.550, 0.055, 0.675, 0.190) forwards; }
         .anim-pop-in { animation: popIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .list-item-exit-active { opacity: 0; transform: scale(0.95); transition: all 0.3s ease; }
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
@@ -126,24 +128,14 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .list-item-exit-active { opacity: 0; transform: scale(0.95); transition: all 0.3s ease; }
-
+        /* Animasi Latar Belakang Aurora */
         .aurora-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1;
         }
         .aurora-background::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200vw;
-            height: 200vh;
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 200vw; height: 200vh;
             background: radial-gradient(circle, var(--theme-color-aurora), transparent 60%);
             border-radius: 50%;
             transform: translate(-50%, -50%);
@@ -155,57 +147,52 @@
             50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
         
+        /* Animasi Ikon */
         @keyframes icon-pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
         .icon-pulse { animation: icon-pulse 2s infinite ease-in-out; }
 
-        /* Themed text and icons */
+        /* Utilitas Tema */
         .text-theme { color: var(--theme-color-focus); }
         .bg-theme-20 { background-color: color-mix(in srgb, var(--theme-color-hex) 20%, transparent); }
         .text-theme-focus { color: var(--theme-color-focus); }
         .border-theme-focus { border-color: var(--theme-color-focus); }
         .gradient-theme { background-image: linear-gradient(to right, var(--theme-color-focus), var(--theme-color-hex)); }
 
-        .page-content {
-            transition: opacity 0.3s ease-in-out;
-        }
+        .page-content { transition: opacity 0.3s ease-in-out; }
     </style>
 </head>
 <body class="antialiased">
     
     <div id="app-container">
-        <!-- Background Animation Container -->
+        <!-- Latar Belakang Animasi Aurora -->
         <div id="aurora-container" class="aurora-background"></div>
 
         <div class="min-h-screen flex flex-col relative z-10 pb-20 md:pb-0">
-            <!-- Header for All Screens -->
+            <!-- Header (Desktop & Mobile) -->
             <header class="bg-zinc-900/70 backdrop-blur-lg border-b border-zinc-800/50 sticky top-0 z-30">
                 <div class="container mx-auto px-4 md:px-8 flex items-center justify-between h-16">
-                    <!-- Left Side: Page Title (Mobile) / Logo (Desktop) -->
+                    <!-- Sisi Kiri: Judul Halaman (Mobile) / Logo (Desktop) -->
                     <div class="flex items-center gap-3">
-                        <!-- Desktop Logo -->
                         <a href="#" data-page="beranda" class="nav-btn hidden md:flex items-center gap-3">
                             <div id="header-logo-bg-desktop" class="w-10 h-10 rounded-lg text-white flex items-center justify-center text-2xl shadow-md transition-colors duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                             </div>
                             <h1 class="text-xl font-bold text-gray-200">SIAP!</h1>
                         </a>
-                        <!-- Mobile Page Title -->
                         <h2 id="mobile-header-title" class="text-lg font-bold text-gray-200 md:hidden"></h2>
                     </div>
 
-                    <!-- Right Side: Logo (Mobile) / Nav (Desktop) -->
+                    <!-- Sisi Kanan: Logo (Mobile) / Navigasi (Desktop) -->
                     <div class="flex items-center">
-                        <!-- Desktop Navigation -->
                         <nav class="hidden md:flex items-center gap-2 sm:gap-4 text-sm font-semibold">
                             <button data-page="beranda" class="nav-btn px-3 py-2 rounded-lg transition-colors">Beranda</button>
                             <button data-page="editor" class="nav-btn px-3 py-2 rounded-lg transition-colors">Editor</button>
                             <button data-page="riwayat" class="nav-btn px-3 py-2 rounded-lg transition-colors">Riwayat</button>
                             <button data-page="visualisasi" class="nav-btn px-3 py-2 rounded-lg transition-colors">Baca Perpang</button>
                         </nav>
-                        <!-- Mobile Logo -->
                         <a href="#" data-page="beranda" class="nav-btn flex items-center gap-3 md:hidden">
                             <h1 class="text-lg font-bold text-gray-200">SIAP!</h1>
                             <div id="header-logo-bg-mobile" class="w-10 h-10 rounded-lg text-white flex items-center justify-center text-2xl shadow-md transition-colors duration-300">
@@ -216,12 +203,12 @@
                 </div>
             </header>
 
+            <!-- Konten Utama -->
             <main class="container mx-auto p-4 md:px-8 flex-grow">
-                
                 <div id="page-container">
-                    <!-- Beranda Page Content -->
+                    <!-- Halaman: Beranda -->
                     <div id="page-beranda" class="page-content">
-                        <section id="hero" class="text-center py-12 md:py-24 anim-fade-in">
+                        <section id="hero" class="text-center py-12 md:py-20 anim-fade-in">
                             <div class="w-20 h-20 mx-auto rounded-2xl text-white flex items-center justify-center text-5xl shadow-md mb-6" style="background-color: #9f1239;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                             </div>
@@ -231,9 +218,12 @@
                             <p class="mt-4 max-w-2xl mx-auto text-lg text-zinc-400">
                                 Alat bantu modern untuk merancang, menyimpan, dan membagikan skenario aba-aba baris-berbaris dengan detail dan akurasi tinggi.
                             </p>
-                            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                                <button data-page="editor" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2 theme-editor-cta">
-                                    <div class="flex items-center gap-4">
+                            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                                <button data-page="editor" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2 theme-editor-cta relative overflow-hidden">
+                                    <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
+                                        <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z" /></svg>
+                                    </div>
+                                    <div class="relative z-10 flex items-center gap-4">
                                         <div class="w-12 h-12 bg-theme-20 text-theme-focus rounded-lg flex items-center justify-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                                         </div>
@@ -243,19 +233,11 @@
                                         </div>
                                     </div>
                                 </button>
-                                <button data-page="riwayat" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2 theme-riwayat-cta">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 bg-theme-20 text-theme-focus rounded-lg flex items-center justify-center">
-                                           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                        </div>
-                                        <div>
-                                            <h3 class="text-lg font-bold text-zinc-100">Riwayat Aba-aba</h3>
-                                            <p class="text-sm text-zinc-400">Lihat rencana yang tersimpan.</p>
-                                        </div>
+                                <button data-page="visualisasi" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2 theme-visualisasi-cta relative overflow-hidden">
+                                    <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
+                                        <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 5V19C20 20.11 19.11 21 18 21V3C19.11 3 20 3.9 20 5M16 3V21H4C2.9 21 2 20.11 2 19V5C2 3.9 2.9 3 4 3H16M14 12V10H6V12H14M14 15V13H6V15H14M10 9V7H6V9H10Z" /></svg>
                                     </div>
-                                </button>
-                                <button data-page="visualisasi" class="nav-btn glass-card p-6 rounded-xl text-left hover:-translate-y-2 theme-visualisasi-cta">
-                                    <div class="flex items-center gap-4">
+                                    <div class="relative z-10 flex items-center gap-4">
                                         <div class="w-12 h-12 bg-theme-20 text-theme-focus rounded-lg flex items-center justify-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                                         </div>
@@ -267,9 +249,18 @@
                                 </button>
                             </div>
                         </section>
+                        <section id="recent-history" class="py-12">
+                            <h2 class="text-2xl font-bold text-center mb-8">Riwayat Terakhir</h2>
+                            <div id="recent-riwayat-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                                <!-- Riwayat terakhir akan dirender di sini -->
+                            </div>
+                            <div id="view-all-history-container" class="text-center mt-10 hidden">
+                                <button data-page="riwayat" class="nav-btn btn btn-primary px-6 py-2 rounded-lg">Lihat Semua Riwayat</button>
+                            </div>
+                        </section>
                     </div>
 
-                    <!-- Editor Page Content -->
+                    <!-- Halaman: Editor -->
                     <div id="page-editor" class="page-content hidden">
                         <div class="text-center py-8 anim-fade-in">
                             <h1 class="text-3xl md:text-4xl font-bold text-theme flex items-center justify-center gap-3">
@@ -283,10 +274,10 @@
                                 <div class="glass-card p-5 rounded-xl">
                                     <h2 class="text-lg font-bold mb-4 text-theme">Detail Informasi</h2>
                                     <div class="space-y-3">
-                                        <input type="text" id="plan-title" placeholder="Nama Aba-aba" class="form-input w-full p-2 border rounded-lg text-sm">
-                                        <textarea id="plan-description" placeholder="Deskripsi singkat" class="form-input w-full p-2 border rounded-lg text-sm" rows="2"></textarea>
-                                        <input type="date" id="plan-date" class="form-input w-full p-2 border rounded-lg text-zinc-400 text-sm">
-                                        <input type="text" id="plan-location" placeholder="Lokasi" class="form-input w-full p-2 border rounded-lg text-sm">
+                                        <input type="text" id="plan-title" placeholder="Nama Aba-aba (Wajib)" class="form-input w-full p-2 border rounded-lg text-sm" title="Masukkan nama atau judul untuk rencana aba-aba ini.">
+                                        <textarea id="plan-description" placeholder="Deskripsi singkat" class="form-input w-full p-2 border rounded-lg text-sm" rows="2" title="Tambahkan deskripsi singkat mengenai tujuan atau konteks dari rencana ini."></textarea>
+                                        <input type="date" id="plan-date" class="form-input w-full p-2 border rounded-lg text-zinc-400 text-sm" title="Pilih tanggal pelaksanaan.">
+                                        <input type="text" id="plan-location" placeholder="Lokasi" class="form-input w-full p-2 border rounded-lg text-sm" title="Tentukan lokasi tempat latihan atau acara.">
                                     </div>
                                 </div>
                                 <div class="glass-card p-5 rounded-xl">
@@ -304,7 +295,7 @@
                         </div>
                     </div>
 
-                    <!-- Riwayat Page Content -->
+                    <!-- Halaman: Riwayat -->
                     <div id="page-riwayat" class="page-content hidden">
                         <div class="text-center py-8 anim-fade-in">
                             <h1 class="text-3xl md:text-4xl font-bold text-theme flex items-center justify-center gap-3">
@@ -313,12 +304,12 @@
                             </h1>
                             <p class="mt-4 text-zinc-400">Daftar rencana yang telah Anda simpan akan muncul di sini.</p>
                             <div id="riwayat-list" class="mt-8 max-w-3xl mx-auto space-y-4">
-                               <!-- Riwayat items will be rendered here by JS -->
+                               <!-- Item riwayat akan dirender di sini oleh JavaScript -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- Visualisasi Page Content -->
+                    <!-- Halaman: Visualisasi (Baca Perpang) -->
                     <div id="page-visualisasi" class="page-content hidden">
                          <div class="text-center py-8 anim-fade-in">
                             <h1 class="text-3xl md:text-4xl font-bold text-theme flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -328,24 +319,30 @@
                             <p class="mt-4 text-zinc-400 max-w-2xl mx-auto">Pilih dokumen Peraturan Panglima TNI untuk dibaca. Dokumen akan ditampilkan dalam format PDF.</p>
                             <div id="perpang-cards-container" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                                 <!-- Card 1: PERPANG 57 -->
-                                 <div class="glass-card rounded-xl p-6 text-left flex flex-col overflow-hidden relative theme-riwayat-cta">
-                                    <div class="absolute -top-8 -right-8 w-24 h-24 bg-theme-focus/20 rounded-full z-0"></div>
-                                    <div class="absolute -bottom-12 -left-4 w-24 h-24 bg-theme-focus/10 rounded-full z-0"></div>
-                                    <h3 class="text-lg font-bold text-zinc-100 z-10">Perpang TNI No. 57 Th 2018</h3>
-                                    <p class="text-sm text-zinc-400 mt-2 flex-grow z-10">Tentang Peraturan Penghormatan Militer (PPM) Tentara Nasional Indonesia.</p>
-                                    <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm z-10" data-pdf-url="https://drive.google.com/file/d/1sTDe64-dQCAw25INF5kfbMt6GtlMNyrc/view?usp=sharing" data-pdf-title="Perpang TNI No. 57 Th 2018 - PPM">
-                                        Baca Dokumen
-                                    </button>
+                                 <div class="glass-card rounded-xl p-6 text-left flex flex-col overflow-hidden relative theme-riwayat-cta hover:-translate-y-2">
+                                    <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
+                                        <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.25C13.24 12.25 14.25 11.24 14.25 10C14.25 8.76 13.24 7.75 12 7.75C10.76 7.75 9.75 8.76 9.75 10C9.75 11.24 10.76 12.25 12 12.25M12 14.25C9.33 14.25 4.5 15.58 4.5 18.25V20H19.5V18.25C19.5 15.58 14.67 14.25 12 14.25M12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4Z" /></svg>
+                                    </div>
+                                    <div class="relative z-10">
+                                        <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 57 Th 2018</h3>
+                                        <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Penghormatan Militer (PPM) Tentara Nasional Indonesia.</p>
+                                        <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/1sTDe64-dQCAw25INF5kfbMt6GtlMNyrc/view?usp=sharing" data-pdf-title="Perpang TNI No. 57 Th 2018 - PPM">
+                                            Baca Dokumen
+                                        </button>
+                                    </div>
                                 </div>
                                 <!-- Card 2: PERPANG 58 -->
-                                <div class="glass-card rounded-xl p-6 text-left flex flex-col overflow-hidden relative theme-visualisasi-cta">
-                                    <div class="absolute -top-8 -right-8 w-24 h-24 bg-theme-focus/20 rounded-full z-0"></div>
-                                    <div class="absolute -bottom-12 -left-4 w-24 h-24 bg-theme-focus/10 rounded-full z-0"></div>
-                                    <h3 class="text-lg font-bold text-zinc-100 z-10">Perpang TNI No. 58 Th 2018</h3>
-                                    <p class="text-sm text-zinc-400 mt-2 flex-grow z-10">Tentang Peraturan Baris Berbaris (PBB) Tentara Nasional Indonesia.</p>
-                                    <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm z-10" data-pdf-url="https://drive.google.com/file/d/13_lH4YlqfXQJobfTm8TBsTSa7Rp5RXYD/view?usp=sharing" data-pdf-title="Perpang TNI No. 58 Th 2018 - PBB">
-                                        Baca Dokumen
-                                    </button>
+                                <div class="glass-card rounded-xl p-6 text-left flex flex-col overflow-hidden relative theme-visualisasi-cta hover:-translate-y-2">
+                                     <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
+                                        <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 13H11V11H3M3 18H11V16H3M3 8H11V6H3M13 18V16H21V18M13 13H21V11H13M13 8V6H21V8Z" /></svg>
+                                    </div>
+                                    <div class="relative z-10">
+                                        <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 58 Th 2018</h3>
+                                        <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Baris Berbaris (PBB) Tentara Nasional Indonesia.</p>
+                                        <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/13_lH4YlqfXQJobfTm8TBsTSa7Rp5RXYD/view?usp=sharing" data-pdf-title="Perpang TNI No. 58 Th 2018 - PBB">
+                                            Baca Dokumen
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -365,16 +362,20 @@
                             </div>
                         </div>
                         <div class="lg:col-span-7">
-                            <div class="grid grid-cols-4 gap-2">
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                <!-- Aksi Utama -->
+                                <button id="save-plan-btn" class="btn btn-primary text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16 col-span-2" title="Simpan Rencana"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg><span>Simpan</span></button>
+                                <!-- Aksi Pembuatan -->
                                 <button id="new-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Rencana Baru"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg><span>Baru</span></button>
-                                <button id="save-plan-btn" class="btn bg-rose-600/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Simpan"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg><span>Simpan</span></button>
-                                <button id="copy-text-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Salin Teks"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg><span>Salin</span></button>
-                                <button id="export-pdf-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Ekspor PDF"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg><span>PDF</span></button>
                                 <button id="duplicate-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Duplikat"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16a2 2 0 002 2h8a2 2 0 002-2V8a2 2 0 00-2-2h-3l-4-4-4 4H8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg><span>Duplikat</span></button>
-                                <button id="share-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Bagikan"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg><span>Bagikan</span></button>
-                                <button id="delete-plan-btn" class="btn bg-zinc-700/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg><span>Hapus</span></button>
+                                <!-- Aksi Ekspor/Bagikan -->
+                                <button id="copy-text-btn" class="btn bg-zinc-800/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Salin Teks"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg><span>Salin</span></button>
+                                <button id="export-pdf-btn" class="btn bg-zinc-800/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Ekspor PDF"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg><span>PDF</span></button>
+                                <button id="share-btn" class="btn bg-zinc-800/80 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Bagikan"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" /></svg><span>Bagikan</span></button>
+                                <!-- Aksi Hapus -->
+                                <button id="delete-plan-btn" class="btn bg-red-900/60 text-red-300 hover:bg-red-800/80 hover:text-red-100 text-sm flex flex-col items-center justify-center gap-1 p-2 rounded-lg h-16" title="Hapus"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg><span>Hapus</span></button>
                             </div>
-                             <!-- Manual Copy Area (was missing) -->
+                            <!-- Area Salin Manual (jika navigator.clipboard gagal) -->
                             <div id="manual-copy-area" class="mt-4 hidden">
                                 <textarea id="manual-copy-textarea" class="form-input w-full p-2 border rounded-lg text-sm bg-zinc-800 text-zinc-200" rows="4"></textarea>
                             </div>
@@ -397,8 +398,8 @@
                         </a>
                         <a href="https://www.tiktok.com/@tontimuallimin" target="_blank" class="glass-card p-2.5 rounded-lg flex items-center justify-center" title="Kunjungi TikTok" aria-label="Kunjungi TikTok">
                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="text-white" fill="currentColor" viewBox="0 0 16 16">
-                              <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/>
-                            </svg>
+                             <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/>
+                           </svg>
                         </a>
                     </div>
                 </div>
@@ -406,7 +407,7 @@
         </div>
     </div>
     
-    <!-- Mobile Bottom Navigation -->
+    <!-- Navigasi Bawah (Mobile) -->
     <nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-zinc-900/80 backdrop-blur-lg border-t border-zinc-800/50 z-40 transition-colors duration-300">
         <div class="flex justify-around items-center h-16">
             <button data-page="beranda" class="bottom-nav-btn flex flex-col items-center justify-center w-full">
@@ -428,7 +429,7 @@
         </div>
     </nav>
 
-    <!-- Modal & Print Area -->
+    <!-- Kontainer untuk Modal & Area Cetak -->
     <div id="modal-container"></div>
     <div id="print-area" class="hidden" style="font-family: 'Inter', sans-serif; color: black; background: white; padding: 20px;"></div>
 
@@ -436,6 +437,9 @@
     document.addEventListener('DOMContentLoaded', () => {
 
         const SiapApp = {
+            //======================================================================
+            // DATA & STATE
+            //======================================================================
             PBB_COMMANDS: [
                 { category: 'Gerakan Tambahan', items: [ { id: 'custom_report_start', text: 'Laporan Pembuka' }, { id: 'custom_report_end', text: 'Laporan Penutup' }, { id: 'custom_start', text: 'Materi Mulai' }, { id: 'custom_end', text: 'Materi Selesai' } ]},
                 { category: 'Sikap Sempurna & Istirahat', items: [ { id: 'siap_gerak', text: 'Siap = GERAK!' }, { id: 'parade_siap_gerak', text: 'Parade, Siap = GERAK!' }, { id: 'duduk_siap_gerak', text: 'Duduk Siap = GERAK!' }, { id: 'istirahat_ditempat_gerak', text: 'Istirahat di Tempat = GERAK!' }, { id: 'parade_istirahat_ditempat_gerak', text: 'Parade, Istirahat di Tempat = GERAK!' }, { id: 'untuk_perhatian', text: 'Untuk Perhatian!' } ] },
@@ -458,24 +462,36 @@
                 { category: 'Berhimpun & Berkumpul', items: [ { id: 'custom_penjuru', text: '(...) Sebagai Penjuru!', needsInput: true, isCustomText: true }, { id: 'berhimpun_mulai', text: 'Berhimpun = MULAI!' }, { id: 'bersaf_kumpul_mulai', text: 'Bersaf Kumpul = MULAI!' }, { id: 'berbanjar_kumpul_mulai', text: 'Berbanjar Kumpul = MULAI!' }, { id: 'selesai_himpun_kumpul', text: 'SELESAI!' } ]}
             ],
             ALL_COMMANDS_FLAT: null,
+            
             state: {
                 plan: null,
                 riwayat: [],
                 activePostId: null,
-                modalContext: { type: null, targetId: null },
-                currentPage: 'beranda'
+                modalContext: { type: null, targetId: null, insertIndex: -1 },
+                currentPage: 'beranda',
+                isDirty: false, // Flag untuk autosave
+                autosaveInterval: null,
             },
+            
             elements: {},
             lastScrollPosition: 0,
+
+            //======================================================================
+            // INISIALISASI
+            //======================================================================
+
             init() {
                 this.ALL_COMMANDS_FLAT = this.PBB_COMMANDS.flatMap(c => c.items);
                 this.state.plan = this.getInitialPlan();
                 this.cacheDOMElements();
                 this.loadStateFromLocalStorage();
                 this.bindEventListeners();
+                this.checkForAutoSave();
                 this.renderApp(true);
                 this.showWelcomeModal();
+                this.state.autosaveInterval = setInterval(this.handleAutoSave.bind(this), 5000); // Autosave setiap 5 detik
             },
+            
             cacheDOMElements() {
                 this.elements = {
                     appContainer: document.getElementById('app-container'),
@@ -494,6 +510,8 @@
                     bottomNavButtons: document.querySelectorAll('.bottom-nav-btn'),
                     bottomNav: document.getElementById('bottom-nav'),
                     riwayatListContainer: document.getElementById('riwayat-list'),
+                    recentRiwayatList: document.getElementById('recent-riwayat-list'),
+                    viewAllHistoryContainer: document.getElementById('view-all-history-container'),
                     planTitle: document.getElementById('plan-title'),
                     planDescription: document.getElementById('plan-description'),
                     planDate: document.getElementById('plan-date'),
@@ -507,61 +525,104 @@
                     headerLogoBgMobile: document.getElementById('header-logo-bg-mobile'),
                 };
             },
+
             bindEventListeners() {
                 document.addEventListener('input', this.handleGlobalInput.bind(this));
                 document.addEventListener('click', this.handleGlobalClick.bind(this));
             },
+
+            //======================================================================
+            // MANAJEMEN STATE & PENYIMPANAN
+            //======================================================================
+            
             getInitialPlan: () => ({
                 id: null, title: '', description: '', date: '', location: '', posts: []
             }),
+
             saveStateToLocalStorage() {
                 localStorage.setItem('siap_riwayat', JSON.stringify(this.state.riwayat));
             },
+
             loadStateFromLocalStorage() {
                 const savedRiwayat = localStorage.getItem('siap_riwayat');
                 if (savedRiwayat) {
                     this.state.riwayat = JSON.parse(savedRiwayat);
                 }
             },
+
+            checkForAutoSave() {
+                const autosavedPlan = localStorage.getItem('siap_autosave');
+                if (autosavedPlan) {
+                    const parsedPlan = JSON.parse(autosavedPlan);
+                    if (parsedPlan.title || parsedPlan.posts.length > 0) {
+                        this.openConfirmationModal(
+                            "Ditemukan sesi yang belum disimpan. Apakah Anda ingin memulihkannya?",
+                            () => { // onConfirm
+                                this.state.plan = parsedPlan;
+                                this.state.activePostId = this.state.plan.posts.length > 0 ? this.state.plan.posts[0].id : null;
+                                this.state.currentPage = 'editor';
+                                this.renderApp(true);
+                                this.showToast("Sesi berhasil dipulihkan.");
+                            },
+                            () => { // onCancel
+                                localStorage.removeItem('siap_autosave');
+                            }
+                        );
+                    }
+                }
+            },
+
+            handleAutoSave() {
+                if (this.state.isDirty && this.state.currentPage === 'editor') {
+                    if (this.state.plan.title || this.state.plan.posts.length > 0) {
+                        localStorage.setItem('siap_autosave', JSON.stringify(this.state.plan));
+                        this.state.isDirty = false;
+                    }
+                }
+            },
+
+            //======================================================================
+            // FUNGSI RENDER (MEMPERBARUI UI)
+            //======================================================================
+            
             renderApp(isPageChange = false) {
                 if (isPageChange) {
                     window.scrollTo(0, 0);
                 }
                 this.renderPage();
-                if (this.state.currentPage === 'editor') {
+                if (this.state.currentPage === 'beranda') {
+                    this.renderRecentRiwayat();
+                } else if (this.state.currentPage === 'editor') {
                     this.renderEditorUI();
                 } else if (this.state.currentPage === 'riwayat') {
                     this.renderRiwayatPage();
                 }
             },
+
             renderEditorUI() {
                 this.renderEditorDetails();
                 this.renderPostsNav();
                 this.renderWorkspace();
                 this.updateActionButtonsState();
             },
+
             updateTheme() {
                 const themeClass = `theme-${this.state.currentPage}`;
                 const appContainer = this.elements.appContainer;
-                // Remove previous theme classes
                 appContainer.className = Array.from(appContainer.classList).filter(c => !c.startsWith('theme-')).join(' ');
                 appContainer.classList.add(themeClass);
 
-                // Update header logo color and bottom nav after theme is set
                 setTimeout(() => {
                     const themeColor = getComputedStyle(this.elements.appContainer).getPropertyValue('--theme-color-hex').trim();
-                    if (this.elements.headerLogoBgDesktop) {
-                        this.elements.headerLogoBgDesktop.style.backgroundColor = themeColor;
-                    }
-                    if (this.elements.headerLogoBgMobile) {
-                        this.elements.headerLogoBgMobile.style.backgroundColor = themeColor;
-                    }
+                    if (this.elements.headerLogoBgDesktop) this.elements.headerLogoBgDesktop.style.backgroundColor = themeColor;
+                    if (this.elements.headerLogoBgMobile) this.elements.headerLogoBgMobile.style.backgroundColor = themeColor;
                     if (this.elements.bottomNav) {
                          this.elements.bottomNav.className = Array.from(this.elements.bottomNav.classList).filter(c => !c.startsWith('theme-')).join(' ');
                          this.elements.bottomNav.classList.add(themeClass);
                     }
                 }, 0);
             },
+
             renderPage() {
                 this.updateTheme();
                 document.querySelectorAll('.page-content').forEach(page => page.classList.add('hidden'));
@@ -569,208 +630,260 @@
                 if (activePage) activePage.classList.remove('hidden');
 
                 const pageTitles = {
-                    beranda: "Beranda",
-                    editor: "Editor",
-                    riwayat: "Riwayat",
-                    visualisasi: "Perpang"
+                    beranda: "Beranda", editor: "Editor", riwayat: "Riwayat", visualisasi: "Perpang"
                 };
                 this.elements.mobileHeaderTitle.textContent = pageTitles[this.state.currentPage] || "SIAP!";
-
 
                 const allNavButtons = [...this.elements.navButtons, ...this.elements.bottomNavButtons];
                 allNavButtons.forEach(btn => {
                     const page = btn.dataset.page;
                     if (page) {
+                        const isActive = page === this.state.currentPage;
+                        btn.classList.toggle('text-theme-focus', isActive);
+                        btn.classList.toggle('text-zinc-400', !isActive);
                         const icon = btn.querySelector('svg');
                         const text = btn.querySelector('span');
-                        if (page === this.state.currentPage) {
-                            btn.classList.add('text-theme-focus');
-                            if(icon) icon.classList.add('text-theme-focus');
-                            if(text) text.classList.add('text-theme-focus');
-                            btn.classList.remove('text-zinc-400');
-                        } else {
-                            btn.classList.remove('text-theme-focus');
-                            if(icon) icon.classList.remove('text-theme-focus');
-                            if(text) text.classList.remove('text-theme-focus');
-                            btn.classList.add('text-zinc-400');
-                        }
+                        if(icon) icon.classList.toggle('text-theme-focus', isActive);
+                        if(text) text.classList.toggle('text-theme-focus', isActive);
                     }
                 });
                 
                 this.elements.helperBox.style.display = this.state.currentPage === 'editor' ? '' : 'none';
-                this.elements.auroraContainer.style.display = 'block';
             },
+
             renderEditorDetails() {
                 this.elements.planTitle.value = this.state.plan.title;
                 this.elements.planDescription.value = this.state.plan.description;
                 this.elements.planDate.value = this.state.plan.date;
                 this.elements.planLocation.value = this.state.plan.location;
             },
+
             renderPostsNav() {
-                const { postsNavList, posts } = { postsNavList: this.elements.postsNavList, posts: this.state.plan.posts };
-                postsNavList.innerHTML = '';
-                if (posts.length === 0) {
+                const { postsNavList } = this.elements;
+                if (this.state.plan.posts.length === 0) {
                     postsNavList.innerHTML = `<p class="text-sm text-center text-slate-500 py-4">Belum ada pos.</p>`;
                     return;
                 }
-                posts.forEach((post, index) => {
+                const navHTML = this.state.plan.posts.map((post, index) => {
                     const isActive = post.id === this.state.activePostId;
-                    const navItem = document.createElement('button');
-                    navItem.dataset.postId = post.id;
-                    navItem.className = `w-full text-left p-3 rounded-lg transition-all duration-200 flex justify-between items-center relative ${isActive ? 'bg-zinc-700' : 'hover:bg-zinc-700/50'}`;
-                    navItem.innerHTML = `
-                        <span class="flex items-center gap-2 ${isActive ? 'font-semibold text-theme-focus' : 'text-zinc-200'}">
-                            ${post.name || `POS ${index + 1}`}
-                        </span>
-                        ${isActive ? '<div class="absolute left-0 top-0 h-full w-1 bg-theme rounded-r-full" style="background-color: var(--theme-color-focus)"></div>' : ''}
-                    `;
-                    postsNavList.appendChild(navItem);
-                });
+                    const postName = post.name || `POS ${index + 1}`;
+                    return this.createHTML.postNavItem(post, postName, isActive);
+                }).join('');
+                postsNavList.innerHTML = navHTML;
             },
+
             renderWorkspace() {
                 const activePost = this.getActivePost();
                 if (!activePost) {
-                    this.elements.workspace.innerHTML = `<div class="glass-card rounded-xl shadow-lg flex flex-col items-center justify-center h-full min-h-[400px] text-center p-6 anim-fade-in">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-zinc-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                        <h3 class="text-xl font-bold text-slate-200">Tidak Ada Pos yang Dipilih</h3>
-                        <p class="mt-2 text-slate-400 max-w-xs">Silakan pilih pos dari daftar di sebelah kiri, atau buat pos baru.</p>
-                    </div>`;
+                    this.elements.workspace.innerHTML = this.createHTML.emptyWorkspace();
                     return;
                 }
-                
                 const postIndex = this.state.plan.posts.findIndex(p => p.id === this.state.activePostId);
-                const postTitleHTML = `<input type="text" value="${activePost.name || ''}" data-field="name" placeholder="Nama Pos ${postIndex + 1}" class="text-2xl font-bold text-theme bg-transparent focus:bg-zinc-700 rounded-lg p-2 w-full -ml-2">`;
-                
-                const sizeParts = [activePost.size_p, activePost.size_l, activePost.turn_width].filter(Boolean);
-                const sizeString = sizeParts.length > 0 ? `${sizeParts.join(' x ')} Meter` : '-';
-                const infoTags = `
-                    <div class="flex flex-wrap gap-x-4 gap-y-2">
-                        <span class="text-sm text-zinc-300">Ukuran: <b class="font-semibold text-white">${sizeString}</b></span>
-                        <span class="text-sm text-zinc-300">Waktu: <b class="font-semibold text-white">${activePost.time || '-'}</b> Menit</span>
-                    </div>`;
-                
-                this.elements.workspace.innerHTML = `
-                    <div class="glass-card relative p-4 sm:p-6 rounded-xl shadow-xl anim-pop-in" data-post-id="${activePost.id}">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex-grow">${postTitleHTML}</div>
-                            <div class="flex items-center">
-                                <button class="delete-post-btn text-slate-400 hover:text-red-500 transition-colors p-1 rounded-full" aria-label="Hapus Pos Ini">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between bg-black/20 p-3 rounded-xl">
-                            ${infoTags}
-                            <button class="edit-size-btn btn btn-primary text-sm font-semibold py-1 px-3 rounded-lg">Atur</button>
-                        </div>
-                        <hr class="my-4 border-zinc-700/50">
-                        <div class="materials-container space-y-2"></div>
-                        <div class="mt-4">
-                            <button class="add-material-btn btn btn-primary w-full font-semibold py-2 px-4 rounded-lg">+ Tambah Baris Materi</button>
-                        </div>
-                    </div>
-                `;
+                this.elements.workspace.innerHTML = this.createHTML.workspace(activePost, postIndex);
                 this.renderMaterials(this.elements.workspace.querySelector('.materials-container'), activePost);
             },
+
             renderMaterials(container, postData) {
-                container.innerHTML = '';
                 if (postData.materials.length === 0) {
                     container.innerHTML = `<p class="text-center text-slate-400 py-4">Belum ada materi. Klik tombol di bawah untuk menambahkan.</p>`;
                     return;
                 }
                 let numberedCounter = 0;
-
-                postData.materials.forEach((material, index) => {
+                const materialsHTML = postData.materials.map((material, index) => {
                     if (material.isNumbered) numberedCounter++;
+                    return this.createHTML.materialRow(material, index, postData.materials.length, numberedCounter);
+                }).join('');
+                container.innerHTML = materialsHTML;
+            },
+            
+            renderRiwayatPage() {
+                const { riwayatListContainer } = this.elements;
+                const { riwayat } = this.state;
+                if (riwayat.length === 0) {
+                    riwayatListContainer.innerHTML = `<div class="glass-card p-6 rounded-xl text-center"><p class="text-zinc-400">Belum ada riwayat yang tersimpan.</p></div>`;
+                    return;
+                }
+                // Urutkan riwayat dari yang terbaru
+                const sortedRiwayat = [...riwayat].sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+                const riwayatHTML = sortedRiwayat.map(plan => this.createHTML.riwayatItem(plan)).join('');
+                riwayatListContainer.innerHTML = riwayatHTML;
+            },
+
+            renderRecentRiwayat() {
+                const { recentRiwayatList, viewAllHistoryContainer } = this.elements;
+                const { riwayat } = this.state;
+
+                if (riwayat.length === 0) {
+                    recentRiwayatList.innerHTML = `<p class="text-zinc-400 text-center md:col-span-2 lg:col-span-3">Belum ada riwayat tersimpan.</p>`;
+                    viewAllHistoryContainer.classList.add('hidden');
+                    return;
+                }
+
+                const sortedRiwayat = [...riwayat].sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+                const recentItems = sortedRiwayat.slice(0, 6);
+                
+                const riwayatHTML = recentItems.map(plan => this.createHTML.riwayatItem(plan, true)).join('');
+                recentRiwayatList.innerHTML = riwayatHTML;
+                
+                if (riwayat.length > 0) {
+                    viewAllHistoryContainer.classList.remove('hidden');
+                } else {
+                    viewAllHistoryContainer.classList.add('hidden');
+                }
+            },
+
+            //======================================================================
+            // FUNGSI PEMBUAT HTML (TEMPLATE HELPERS)
+            //======================================================================
+            
+            createHTML: {
+                postNavItem(post, name, isActive) {
+                    return `
+                        <button data-post-id="${post.id}" class="w-full text-left p-3 rounded-lg transition-all duration-200 flex justify-between items-center relative ${isActive ? 'bg-zinc-700' : 'hover:bg-zinc-700/50'}">
+                            <span class="flex items-center gap-2 ${isActive ? 'font-semibold text-theme-focus' : 'text-zinc-200'}">${name}</span>
+                            ${isActive ? '<div class="absolute left-0 top-0 h-full w-1 rounded-r-full" style="background-color: var(--theme-color-focus)"></div>' : ''}
+                        </button>`;
+                },
+
+                emptyWorkspace() {
+                    return `<div class="glass-card rounded-xl shadow-lg flex flex-col items-center justify-center h-full min-h-[400px] text-center p-6 anim-fade-in">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-zinc-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        <h3 class="text-xl font-bold text-slate-200">Tidak Ada Pos yang Dipilih</h3>
+                        <p class="mt-2 text-slate-400 max-w-xs">Silakan pilih pos dari daftar di sebelah kiri, atau buat pos baru.</p>
+                    </div>`;
+                },
+
+                workspace(post, index) {
+                    const postTitleHTML = `<input type="text" value="${post.name || ''}" data-field="name" placeholder="Nama Pos ${index + 1}" class="text-2xl font-bold text-theme bg-transparent focus:bg-zinc-700 rounded-lg p-2 w-full -ml-2">`;
+                    const sizeParts = [post.size_p, post.size_l, post.turn_width].filter(Boolean);
+                    const sizeString = sizeParts.length > 0 ? `${sizeParts.join(' x ')} Meter` : '-';
+                    const infoTags = `
+                        <div class="flex flex-wrap gap-x-4 gap-y-2">
+                            <span class="text-sm text-zinc-300">Ukuran: <b class="font-semibold text-white">${sizeString}</b></span>
+                            <span class="text-sm text-zinc-300">Waktu: <b class="font-semibold text-white">${post.time || '-'}</b> Menit</span>
+                        </div>`;
+                    return `
+                        <div class="glass-card relative p-4 sm:p-6 rounded-xl shadow-xl anim-pop-in" data-post-id="${post.id}">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="flex-grow">${postTitleHTML}</div>
+                                <div class="flex items-center">
+                                    <button class="delete-post-btn text-slate-400 hover:text-red-500 transition-colors p-1 rounded-full" aria-label="Hapus Pos Ini">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between bg-black/20 p-3 rounded-xl">
+                                ${infoTags}
+                                <button class="edit-size-btn btn btn-primary text-sm font-semibold py-1 px-3 rounded-lg">Atur</button>
+                            </div>
+                            <hr class="my-4 border-zinc-700/50">
+                            <div class="materials-container space-y-2"></div>
+                            <div class="mt-4">
+                                <button class="add-material-btn btn btn-primary w-full font-semibold py-2 px-4 rounded-lg">+ Tambah Baris Materi</button>
+                            </div>
+                        </div>`;
+                },
+
+                materialRow(material, index, totalMaterials, numberedCounter) {
                     const numberPrefix = material.isNumbered ? `${numberedCounter}.` : '•';
                     
-                    const movementSpans = material.movements.map((mov, movIndex) => {
-                        const command = this.ALL_COMMANDS_FLAT.find(i => i.id === mov.id);
+                    const movementChips = material.movements.map((mov, movIndex) => {
+                        const command = SiapApp.ALL_COMMANDS_FLAT.find(i => i.id === mov.id);
                         if (!command) return '';
                         
                         let chipHTML;
                         if (command.isCustomText) {
-                             chipHTML = `<input type="text" value="${mov.count || ''}" placeholder="..." data-movement-index="${movIndex}" class="movement-count-input w-20 text-center bg-transparent font-bold text-theme-focus focus:outline-none"> ${command.text.replace('(...)', '')}`;
+                            chipHTML = `<input type="text" value="${mov.count || ''}" placeholder="..." data-movement-index="${movIndex}" class="movement-count-input w-20 text-center bg-transparent font-bold text-theme-focus focus:outline-none"> ${command.text.replace('(...)', '')}`;
                         } else if (command.needsInput) {
                             chipHTML = `<input type="number" value="${mov.count || ''}" placeholder="..." data-movement-index="${movIndex}" class="movement-count-input w-10 text-center bg-transparent font-bold text-theme-focus focus:outline-none" ${command.max ? `max="${command.max}"` : ''} min="1"> ${command.text}`;
                         } else {
                             chipHTML = command.text;
                         }
 
-                        return `<span class="bg-black/20 px-3 py-1 rounded-full shadow-sm flex items-center gap-2 text-sm relative group/chip">
-                                    ${chipHTML}
-                                    <button class="delete-movement-btn absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center opacity-0 group-hover/chip:opacity-100 transition-opacity" data-movement-index="${movIndex}" aria-label="Hapus Gerakan">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                                    </button>
-                                </span>`;
-                    }).join('<span class="font-bold text-zinc-500 mx-1">–</span>');
-                    
-                    let movementContent = movementSpans.length > 0 ? movementSpans : `<button class="add-movement-btn text-theme-focus hover:underline">Tambah gerakan...</button>`;
-                    if(movementSpans.length > 0) {
-                        movementContent += `<button class="add-movement-btn text-theme-focus p-1 rounded-full hover:bg-theme-20 ml-2" aria-label="Tambah Gerakan Lagi"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" /></svg></button>`;
+                        return `<div class="movement-chip-wrapper relative group/chip flex items-center">
+                                    <span class="bg-black/20 px-3 py-1 rounded-full shadow-sm flex items-center gap-2 text-sm">
+                                        ${chipHTML}
+                                        <button class="delete-movement-btn absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center opacity-0 group-hover/chip:opacity-100 transition-opacity" data-movement-index="${movIndex}" aria-label="Hapus Gerakan">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                        </button>
+                                    </span>
+                                </div>`;
+                    });
+
+                    let movementContent = movementChips.reduce((acc, chip, i) => {
+                        acc.push(chip);
+                        if (i < movementChips.length) {
+                            acc.push(`
+                                <button class="insert-movement-btn text-zinc-500 hover:text-theme-focus rounded-full opacity-0 group-hover/row:opacity-100 transition-opacity" aria-label="Sisipkan Gerakan" data-insert-index="${i + 1}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                                </button>
+                            `);
+                        }
+                        return acc;
+                    }, []).join('');
+
+
+                    if (material.movements.length === 0) {
+                        movementContent = `<button class="add-movement-btn text-theme-focus hover:underline">Tambah gerakan...</button>`;
                     }
-                    
-                    const materialRow = document.createElement('div');
-                    materialRow.className = `material-row group relative bg-black/20 p-2 rounded-lg flex items-center gap-2 sm:gap-3 transition-all duration-300 ${material.commanderExecutes ? 'font-bold' : ''}`;
-                    materialRow.dataset.materialId = material.id;
 
                     const moveUpBtn = index > 0 ? `<button class="move-material-btn" data-direction="up" aria-label="Naik"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>` : `<div class="w-5"></div>`;
-                    const moveDownBtn = index < postData.materials.length - 1 ? `<button class="move-material-btn" data-direction="down" aria-label="Turun"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>` : `<div class="w-5"></div>`;
+                    const moveDownBtn = index < totalMaterials - 1 ? `<button class="move-material-btn" data-direction="down" aria-label="Turun"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>` : `<div class="w-5"></div>`;
 
-                    materialRow.innerHTML = `
-                        <div class="flex flex-col items-center text-zinc-500 group-hover:text-zinc-300 transition-colors">
+                    return `<div class="material-row group/row relative bg-black/20 p-2 rounded-lg flex items-center gap-2 sm:gap-3 transition-all duration-300 ${material.commanderExecutes ? 'font-bold' : ''}" data-material-id="${material.id}">
+                        <div class="flex flex-col items-center text-zinc-500 group-hover/row:text-zinc-300 transition-colors">
                             ${moveUpBtn}
                             ${moveDownBtn}
                         </div>
                         <span class="font-bold text-slate-200 w-6 text-right">${numberPrefix}</span>
-                        <div class="movements-display flex-grow flex flex-wrap items-center gap-2">${movementContent}</div>
+                        <div class="movements-display flex-grow flex flex-wrap items-center gap-1">${movementContent}</div>
                         <div class="flex items-center gap-2 sm:gap-3 ml-auto">
                             ${material.note ? `<span class="text-yellow-500 cursor-help" title="Catatan: ${material.note}"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 112 0v4a1 1 0 11-2 0V9zm1-4a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" /></svg></span>` : ''}
                             <button class="settings-btn text-zinc-400 hover:text-theme-focus rounded-full p-1" aria-label="Opsi Materi"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" /></svg></button>
                             <button class="delete-material-btn text-zinc-500 hover:text-red-500 rounded-full p-1" aria-label="Hapus Baris">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                             </button>
-                        </div>`;
-                    container.appendChild(materialRow);
-                });
-            },
-            renderRiwayatPage() {
-                const { riwayatListContainer, riwayat } = { riwayatListContainer: this.elements.riwayatListContainer, riwayat: this.state.riwayat };
-                riwayatListContainer.innerHTML = '';
-                if (riwayat.length === 0) {
-                    riwayatListContainer.innerHTML = `<div class="glass-card p-6 rounded-xl text-center"><p class="text-zinc-400">Belum ada riwayat yang tersimpan.</p></div>`;
-                    return;
-                }
-                riwayat.forEach(plan => {
+                        </div>
+                    </div>`;
+                },
+
+                riwayatItem(plan, isRecent = false) {
                     const totalPosts = plan.posts.length;
                     const totalMaterials = plan.posts.reduce((acc, post) => acc + post.materials.length, 0);
-
-                    const item = document.createElement('div');
-                    item.className = 'glass-card p-4 rounded-xl text-left flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-l-4 border-theme-focus';
-                    item.innerHTML = `
-                        <div class="flex-grow">
-                            <h3 class="font-bold text-zinc-100">${plan.title || 'Rencana Tanpa Judul'}</h3>
-                            <p class="text-sm text-zinc-400 mt-1">${plan.description || 'Tidak ada deskripsi'}</p>
-                            <div class="text-xs text-zinc-500 mt-2 flex flex-wrap gap-x-4 gap-y-1">
-                                <span>Disimpan: ${new Date(plan.savedAt).toLocaleString('id-ID')}</span>
-                                <span class="font-semibold">${totalPosts} Pos</span>
-                                <span class="font-semibold">${totalMaterials} Materi</span>
+                    const cardClass = 'riwayat-card glass-card p-4 rounded-xl text-left flex flex-col gap-4 border-l-4 border-theme-focus relative overflow-hidden';
+                    const layoutClass = isRecent ? '' : 'sm:flex-row sm:justify-between sm:items-center';
+                    return `
+                        <div class="${cardClass} ${layoutClass}">
+                             <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
+                                <svg width="100" height="100" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M13 3A9 9 0 0 0 4 12H1L4.89 15.89L5 16L9 12H6A7 7 0 0 1 13 5C16.04 5 18.65 6.95 19.58 9.6L21.55 9.03C20.33 5.56 17.03 3 13 3M12 18A7 7 0 0 1 5.42 14.4L3.45 14.97C4.67 18.44 7.97 21 12 21A9 9 0 0 0 21 12H23L19.11 8.11L19 8L15 12H18A7 7 0 0 1 12 18Z" /></svg>
                             </div>
-                        </div>
-                        <div class="flex gap-2 self-end sm:self-center flex-shrink-0">
-                            <button class="load-riwayat-btn btn btn-primary text-white px-4 py-2 text-sm rounded-lg" data-id="${plan.id}">Muat</button>
-                            <button class="delete-riwayat-btn btn bg-zinc-700/80 text-white px-4 py-2 text-sm rounded-lg" data-id="${plan.id}">Hapus</button>
-                        </div>
-                    `;
-                    riwayatListContainer.appendChild(item);
-                });
+                            <div class="flex-grow z-10">
+                                <h3 class="font-bold text-zinc-100">${plan.title || 'Rencana Tanpa Judul'}</h3>
+                                <p class="text-sm text-zinc-400 mt-1 line-clamp-2">${plan.description || 'Tidak ada deskripsi'}</p>
+                                <div class="text-xs text-zinc-500 mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                                    <span>${new Date(plan.savedAt).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                    <span class="font-semibold">${totalPosts} Pos</span>
+                                    <span class="font-semibold">${totalMaterials} Materi</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 self-end sm:self-center flex-shrink-0 z-10 mt-4 sm:mt-0">
+                                <button class="load-riwayat-btn btn btn-primary text-white px-4 py-2 text-sm rounded-lg" data-id="${plan.id}">Muat</button>
+                                <button class="delete-riwayat-btn btn bg-zinc-700/80 text-white px-4 py-2 text-sm rounded-lg" data-id="${plan.id}">Hapus</button>
+                            </div>
+                        </div>`;
+                }
             },
+
+            //======================================================================
+            // FUNGSI MODAL
+            //======================================================================
+
             createModal(id, title, bodyHTML, footerHTML = '', isPdf = false) {
                 this.lastScrollPosition = window.scrollY;
                 const modalEl = document.createElement('div');
                 modalEl.id = id;
                 modalEl.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop anim-fade-in';
-                const modalSize = isPdf ? 'max-w-4xl w-full h-full max-h-[90vh]' : 'max-w-3xl w-full';
+                const modalSize = isPdf ? 'max-w-5xl w-full h-full max-h-[90vh]' : 'max-w-3xl w-full';
                 modalEl.innerHTML = `
                     <div class="glass-card ${modalSize} flex flex-col anim-pop-in rounded-xl" role="dialog" aria-modal="true" aria-labelledby="modal-title-${id}">
                         <header class="p-4 border-b border-zinc-700/50 flex justify-between items-center flex-shrink-0">
@@ -784,10 +897,10 @@
                     </div>`;
                 
                 modalEl.querySelector('.glass-card').classList.add(`theme-${this.state.currentPage}`);
-
                 this.elements.modalContainer.appendChild(modalEl);
                 return modalEl;
             },
+
             closeModal() {
                 const modal = this.elements.modalContainer.firstChild;
                 if (modal) {
@@ -800,8 +913,9 @@
                     }, { once: true });
                 }
             },
-            openCommandModal(contextType, targetId) {
-                this.state.modalContext = { type: contextType, targetId };
+
+            openCommandModal(contextType, targetId, insertIndex = -1) {
+                this.state.modalContext = { type: contextType, targetId, insertIndex };
                 const body = `<input type="text" id="modal-search" placeholder="Cari gerakan..." class="form-input w-full p-2 border rounded-lg mb-4">
                                 <div id="modal-command-list" class="max-h-[50vh] overflow-y-auto pr-2"></div>`;
                 const modal = this.createModal('command-modal', 'Pilih Gerakan', body);
@@ -809,6 +923,7 @@
                 modal.querySelector('#modal-search').addEventListener('input', (e) => this.renderCommandModal(e.target.value));
                 modal.querySelector('#modal-search').focus();
             },
+
             renderCommandModal(filter = '') {
                 const listEl = document.getElementById('modal-command-list');
                 if (!listEl) return;
@@ -827,6 +942,7 @@
                 });
                 listEl.innerHTML = html || `<p class="text-center text-slate-400">Tidak ada gerakan yang cocok dengan pencarian "${filter}".</p>`;
             },
+
             openContextMenu(materialId) {
                 const { material } = this.getMaterialById(materialId);
                 if (!material) return;
@@ -843,6 +959,7 @@
                 const modal = this.createModal('context-menu-modal', 'Opsi Materi', body, footer);
                 modal.dataset.materialId = materialId;
             },
+            
             openSizeModal(postId) {
                 const post = this.state.plan.posts.find(p => p.id === postId);
                 if (!post) return;
@@ -858,10 +975,11 @@
                 const modal = this.createModal('size-modal', 'Atur Ukuran & Waktu Pos', body, footer);
                 modal.dataset.postId = postId;
             },
-            openConfirmationModal(message, onConfirm) {
+            
+            openConfirmationModal(message, onConfirm, onCancel = () => {}) {
                 const body = `<p class="text-center text-zinc-300">${message}</p>`;
                 const footer = `
-                    <button class="modal-close-btn btn bg-zinc-700 text-white px-4 py-2 rounded-lg">Batal</button>
+                    <button id="cancel-action-btn" class="btn bg-zinc-700 text-white px-4 py-2 rounded-lg">Batal</button>
                     <button id="confirm-action-btn" class="btn btn-primary px-4 py-2 rounded-lg">Ya, Lanjutkan</button>
                 `;
                 const modal = this.createModal('confirmation-modal', 'Konfirmasi Tindakan', body, footer);
@@ -869,21 +987,23 @@
                     onConfirm();
                     this.closeModal();
                 }, { once: true });
+                modal.querySelector('#cancel-action-btn').addEventListener('click', () => {
+                    onCancel();
+                    this.closeModal();
+                }, { once: true });
             },
+
             openPdfModal(url, title) {
-                let embedUrl = url;
-                if (url.includes('drive.google.com')) {
-                    const fileIdMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                    if (fileIdMatch && fileIdMatch[1]) {
-                        const fileId = fileIdMatch[1];
-                        embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-                    }
+                const fileIdMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (fileIdMatch && fileIdMatch[1]) {
+                    const embedUrl = `https://drive.google.com/file/d/${fileIdMatch[1]}/preview`;
+                    const body = `<iframe src="${embedUrl}" class="w-full h-full border-0 rounded-lg" frameborder="0"></iframe>`;
+                    this.createModal('pdf-viewer-modal', title, body, '', true);
                 } else {
-                    embedUrl = `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+                    this.showToast("URL Google Drive tidak valid.");
                 }
-                const body = `<iframe src="${embedUrl}" class="w-full h-full border-0 rounded-lg" frameborder="0"></iframe>`;
-                this.createModal('pdf-viewer-modal', title, body, '', true);
             },
+
             showWelcomeModal() {
                 if (sessionStorage.getItem('welcomeShown')) return;
                 const body = `<div class="text-center">
@@ -903,7 +1023,8 @@
                 this.createModal('welcome-modal', '', body, footer);
                 sessionStorage.setItem('welcomeShown', 'true');
             },
-            showToast(message) {
+
+            showToast(message, duration = 3000) {
                 const toastEl = document.createElement('div');
                 toastEl.className = "fixed bottom-20 md:bottom-5 right-5 bg-slate-900 text-white py-3 px-6 rounded-lg shadow-xl transition-all duration-300 transform translate-y-24 opacity-0 z-[100]";
                 toastEl.textContent = message;
@@ -912,9 +1033,15 @@
                 setTimeout(() => {
                     toastEl.classList.add('translate-y-24', 'opacity-0');
                     toastEl.addEventListener('transitionend', () => toastEl.remove());
-                }, 3000);
+                }, duration);
             },
+
+            //======================================================================
+            // FUNGSI HELPER & GETTER
+            //======================================================================
+
             getActivePost() { return this.state.plan.posts.find(p => p.id === this.state.activePostId); },
+            
             getMaterialById(materialId) {
                 for (const post of this.state.plan.posts) {
                     const material = post.materials.find(m => m.id === materialId);
@@ -922,7 +1049,13 @@
                 }
                 return { post: null, material: null };
             },
+
+            //======================================================================
+            // EVENT HANDLER
+            //======================================================================
+
             handleGlobalInput(e) {
+                this.state.isDirty = true;
                 const { id, value } = e.target;
                 if (['plan-title', 'plan-description', 'plan-date', 'plan-location'].includes(id)) {
                     this.state.plan[id.split('-')[1]] = value;
@@ -931,6 +1064,7 @@
                     this.handleWorkspaceInput(e);
                 }
             },
+
             handleWorkspaceInput(e) {
                 const post = this.getActivePost();
                 if (!post) return;
@@ -954,6 +1088,7 @@
                 }
                 this.updateActionButtonsState();
             },
+
             handleGlobalClick(e) {
                 const target = e.target;
                 const navBtn = target.closest('.nav-btn, .bottom-nav-btn');
@@ -969,6 +1104,7 @@
                 }
                 this.delegateClick(target);
             },
+
             delegateClick(target) {
                 const postEl = target.closest('[data-post-id]');
                 const materialRow = target.closest('.material-row');
@@ -1001,6 +1137,10 @@
                     if (target.closest('.delete-movement-btn')) this.handleDeleteMovement(materialRow.dataset.materialId, target.closest('button').dataset.movementIndex);
                     if (target.closest('.move-material-btn')) this.handleMoveMaterial(materialRow.dataset.materialId, target.closest('button').dataset.direction);
                     if (target.closest('.add-movement-btn')) this.openCommandModal('addMovement', materialRow.dataset.materialId);
+                    if (target.closest('.insert-movement-btn')) {
+                        const insertIndex = parseInt(target.closest('button').dataset.insertIndex, 10);
+                        this.openCommandModal('addMovement', materialRow.dataset.materialId, insertIndex);
+                    }
                     if (target.closest('.settings-btn')) this.openContextMenu(materialRow.dataset.materialId);
                 }
                 if (target.closest('.select-command-btn')) this.handleSelectCommand(target.closest('button').dataset.commandId);
@@ -1010,24 +1150,38 @@
                     this.closeModal();
                 }
             },
+
+            //======================================================================
+            // HANDLER UNTUK AKSI-AKSI UTAMA
+            //======================================================================
+            
             handleNewPlan() {
-                this.state.plan = this.getInitialPlan();
-                this.state.activePostId = null;
-                this.renderApp(true);
-                this.showToast("Lembar kerja baru telah disiapkan.");
+                this.openConfirmationModal("Apakah Anda yakin ingin membuat lembar kerja baru? Perubahan yang belum disimpan akan hilang.", () => {
+                    this.state.plan = this.getInitialPlan();
+                    this.state.activePostId = null;
+                    this.state.isDirty = false;
+                    localStorage.removeItem('siap_autosave');
+                    this.renderApp(true);
+                    this.showToast("Lembar kerja baru telah disiapkan.");
+                });
             },
+            
             handleAddPost() {
+                this.state.isDirty = true;
                 const newPost = { id: crypto.randomUUID(), name: '', materials: [] };
                 this.state.plan.posts.push(newPost);
                 this.state.activePostId = newPost.id;
                 this.renderApp();
                 this.showToast('Pos baru ditambahkan!');
             },
+
             handleSelectPost(postId) {
                 this.state.activePostId = postId;
                 this.renderApp();
             },
+            
             handleDeletePost(postId) {
+                this.state.isDirty = true;
                 const animateAndRemove = (selector, callback) => {
                     const el = document.querySelector(selector);
                     if (el) {
@@ -1046,7 +1200,9 @@
                     });
                 });
             },
+
             handleDeleteMaterial(materialId) {
+                this.state.isDirty = true;
                 const materialRow = document.querySelector(`[data-material-id="${materialId}"]`);
                 if (materialRow) {
                     materialRow.classList.add('list-item-exit-active');
@@ -1061,11 +1217,12 @@
                     }, { once: true });
                 }
             },
+            
             handleDeleteMovement(materialId, movementIndex) {
+                this.state.isDirty = true;
                 const { material } = this.getMaterialById(materialId);
                 if (material && material.movements[movementIndex]) {
                     material.movements.splice(movementIndex, 1);
-                    // If no movements are left, remove the whole material row
                     if (material.movements.length === 0) {
                         this.handleDeleteMaterial(materialId);
                     } else {
@@ -1075,7 +1232,9 @@
                     }
                 }
             },
+            
             handleMoveMaterial(materialId, direction) {
+                this.state.isDirty = true;
                 const post = this.getActivePost();
                 if (!post) return;
                 const index = post.materials.findIndex(m => m.id === materialId);
@@ -1087,32 +1246,38 @@
                 this.renderWorkspace();
                 this.showToast('Urutan materi diubah.');
             },
+
             handleSelectCommand(commandId) {
+                this.state.isDirty = true;
                 const command = this.ALL_COMMANDS_FLAT.find(i => i.id === commandId);
                 if (!command) return;
 
                 const newMovement = { id: commandId, ...(command.needsInput && { count: '' }) };
                 let targetMaterial, targetPost;
+                const { type, targetId, insertIndex } = this.state.modalContext;
 
-                if (this.state.modalContext.type === 'newMaterial') {
-                    targetPost = this.state.plan.posts.find(p => p.id === this.state.modalContext.targetId);
+                if (type === 'newMaterial') {
+                    targetPost = this.state.plan.posts.find(p => p.id === targetId);
                     if (targetPost) {
                         const newMaterial = { id: crypto.randomUUID(), movements: [newMovement], commanderExecutes: false, note: '', isNumbered: true };
                         targetPost.materials.push(newMaterial);
                         targetMaterial = newMaterial;
                         this.showToast('Materi baru ditambahkan.');
                     }
-                } else if (this.state.modalContext.type === 'addMovement') {
-                    const { post, material } = this.getMaterialById(this.state.modalContext.targetId);
+                } else if (type === 'addMovement') {
+                    const { post, material } = this.getMaterialById(targetId);
                     if (material) {
-                        material.movements.push(newMovement);
+                        if (insertIndex > -1) {
+                            material.movements.splice(insertIndex, 0, newMovement);
+                        } else {
+                            material.movements.push(newMovement);
+                        }
                         targetMaterial = material;
                         targetPost = post;
                         this.showToast('Gerakan ditambahkan.');
                     }
                 }
 
-                // Apply automatic command logic
                 if (targetMaterial && targetPost) {
                     this.applyCommandLogic(commandId, targetMaterial, targetPost);
                 }
@@ -1121,7 +1286,9 @@
                 this.closeModal();
                 this.updateActionButtonsState();
             },
+
             applyCommandLogic(commandId, material, post) {
+                this.state.isDirty = true;
                 const addChainedCommand = (id) => {
                     const chainedCommand = this.ALL_COMMANDS_FLAT.find(c => c.id === id);
                     if (chainedCommand) {
@@ -1129,12 +1296,10 @@
                     }
                 };
 
-                // Logic 1 & 2: Hormat/Lencang -> Tegak (Same Line)
                 if (commandId.startsWith('hormat_') || commandId.startsWith('lencang_') || commandId.startsWith('setengah_lengan_lencang_')) {
                     addChainedCommand('tegak_gerak');
                 }
 
-                // Logic 3: MULAI! -> SELESAI! (Same Line)
                 const commandMapping = {
                     'periksa_kerapian_mulai': 'periksa_kerapian_selesai',
                     'parade_periksa_kerapian_mulai': 'periksa_kerapian_selesai',
@@ -1146,19 +1311,19 @@
                     addChainedCommand(commandMapping[commandId]);
                 }
 
-                // Logic 4: Untuk Perhatian -> Istirahat (Same Line)
                 if (commandId === 'untuk_perhatian') {
                     addChainedCommand('istirahat_ditempat_gerak');
                 }
 
-                // Logic 6: Berkumpul -> Penjuru (New Line Before)
                 if (commandId === 'bersaf_kumpul_mulai' || commandId === 'berbanjar_kumpul_mulai') {
                     const penjuruMaterial = { id: crypto.randomUUID(), movements: [{ id: 'custom_penjuru', count: '' }], commanderExecutes: false, note: '', isNumbered: true };
                     const currentMaterialIndex = post.materials.findIndex(m => m.id === material.id);
                     post.materials.splice(currentMaterialIndex, 0, penjuruMaterial);
                 }
             },
+            
             handleSaveSizeModal(modal) {
+                this.state.isDirty = true;
                 const postId = modal.dataset.postId;
                 const post = this.state.plan.posts.find(p => p.id === postId);
                 if(post) {
@@ -1168,7 +1333,9 @@
                 }
                 this.closeModal();
             },
+
             handleSaveContextMenu(modal) {
+                this.state.isDirty = true;
                 const materialId = modal.dataset.materialId;
                 const { material } = this.getMaterialById(materialId);
                 if (material) {
@@ -1178,8 +1345,9 @@
                 }
                 this.closeModal();
             },
+            
             handleSavePlan() {
-                const error = this.getPlanValidationErrors();
+                const error = this.getPlanValidationErrors(false); // Validasi tidak ketat
                 if (error) { this.showToast(`Gagal menyimpan: ${error}`); return; }
                 const planToSave = JSON.parse(JSON.stringify(this.state.plan));
                 planToSave.savedAt = new Date().toISOString();
@@ -1193,79 +1361,113 @@
                     this.state.riwayat.unshift(planToSave);
                 }
                 this.saveStateToLocalStorage();
+                this.state.isDirty = false;
+                localStorage.removeItem('siap_autosave');
                 this.showToast(`Rencana "${planToSave.title}" berhasil disimpan!`);
                 this.renderRiwayatPage();
+                this.renderRecentRiwayat(); // Update juga di beranda
             },
+
             handleLoadPlan(planId) {
-                const planToLoad = this.state.riwayat.find(p => p.id === planId);
-                if (planToLoad) {
-                    this.state.plan = JSON.parse(JSON.stringify(planToLoad));
-                    this.state.activePostId = this.state.plan.posts.length > 0 ? this.state.plan.posts[0].id : null;
-                    this.state.currentPage = 'editor';
-                    this.renderApp(true);
-                    this.showToast(`Rencana "${this.state.plan.title}" dimuat.`);
-                }
+                this.openConfirmationModal("Memuat rencana akan menimpa pekerjaan saat ini. Lanjutkan?", () => {
+                    const planToLoad = this.state.riwayat.find(p => p.id === planId);
+                    if (planToLoad) {
+                        this.state.plan = JSON.parse(JSON.stringify(planToLoad));
+                        this.state.activePostId = this.state.plan.posts.length > 0 ? this.state.plan.posts[0].id : null;
+                        this.state.currentPage = 'editor';
+                        this.state.isDirty = false;
+                        localStorage.removeItem('siap_autosave');
+                        this.renderApp(true);
+                        this.showToast(`Rencana "${this.state.plan.title}" dimuat.`);
+                    }
+                });
             },
+
             handleDeleteRiwayat(planId) {
                 this.openConfirmationModal("Apakah Anda yakin ingin menghapus rencana ini dari riwayat? Tindakan ini tidak dapat diurungkan.", () => {
                     this.state.riwayat = this.state.riwayat.filter(p => p.id !== planId);
                     this.saveStateToLocalStorage();
                     this.renderRiwayatPage();
+                    this.renderRecentRiwayat(); // Update juga di beranda
                     this.showToast("Rencana telah dihapus dari riwayat.");
                 });
             },
+
             handleDuplicatePlan() {
                 if (!this.state.plan.id) {
                     this.showToast('Simpan rencana terlebih dahulu untuk duplikasi.');
                     return;
                 }
-                const newPlan = JSON.parse(JSON.stringify(this.state.plan));
-                newPlan.id = crypto.randomUUID();
-                newPlan.title = `${newPlan.title} (Salinan)`;
-                newPlan.savedAt = new Date().toISOString();
-                this.state.riwayat.unshift(newPlan);
-                this.saveStateToLocalStorage();
-                this.state.plan = newPlan;
-                this.state.activePostId = this.state.plan.posts.length > 0 ? this.state.plan.posts[0].id : null;
-                this.renderApp(true);
-                this.showToast(`Rencana diduplikasi dan dimuat sebagai "${newPlan.title}".`);
+                this.openConfirmationModal("Menduplikasi akan menimpa pekerjaan saat ini dengan salinan baru. Lanjutkan?", () => {
+                    const newPlan = JSON.parse(JSON.stringify(this.state.plan));
+                    newPlan.id = crypto.randomUUID();
+                    newPlan.title = `${newPlan.title} (Salinan)`;
+                    newPlan.savedAt = new Date().toISOString();
+                    this.state.riwayat.unshift(newPlan);
+                    this.saveStateToLocalStorage();
+                    this.state.plan = newPlan;
+                    this.state.activePostId = this.state.plan.posts.length > 0 ? this.state.plan.posts[0].id : null;
+                    this.state.isDirty = false;
+                    localStorage.removeItem('siap_autosave');
+                    this.renderApp(true);
+                    this.showToast(`Rencana diduplikasi dan dimuat sebagai "${newPlan.title}".`);
+                });
             },
+            
             handleDeletePlan() {
                  this.openConfirmationModal("Apakah Anda yakin ingin menghapus seluruh isi editor saat ini? Tindakan ini tidak dapat diurungkan.", () => {
-                    this.handleNewPlan();
+                    this.state.plan = this.getInitialPlan();
+                    this.state.activePostId = null;
+                    this.state.isDirty = false;
+                    localStorage.removeItem('siap_autosave');
+                    this.renderApp();
                     this.showToast("Editor telah dibersihkan.");
                 });
             },
-            getPlanValidationErrors() {
+            
+            //======================================================================
+            // FUNGSI UTILITAS & EKSPOR
+            //======================================================================
+            
+            getPlanValidationErrors(isStrict = false) {
                 if (!this.state.plan.title) return "Judul aba-aba belum diisi.";
-                if (this.state.plan.posts.length === 0) return "Belum ada pos yang dibuat.";
-                for (const [index, post] of this.state.plan.posts.entries()) {
-                    const postName = post.name || `Pos ${index + 1}`;
-                    if (!post.size_p || !post.size_l || !post.time) return `Ukuran atau waktu untuk '${postName}' belum lengkap.`;
-                    if (post.materials.length === 0) return `Pos '${postName}' belum memiliki materi.`;
+                if (isStrict) {
+                    if (this.state.plan.posts.length === 0) return "Belum ada pos yang dibuat.";
+                    for (const [index, post] of this.state.plan.posts.entries()) {
+                        const postName = post.name || `Pos ${index + 1}`;
+                        if (!post.size_p || !post.size_l || !post.time) return `Ukuran atau waktu untuk '${postName}' belum lengkap.`;
+                        if (post.materials.length === 0) return `Pos '${postName}' belum memiliki materi.`;
+                    }
                 }
                 return null;
             },
+
             updateActionButtonsState() {
                 if (this.state.currentPage !== 'editor' || !this.elements.savePlanBtn) return;
-                const error = this.getPlanValidationErrors();
-                const isValid = error === null;
-                const activePost = this.getActivePost();
-                const buttonsToToggle = [ this.elements.savePlanBtn, this.elements.copyTextBtn, this.elements.exportPdfBtn, this.elements.shareBtn, this.elements.duplicatePlanBtn ];
-                buttonsToToggle.forEach(btn => { if (btn) { btn.disabled = !isValid; } });
+                const saveError = this.getPlanValidationErrors(false);
+                const exportError = this.getPlanValidationErrors(true);
+                
+                this.elements.savePlanBtn.disabled = (saveError !== null);
+
+                const exportButtons = [ this.elements.copyTextBtn, this.elements.exportPdfBtn, this.elements.shareBtn, this.elements.duplicatePlanBtn ];
+                exportButtons.forEach(btn => { if (btn) { btn.disabled = (exportError !== null); } });
                 
                 if (this.elements.manualCopyArea) {
                     this.elements.manualCopyArea.classList.add('hidden');
                 }
 
                 let message = "Selamat datang! Siap untuk merancang?";
+                const error = saveError || exportError;
                 if (error) { message = error; } 
                 else { message = "Rencana sudah lengkap! Anda dapat menyimpan atau mengekspor sekarang."; }
-                if (this.state.plan.posts.length > 0 && !this.state.activePostId) { message = "Pilih sebuah pos dari daftar di samping untuk melanjutkan."; } 
+                
+                const activePost = this.getActivePost();
+                if (this.state.plan.posts.length > 0 && !activePost) { message = "Pilih sebuah pos dari daftar di samping untuk melanjutkan."; } 
                 else if (this.state.plan.posts.length === 0 && this.state.plan.title) { message = "Rencana Anda masih kosong. Tambahkan pos pertama untuk memulai."; } 
                 else if (activePost && activePost.materials.length === 0) { message = `Pos "${activePost.name || 'Baru'}" masih kosong. Tambahkan materi pertama Anda.`; }
                 this.elements.helperText.innerHTML = message;
             },
+            
             generatePlanContent(format = 'text') {
                 let output = '';
                 const { title, description, date, location, posts } = this.state.plan;
@@ -1310,8 +1512,9 @@
                 });
                 return output.trim();
             },
+
             async copyToClipboard() {
-                const error = this.getPlanValidationErrors();
+                const error = this.getPlanValidationErrors(true);
                 if (error) { this.showToast(`Gagal: ${error}`); return; }
                 const textToCopy = this.generatePlanContent('text');
                 try {
@@ -1324,8 +1527,9 @@
                     this.elements.manualCopyTextarea.select();
                 }
             },
+
             exportToPDF() {
-                const error = this.getPlanValidationErrors();
+                const error = this.getPlanValidationErrors(true);
                 if (error) { this.showToast(`Gagal: ${error}`); return; }
                 this.showToast('Membuat PDF...');
                 const { jsPDF } = window.jspdf;
@@ -1357,8 +1561,9 @@
                     printArea.classList.add('hidden');
                 });
             },
+            
             async handleShare() {
-                const error = this.getPlanValidationErrors();
+                const error = this.getPlanValidationErrors(true);
                 if (error) { this.showToast(`Gagal: ${error}`); return; }
                 const shareData = {
                     title: `Rencana Latihan: ${this.state.plan.title || 'Tanpa Judul'}`,
@@ -1377,6 +1582,8 @@
                 }
             },
         };
+
+        // Mulai aplikasi
         SiapApp.init();
     });
     </script>
