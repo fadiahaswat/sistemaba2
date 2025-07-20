@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" xintegrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVBL5gI9kLmbG0C+wFjr8bCqwA2ag==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +47,11 @@
             --theme-color-hex: #1d4ed8; /* blue-700 */
             --theme-color-focus: #3b82f6; /* blue-500 */
             --theme-color-aurora: rgba(29, 78, 216, 0.15);
+        }
+        .theme-tempo, .theme-tempo-cta {
+            --theme-color-hex: #7c3aed; /* violet-600 */
+            --theme-color-focus: #8b5cf6; /* violet-500 */
+            --theme-color-aurora: rgba(124, 58, 237, 0.15);
         }
         .theme-visualisasi, .theme-visualisasi-cta {
             --theme-color-hex: #059669; /* emerald-600 */
@@ -168,7 +174,7 @@
         .text-theme { color: var(--theme-color-focus); }
         .bg-theme-20 { background-color: color-mix(in srgb, var(--theme-color-hex) 20%, transparent); }
         .text-theme-focus { color: var(--theme-color-focus); }
-        .border-theme-focus { border-color: var(--theme-color-focus); }
+        .border-theme-focus { border-color: var(--theme-color-focus) !important; }
         .gradient-theme { background-image: linear-gradient(to right, var(--theme-color-focus), var(--theme-color-hex)); }
 
         .page-content { transition: opacity 0.3s ease-in-out; }
@@ -192,7 +198,7 @@
                             </div>
                             <h1 class="text-xl font-bold text-gray-200">SIAP!</h1>
                         </a>
-                        <h2 id="mobile-header-title" class="text-lg font-bold text-gray-200 md:hidden"></h2>
+                        <h2 id="mobile-header-title" class="text-lg font-bold text-gray-200 md:hidden">Beranda</h2>
                     </div>
 
                     <!-- Sisi Kanan: Logo (Mobile) / Navigasi (Desktop) -->
@@ -201,6 +207,7 @@
                             <button data-page="beranda" class="nav-btn px-3 py-2 rounded-lg transition-colors">Beranda</button>
                             <button data-page="editor" class="nav-btn px-3 py-2 rounded-lg transition-colors">Editor</button>
                             <button data-page="riwayat" class="nav-btn px-3 py-2 rounded-lg transition-colors">Riwayat</button>
+                            <button data-page="tempo" class="nav-btn px-3 py-2 rounded-lg transition-colors">Tempo</button>
                             <button data-page="visualisasi" class="nav-btn px-3 py-2 rounded-lg transition-colors">Baca Perpang</button>
                         </nav>
                         <a href="#" data-page="beranda" class="nav-btn flex items-center gap-3 md:hidden">
@@ -319,6 +326,20 @@
                         </div>
                     </div>
 
+                    <!-- Halaman: Tempo -->
+                    <div id="page-tempo" class="page-content hidden">
+                        <div class="text-center py-8 anim-fade-in">
+                            <h1 class="text-3xl md:text-4xl font-bold text-theme flex items-center justify-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l10-3v10l-10 3zM9 6H5v11h4" /></svg>
+                                Tempo Gerakan
+                            </h1>
+                            <p id="metronome-status" class="mt-4 text-zinc-400 max-w-2xl mx-auto h-6">Metronom berhenti. Pilih salah satu tempo untuk memulai.</p>
+                        </div>
+                        <main id="tempo-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                            <!-- Kartu tempo akan dimasukkan di sini oleh JavaScript -->
+                        </main>
+                    </div>
+
                     <!-- Halaman: Visualisasi (Baca Perpang) -->
                     <div id="page-visualisasi" class="page-content hidden">
                          <div class="text-center py-8 anim-fade-in">
@@ -330,30 +351,30 @@
                             <div id="perpang-cards-container" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                                 <!-- Card 1: PERPANG 57 -->
                                  <div class="glass-card rounded-xl p-6 text-left flex flex-col overflow-hidden relative theme-riwayat-cta hover:-translate-y-2">
-                                    <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
-                                        <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.25C13.24 12.25 14.25 11.24 14.25 10C14.25 8.76 13.24 7.75 12 7.75C10.76 7.75 9.75 8.76 9.75 10C9.75 11.24 10.76 12.25 12 12.25M12 14.25C9.33 14.25 4.5 15.58 4.5 18.25V20H19.5V18.25C19.5 15.58 14.67 14.25 12 14.25M12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4Z" /></svg>
-                                    </div>
-                                    <div class="relative z-10">
-                                        <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 57 Th 2018</h3>
-                                        <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Penghormatan Militer (PPM) Tentara Nasional Indonesia.</p>
-                                        <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/1sTDe64-dQCAw25INF5kfbMt6GtlMNyrc/view?usp=sharing" data-pdf-title="Perpang TNI No. 57 Th 2018 - PPM">
-                                            Baca Dokumen
-                                        </button>
-                                    </div>
-                                </div>
+                                     <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
+                                         <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.25C13.24 12.25 14.25 11.24 14.25 10C14.25 8.76 13.24 7.75 12 7.75C10.76 7.75 9.75 8.76 9.75 10C9.75 11.24 10.76 12.25 12 12.25M12 14.25C9.33 14.25 4.5 15.58 4.5 18.25V20H19.5V18.25C19.5 15.58 14.67 14.25 12 14.25M12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4Z" /></svg>
+                                     </div>
+                                     <div class="relative z-10">
+                                         <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 57 Th 2018</h3>
+                                         <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Penghormatan Militer (PPM) Tentara Nasional Indonesia.</p>
+                                         <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/1sTDe64-dQCAw25INF5kfbMt6GtlMNyrc/view?usp=sharing" data-pdf-title="Perpang TNI No. 57 Th 2018 - PPM">
+                                             Baca Dokumen
+                                         </button>
+                                     </div>
+                                 </div>
                                 <!-- Card 2: PERPANG 58 -->
                                 <div class="glass-card rounded-xl p-6 text-left flex flex-col overflow-hidden relative theme-visualisasi-cta hover:-translate-y-2">
                                      <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
-                                        <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 13H11V11H3M3 18H11V16H3M3 8H11V6H3M13 18V16H21V18M13 13H21V11H13M13 8V6H21V8Z" /></svg>
-                                    </div>
-                                    <div class="relative z-10">
-                                        <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 58 Th 2018</h3>
-                                        <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Baris Berbaris (PBB) Tentara Nasional Indonesia.</p>
-                                        <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/13_lH4YlqfXQJobfTm8TBsTSa7Rp5RXYD/view?usp=sharing" data-pdf-title="Perpang TNI No. 58 Th 2018 - PBB">
-                                            Baca Dokumen
-                                        </button>
-                                    </div>
-                                </div>
+                                         <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 13H11V11H3M3 18H11V16H3M3 8H11V6H3M13 18V16H21V18M13 13H21V11H13M13 8V6H21V8Z" /></svg>
+                                     </div>
+                                     <div class="relative z-10">
+                                         <h3 class="text-lg font-bold text-zinc-100">Perpang TNI No. 58 Th 2018</h3>
+                                         <p class="text-sm text-zinc-400 mt-2 flex-grow">Tentang Peraturan Baris Berbaris (PBB) Tentara Nasional Indonesia.</p>
+                                         <button class="open-pdf-btn btn btn-primary mt-4 self-start rounded-lg px-4 py-2 text-sm" data-pdf-url="https://drive.google.com/file/d/13_lH4YlqfXQJobfTm8TBsTSa7Rp5RXYD/view?usp=sharing" data-pdf-title="Perpang TNI No. 58 Th 2018 - PBB">
+                                             Baca Dokumen
+                                         </button>
+                                     </div>
+                                 </div>
                             </div>
                         </div>
                     </div>
@@ -400,18 +421,18 @@
                 <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
                     <p>&copy; 2025 SIAP! - Dikembangkan oleh 1nspektur Tonti Mu'allimin.</p>
                      <div class="flex items-center gap-3">
-                        <a href="https://wa.me/6285339213109" target="_blank" class="glass-card p-2.5 rounded-lg flex items-center justify-center" title="Hubungi via WhatsApp" aria-label="Hubungi via WhatsApp">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="text-green-500" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943c-.049-.084-.182-.133-.38-.232z"/></svg>
-                        </a>
-                        <a href="https://www.instagram.com/tontimuallimin/" target="_blank" class="glass-card p-2.5 rounded-lg flex items-center justify-center" title="Kunjungi Instagram" aria-label="Kunjungi Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="text-rose-500" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.556 0 5.829 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.556 15.99 5.829 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372.526-.205.972-.478 1.417-.923.445-.444.718-.891.923-1.417.198-.509.333-1.09.372-1.942C15.99 10.444 16 10.173 16 8s-.01-2.444-.048-3.297c-.04-.852-.174-1.433-.372-1.942a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.09-.333-1.942-.372C10.444.01 10.173 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.233s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.92 2.5 2.5 0 0 1-.92.598c-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.598-.92c-.11-.282-.24-.705-.276-1.486-.038-.843-.046-1.096-.046-3.232s.008-2.389.046-3.233c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.843-.038 1.096-.047 3.232-.047zM8 3.882a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 6.774a2.667 2.667 0 1 1 0-5.334 2.667 2.667 0 0 1 0 5.334zM12.974 3.882a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z"/></svg>
-                        </a>
-                        <a href="https://www.tiktok.com/@tontimuallimin" target="_blank" class="glass-card p-2.5 rounded-lg flex items-center justify-center" title="Kunjungi TikTok" aria-label="Kunjungi TikTok">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="text-white" fill="currentColor" viewBox="0 0 16 16">
-                             <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/>
-                           </svg>
-                        </a>
-                    </div>
+                         <a href="https://wa.me/6285339213109" target="_blank" class="glass-card p-2.5 rounded-lg flex items-center justify-center" title="Hubungi via WhatsApp" aria-label="Hubungi via WhatsApp">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="text-green-500" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.89 7.89 0 0 0 13.6 2.326zM7.994 14.521a6.57 6.57 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943c-.049-.084-.182-.133-.38-.232z"/></svg>
+                         </a>
+                         <a href="https://www.instagram.com/tontimuallimin/" target="_blank" class="glass-card p-2.5 rounded-lg flex items-center justify-center" title="Kunjungi Instagram" aria-label="Kunjungi Instagram">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="text-rose-500" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.703.01 5.556 0 5.829 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.556 15.99 5.829 16 8 16s2.444-.01 3.297-.048c.852-.04 1.433-.174 1.942-.372.526-.205.972-.478 1.417-.923.445-.444.718-.891.923-1.417.198-.509.333-1.09.372-1.942C15.99 10.444 16 10.173 16 8s-.01-2.444-.048-3.297c-.04-.852-.174-1.433-.372-1.942a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.09-.333-1.942-.372C10.444.01 10.173 0 8 0zm0 1.442c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.233s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.92 2.5 2.5 0 0 1-.92.598c-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.598-.92c-.11-.282-.24-.705-.276-1.486-.038-.843-.046-1.096-.046-3.232s.008-2.389.046-3.233c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.843-.038 1.096-.047 3.232-.047zM8 3.882a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 6.774a2.667 2.667 0 1 1 0-5.334 2.667 2.667 0 0 1 0 5.334zM12.974 3.882a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92z"/></svg>
+                         </a>
+                         <a href="https://www.tiktok.com/@tontimuallimin" target="_blank" class="glass-card p-2.5 rounded-lg flex items-center justify-center" title="Kunjungi TikTok" aria-label="Kunjungi TikTok">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="text-white" fill="currentColor" viewBox="0 0 16 16">
+                               <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V0Z"/>
+                            </svg>
+                         </a>
+                     </div>
                 </div>
             </footer>
         </div>
@@ -431,6 +452,10 @@
             <button data-page="riwayat" class="bottom-nav-btn flex flex-col items-center justify-center w-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <span class="text-xs mt-1">Riwayat</span>
+            </button>
+            <button data-page="tempo" class="bottom-nav-btn flex flex-col items-center justify-center w-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l10-3v10l-10 3zM9 6H5v11h4" /></svg>
+                <span class="text-xs mt-1">Tempo</span>
             </button>
             <button data-page="visualisasi" class="bottom-nav-btn flex flex-col items-center justify-center w-full">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
@@ -484,6 +509,15 @@
                 { category: 'Haluan & Melintang', items: [ { id: 'haluan_kanan_jalan', text: 'Haluan Kanan = JALAN!' }, { id: 'haluan_kiri_jalan', text: 'Haluan Kiri = JALAN!' }, { id: 'haluan_kanan_maju_jalan', text: 'Haluan Kanan Maju = JALAN!' }, { id: 'haluan_kiri_maju_jalan', text: 'Haluan Kiri Maju = JALAN!' }, { id: 'melintang_kanan_jalan', text: 'Melintang Kanan = JALAN!' }, { id: 'melintang_kiri_jalan', text: 'Melintang Kiri = JALAN!' }, { id: 'melintang_kanan_maju_jalan', text: 'Melintang Kanan Maju = JALAN!' }, { id: 'melintang_kiri_maju_jalan', text: 'Melintang Kiri Maju = JALAN!' } ]},
                 { category: 'Berhimpun & Berkumpul', items: [ { id: 'custom_penjuru', text: '(...) sebagai Penjuru!', needsInput: true, isCustomText: true }, { id: 'berhimpun_mulai', text: 'Berhimpun = MULAI!' }, { id: 'bersaf_kumpul_mulai', text: 'Bersaf Kumpul = MULAI!' }, { id: 'berbanjar_kumpul_mulai', text: 'Berbanjar Kumpul = MULAI!' }, { id: 'selesai_himpun_kumpul', text: 'SELESAI!' } ]}
             ],
+            TEMPO_DATA: [
+                { name: 'Langkah Biasa', bpm: 96, description: 'Tempo standar untuk berjalan biasa (60 cm/langkah).' },
+                { name: 'Langkah Tegap', bpm: 96, description: 'Tempo untuk barisan dalam formasi tegap (60 cm/langkah).' },
+                { name: 'Langkah Perlahan', bpm: 30, description: 'Tempo lambat untuk upacara (40 cm/langkah).' },
+                { name: 'Langkah ke Samping', bpm: 70, description: 'Tempo untuk gerak ke samping (40 cm/langkah).' },
+                { name: 'Langkah ke Belakang', bpm: 70, description: 'Tempo untuk gerak ke belakang (40 cm/langkah).' },
+                { name: 'Langkah ke Depan', bpm: 70, description: 'Tempo untuk melangkah ke depan dari berhenti (60 cm/langkah).' },
+                { name: 'Langkah Lari', bpm: 166, description: 'Tempo cepat untuk gerakan berlari (70 cm/langkah).' },
+            ],
             ALL_COMMANDS_FLAT: null,
             
             state: {
@@ -494,6 +528,7 @@
                 currentPage: 'beranda',
                 isDirty: false, // Flag untuk autosave
                 autosaveInterval: null,
+                metronome: null, // Untuk menyimpan state Tone.js
             },
             
             elements: {},
@@ -507,6 +542,7 @@
                 this.ALL_COMMANDS_FLAT = this.PBB_COMMANDS.flatMap(c => c.items);
                 this.state.plan = this.getInitialPlan();
                 this.cacheDOMElements();
+                this.initTempo(); // Inisialisasi Tone.js
                 this.loadStateFromLocalStorage();
                 this.bindEventListeners();
                 this.checkForSharedPlan();
@@ -547,6 +583,8 @@
                     mobileHeaderTitle: document.getElementById('mobile-header-title'),
                     headerLogoBgDesktop: document.getElementById('header-logo-bg-desktop'),
                     headerLogoBgMobile: document.getElementById('header-logo-bg-mobile'),
+                    tempoGrid: document.getElementById('tempo-grid'),
+                    metronomeStatus: document.getElementById('metronome-status'),
                 };
             },
 
@@ -648,6 +686,10 @@
             renderApp(isPageChange = false) {
                 if (isPageChange) {
                     window.scrollTo(0, 0);
+                    // Hentikan metronom jika pindah halaman
+                    if (this.state.metronome && this.state.metronome.isPlaying) {
+                        this.stopMetronome();
+                    }
                 }
                 this.renderPage();
                 if (this.state.currentPage === 'beranda') {
@@ -656,6 +698,8 @@
                     this.renderEditorUI();
                 } else if (this.state.currentPage === 'riwayat') {
                     this.renderRiwayatPage();
+                } else if (this.state.currentPage === 'tempo') {
+                    this.renderTempoPage();
                 }
             },
 
@@ -690,7 +734,7 @@
                 if (activePage) activePage.classList.remove('hidden');
 
                 const pageTitles = {
-                    beranda: "Beranda", editor: "Editor", riwayat: "Riwayat", visualisasi: "Perpang"
+                    beranda: "Beranda", editor: "Editor", riwayat: "Riwayat", tempo: "Tempo", visualisasi: "Perpang"
                 };
                 this.elements.mobileHeaderTitle.textContent = pageTitles[this.state.currentPage] || "SIAP!";
 
@@ -916,8 +960,8 @@
                     return `
                         <div class="${cardClass} ${layoutClass}">
                              <div class="absolute -bottom-8 -right-8 text-white/5 z-0">
-                                <svg width="100" height="100" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M13 3A9 9 0 0 0 4 12H1L4.89 15.89L5 16L9 12H6A7 7 0 0 1 13 5C16.04 5 18.65 6.95 19.58 9.6L21.55 9.03C20.33 5.56 17.03 3 13 3M12 18A7 7 0 0 1 5.42 14.4L3.45 14.97C4.67 18.44 7.97 21 12 21A9 9 0 0 0 21 12H23L19.11 8.11L19 8L15 12H18A7 7 0 0 1 12 18Z" /></svg>
-                            </div>
+                                 <svg width="100" height="100" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M13 3A9 9 0 0 0 4 12H1L4.89 15.89L5 16L9 12H6A7 7 0 0 1 13 5C16.04 5 18.65 6.95 19.58 9.6L21.55 9.03C20.33 5.56 17.03 3 13 3M12 18A7 7 0 0 1 5.42 14.4L3.45 14.97C4.67 18.44 7.97 21 12 21A9 9 0 0 0 21 12H23L19.11 8.11L19 8L15 12H18A7 7 0 0 1 12 18Z" /></svg>
+                             </div>
                             <div class="flex-grow z-10">
                                 <h3 class="font-bold text-zinc-100">${plan.title || 'Rencana Tanpa Judul'}</h3>
                                 <p class="text-sm text-zinc-400 mt-1 line-clamp-2">${plan.description || 'Tidak ada deskripsi'}</p>
@@ -932,6 +976,25 @@
                                 <button class="delete-riwayat-btn btn bg-zinc-700/80 text-white px-4 py-2 text-sm rounded-lg" data-id="${plan.id}">Hapus</button>
                             </div>
                         </div>`;
+                },
+                tempoCard(tempo, index, isActive = false) {
+                    const playIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>`;
+                    const pauseIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>`;
+                    
+                    return `
+                        <div id="tempo-card-${index}" class="glass-card p-5 rounded-xl flex flex-col transition-all duration-300 ${isActive ? 'border-theme-focus' : ''}">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-lg font-bold text-zinc-100">${tempo.name}</h3>
+                                    <p class="text-theme-focus font-semibold">${tempo.bpm} BPM</p>
+                                </div>
+                                <button class="tempo-card-btn btn btn-primary rounded-full w-12 h-12 flex items-center justify-center" data-tempo-index="${index}">
+                                    ${isActive ? pauseIcon : playIcon}
+                                </button>
+                            </div>
+                            <p class="text-sm text-zinc-400 mt-3 flex-grow">${tempo.description}</p>
+                        </div>
+                    `;
                 }
             },
 
@@ -978,7 +1041,7 @@
             openCommandModal(contextType, targetId, insertIndex = -1) {
                 this.state.modalContext = { type: contextType, targetId, insertIndex };
                 const body = `<input type="text" id="modal-search" placeholder="Cari gerakan..." class="form-input w-full p-2 border rounded-lg mb-4">
-                                <div id="modal-command-list" class="max-h-[50vh] overflow-y-auto pr-2"></div>`;
+                                 <div id="modal-command-list" class="max-h-[50vh] overflow-y-auto pr-2"></div>`;
                 const modal = this.createModal('command-modal', 'Pilih Gerakan', body);
                 this.renderCommandModal();
                 modal.querySelector('#modal-search').addEventListener('input', (e) => this.renderCommandModal(e.target.value));
@@ -994,7 +1057,7 @@
                     const filteredItems = category.items.filter(item => item.text.toLowerCase().includes(lowerFilter));
                     if (filteredItems.length > 0) {
                         html += `<h4 class="text-md font-semibold text-theme mb-2 border-b border-zinc-700/50 pb-1">${category.category}</h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">`;
+                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-4">`;
                         filteredItems.forEach(item => {
                             html += `<button class="select-command-btn w-full text-left p-3 bg-zinc-700/50 rounded-lg border border-transparent hover:border-theme-focus hover:bg-theme-20 transition" data-command-id="${item.id}">${item.text}</button>`;
                         });
@@ -1188,6 +1251,7 @@
                 if (target.closest('#posts-nav-list button')) this.handleSelectPost(target.closest('button').dataset.postId);
                 if (target.closest('.load-riwayat-btn')) this.handleLoadPlan(target.closest('button').dataset.id);
                 if (target.closest('.delete-riwayat-btn')) this.handleDeleteRiwayat(target.closest('button').dataset.id);
+                if (target.closest('.tempo-card-btn')) this.toggleMetronome(parseInt(target.closest('button').dataset.tempoIndex, 10));
                 if (postEl) {
                     if (target.closest('.delete-post-btn')) this.handleDeletePost(postEl.dataset.postId);
                     if (target.closest('.edit-size-btn')) this.openSizeModal(postEl.dataset.postId);
@@ -1591,6 +1655,96 @@
                 });
             },
             
+            //======================================================================
+            // FUNGSI TEMPO / METRONOME
+            //======================================================================
+            initTempo() {
+                const synth = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 1 }
+                }).toDestination();
+                
+                const loop = new Tone.Loop(time => {
+                    synth.triggerAttackRelease("C5", "8n", time);
+                    // Visual feedback
+                    const activeCard = document.getElementById(`tempo-card-${this.state.metronome.activeCard}`);
+                    if (activeCard) {
+                        activeCard.style.transform = 'scale(1.03)';
+                        setTimeout(() => { activeCard.style.transform = 'scale(1)'; }, 100);
+                    }
+                }, "4n");
+
+                this.state.metronome = { synth, loop, isPlaying: false, activeCard: null };
+            },
+
+            renderTempoPage() {
+                this.elements.tempoGrid.innerHTML = this.TEMPO_DATA.map((tempo, index) => {
+                    const isActive = this.state.metronome.isPlaying && this.state.metronome.activeCard === index;
+                    return this.createHTML.tempoCard(tempo, index, isActive);
+                }).join('');
+                this.updateTempoUI();
+            },
+
+            toggleMetronome(index) {
+                const { metronome } = this.state;
+                const tempoData = this.TEMPO_DATA[index];
+
+                if (metronome.isPlaying && metronome.activeCard === index) {
+                    this.stopMetronome();
+                } else {
+                    if (metronome.isPlaying) {
+                        this.stopMetronome();
+                    }
+                    // Start Tone.js context on user interaction
+                    Tone.start();
+                    Tone.Transport.bpm.value = tempoData.bpm;
+                    metronome.loop.start(0);
+                    Tone.Transport.start();
+                    metronome.isPlaying = true;
+                    metronome.activeCard = index;
+                    this.updateTempoUI();
+                }
+            },
+
+            stopMetronome() {
+                const { metronome } = this.state;
+                if (metronome.isPlaying) {
+                    Tone.Transport.stop();
+                    metronome.loop.stop();
+                    metronome.isPlaying = false;
+                    metronome.activeCard = null;
+                    this.updateTempoUI();
+                }
+            },
+
+            updateTempoUI() {
+                const { metronome } = this.state;
+                const { metronomeStatus } = this.elements;
+                
+                // Update status text
+                if (metronome.isPlaying) {
+                    const currentTempo = this.TEMPO_DATA[metronome.activeCard];
+                    metronomeStatus.innerHTML = `Sedang memainkan: <b class="text-theme-focus">${currentTempo.name} (${currentTempo.bpm} BPM)</b>`;
+                } else {
+                    metronomeStatus.textContent = 'Metronom berhenti. Pilih salah satu tempo untuk memulai.';
+                }
+
+                // Update all cards
+                this.TEMPO_DATA.forEach((tempo, index) => {
+                    const card = document.getElementById(`tempo-card-${index}`);
+                    if (card) {
+                        const isActive = metronome.isPlaying && metronome.activeCard === index;
+                        card.classList.toggle('border-theme-focus', isActive);
+                        card.classList.toggle('bg-theme-20', isActive);
+                        const btn = card.querySelector('.tempo-card-btn');
+                        if (btn) {
+                            btn.innerHTML = this.createHTML.tempoCard(tempo, index, isActive).match(/<button.*?>([\s\S]*)<\/button>/)[1];
+                        }
+                    }
+                });
+            },
+
+
             //======================================================================
             // FUNGSI UTILITAS & EKSPOR
             //======================================================================
