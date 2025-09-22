@@ -273,6 +273,7 @@
                 this.checkForSharedPlan();
                 this.checkForAutoSave();
                 this.renderApp(true);
+                this.renderRiwayatPage(); // Ensure riwayat page is populated on initial load
                 this.showWelcomeModal();
                 this.state.autosaveInterval = setInterval(this.handleAutoSave.bind(this), 5000);
             },
@@ -432,14 +433,14 @@
                 }).join('');
             },
             renderRiwayatPage() {
-                const { riwayatListContainer } = this.elements;
+                const { riwayatList } = this.elements;
                 const { riwayat } = this.state;
                 if (riwayat.length === 0) {
-                    riwayatListContainer.innerHTML = `<div class="glass-card p-6 rounded-xl text-center"><p class="text-zinc-400">Belum ada riwayat.</p></div>`;
+                    riwayatList.innerHTML = `<div class="glass-card p-6 rounded-xl text-center"><p class="text-zinc-400">Belum ada riwayat.</p></div>`;
                     return;
                 }
                 const sortedRiwayat = [...riwayat].sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
-                riwayatListContainer.innerHTML = sortedRiwayat.map(plan => this.createHTML.riwayatItem(plan)).join('');
+                riwayatList.innerHTML = sortedRiwayat.map(plan => this.createHTML.riwayatItem(plan)).join('');
             },
             renderRecentRiwayat() {
                 const { recentRiwayatList, viewAllHistoryContainer } = this.elements;
@@ -1025,5 +1026,4 @@
     </script>
 </body>
 </html>
-
 
