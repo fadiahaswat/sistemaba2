@@ -66,7 +66,26 @@
     </style>
 </head>
 <body class="antialiased">
-    <div id="app-container">
+    <div id="password-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-backdrop" style="display: none;">
+        <div class="glass-card max-w-sm w-full p-8 rounded-2xl text-center anim-pop-in theme-beranda">
+            <div class="w-20 h-20 mx-auto rounded-2xl text-white flex items-center justify-center text-5xl shadow-md mb-6 bg-theme-focus">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-zinc-100 mb-2">Akses Terbatas</h2>
+            <p class="text-zinc-400 mb-6">Silakan masukkan kata sandi untuk melanjutkan.</p>
+            <form id="password-form" class="space-y-4">
+                <input type="password" id="password-input" class="form-input w-full p-3 text-center border rounded-lg text-lg" placeholder="******" required>
+                <button type="submit" class="btn btn-primary w-full py-3 rounded-lg font-bold">Buka Aplikasi</button>
+            </form>
+            <p id="password-error" class="text-red-400 text-sm mt-4 hidden">
+                Password salah. Coba lagi atau <a href="https://www.instagram.com/tontimuallimin/" target="_blank" class="font-bold underline hover:text-red-300">hubungi kami</a>.
+            </p>
+        </div>
+    </div>
+
+    <div id="app-container" style="visibility: hidden;">
         <div id="aurora-container" class="aurora-background"></div>
         <div class="min-h-screen flex flex-col relative z-10 pb-20 md:pb-0">
             <header class="bg-zinc-900/70 backdrop-blur-lg border-b border-zinc-800/50 sticky top-0 z-30">
@@ -232,6 +251,44 @@
     <div id="print-area" class="hidden" style="font-family: 'Inter', sans-serif; color: black; background: white; padding: 20px;"></div>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+        const passwordModal = document.getElementById('password-modal');
+        const passwordForm = document.getElementById('password-form');
+        const passwordInput = document.getElementById('password-input');
+        const passwordError = document.getElementById('password-error');
+        const appContainer = document.getElementById('app-container');
+        const correctPassword = 'sparman68';
+
+        const initializeApp = () => {
+            if (passwordModal) {
+                passwordModal.classList.add('anim-fade-out');
+                passwordModal.addEventListener('animationend', () => passwordModal.remove(), { once: true });
+            }
+            appContainer.style.visibility = 'visible';
+            appContainer.classList.add('anim-fade-in');
+            SiapApp.init();
+        };
+
+        if (sessionStorage.getItem('isVerified') === 'true') {
+            initializeApp();
+        } else {
+            if (passwordModal) {
+                passwordModal.style.display = 'flex';
+                passwordInput.focus();
+                passwordForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    if (passwordInput.value === correctPassword) {
+                        sessionStorage.setItem('isVerified', 'true');
+                        initializeApp();
+                    } else {
+                        passwordError.classList.remove('hidden');
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+                });
+            }
+        }
+
         const SiapApp = {
             PBB_COMMANDS: [
                 { category: 'Gerakan Tambahan', items: [ { id: 'custom_honor_jury', text: 'Kepada Dewan Juri, Hormat = GERAK!' }, { id: 'custom_report_start', text: 'LAPOR! (...)', isCustomText: true }, { id: 'custom_report_end', text: '(...) LAPORAN SELESAI!', isCustomText: true }, { id: 'custom_start', text: 'MATERI MULAI!' }, { id: 'custom_end', text: 'MATERI SELESAI!' } ]},
@@ -1042,10 +1099,9 @@
                 }
             },
         };
-        SiapApp.init();
+        // The SiapApp.init() call is now handled by the password logic
     });
     </script>
 </body>
 </html>
-
 
