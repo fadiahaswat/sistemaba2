@@ -11,10 +11,10 @@ export const HelperBox = () => {
     const text = formatPlanAsText(plan);
     try {
       await navigator.clipboard.writeText(text);
-      showToast('Teks skenario berhasil disalin ke clipboard!');
+      showToast('Teks skenario wis kasil disalin rek!');
     } catch {
       setManualCopyText(text);
-      showToast('Gunakan textarea di bawah untuk menyalin.');
+      showToast('Salin manual seko kothak ngisor iki ya.');
     }
   };
 
@@ -23,17 +23,17 @@ export const HelperBox = () => {
       const shareUrl = `${window.location.origin}${window.location.pathname}?plan=${btoa(JSON.stringify(plan))}`;
       if (navigator.share) {
         await navigator.share({
-          title: `Rencana: ${plan.title || 'Aba-aba mangan perpunk!'}`,
-          text: `Lihat rencana "${plan.title || 'Aba-aba'}" dari mangan perpunk!!`,
+          title: `Rancangan: ${plan.title || 'Aba-aba mangan perpunk!'}`,
+          text: `Delok racikan "${plan.title || 'Aba-aba'}" nang mangan perpunk! Ojo lali disimak rek!`,
           url: shareUrl
         });
       } else {
         await navigator.clipboard.writeText(shareUrl);
-        showToast('Tautan berbagi telah disalin ke clipboard!');
+        showToast('Tautan wis disalin nang clipboard rek!');
       }
     } catch (e) {
       if (e.name !== 'AbortError') {
-        showToast('Gagal membagikan tautan.');
+        showToast('Gagal mbagikake tautan.');
       }
     }
   };
@@ -48,9 +48,9 @@ export const HelperBox = () => {
             </svg>
           </div>
           <div className="flex-grow">
-            <span className="brutal-badge bg-amber-400 text-black mb-1">COMMAND CONSOLE</span>
-            <p className="font-black text-lg text-white uppercase tracking-tight">Asisten Komando mangan perpunk!</p>
-            <p className="text-xs text-zinc-300 font-mono">Pilih tombol aksi taktis untuk menyimpan atau mengekspor rancangan.</p>
+            <span className="brutal-badge bg-amber-400 text-black mb-1">DAPUR KOMANDO</span>
+            <p className="font-black text-lg text-white uppercase tracking-tight">Kothak Piranti mangan perpunk!</p>
+            <p className="text-xs text-zinc-300 font-mono">Pencet tombol gawe nyimpen, ngekspor, utawa mbagikake racikan skenario.</p>
           </div>
         </div>
 
@@ -59,26 +59,26 @@ export const HelperBox = () => {
             <button
               onClick={savePlanToHistory}
               className="btn btn-primary text-xs flex-1 flex flex-col items-center justify-center gap-1 p-2 h-16 min-w-[70px]"
-              title="Simpan Rencana"
+              title="Simpen Skenario"
             >
               <Save className="h-5 w-5" />
-              <span>Simpan</span>
+              <span>Simpen</span>
             </button>
             <button
               onClick={newPlan}
               className="btn bg-zinc-800 hover:bg-zinc-700 text-white text-xs flex-1 flex flex-col items-center justify-center gap-1 p-2 h-16 min-w-[70px]"
-              title="Rencana Baru"
+              title="Gawe Anyar"
             >
               <PlusSquare className="h-5 w-5" />
-              <span>Baru</span>
+              <span>Anyar</span>
             </button>
             <button
               onClick={duplicatePlan}
               className="btn bg-zinc-800 hover:bg-zinc-700 text-white text-xs flex-1 flex flex-col items-center justify-center gap-1 p-2 h-16 min-w-[70px]"
-              title="Duplikat"
+              title="Gandakno"
             >
               <Copy className="h-5 w-5" />
-              <span>Duplikat</span>
+              <span>Gandakno</span>
             </button>
             <button
               onClick={handleCopyText}
@@ -99,18 +99,18 @@ export const HelperBox = () => {
             <button
               onClick={() => exportPlanToDocx(plan)}
               className="btn bg-zinc-800 hover:bg-zinc-700 text-white text-xs flex-1 flex flex-col items-center justify-center gap-1 p-2 h-16 min-w-[70px]"
-              title="Ekspor DOCX"
+              title="Ekspor Word"
             >
               <Download className="h-5 w-5" />
-              <span>DOCX</span>
+              <span>Word</span>
             </button>
             <button
               onClick={handleShare}
               className="btn bg-zinc-800 hover:bg-zinc-700 text-white text-xs flex-1 flex flex-col items-center justify-center gap-1 p-2 h-16 min-w-[70px]"
-              title="Bagikan"
+              title="Bagi Tautan"
             >
               <Share2 className="h-5 w-5" />
-              <span>Bagikan</span>
+              <span>Bagi</span>
             </button>
           </div>
 

@@ -32,18 +32,18 @@ export const Tempo = () => {
     <div className="page-content anim-fade-in max-w-6xl mx-auto space-y-8 py-6">
       <div className="text-center">
         <div className="inline-block mb-2">
-          <span className="brutal-badge bg-purple-400 text-black">AUDIO CADENCE // METRONOME ENGINE</span>
+          <span className="brutal-badge bg-purple-400 text-black">IRAMA LANGKAH // METRONOME ENGINE</span>
         </div>
         <h1 className="text-3xl md:text-5xl font-black text-white uppercase flex items-center justify-center gap-3">
-          <Volume2 className="h-9 w-9 text-purple-400" /> TEMPO GERAKAN PBB
+          <Volume2 className="h-9 w-9 text-purple-400" /> KETUKAN TEMPO PBB
         </h1>
         <p className="mt-2 text-zinc-300 text-sm font-mono max-w-xl mx-auto">
           {currentActiveItem ? (
             <span className="bg-purple-400 text-black font-extrabold px-3 py-1 border-2 border-black inline-block shadow-[2px_2px_0px_#000]">
-              METRONOM BERJALAN: {currentActiveItem.name.toUpperCase()} ({currentActiveItem.bpm} BPM) [AKTIF]
+              METRONOM MLAKU: {currentActiveItem.name.toUpperCase()} ({currentActiveItem.bpm} BPM) [AKTIF]
             </span>
           ) : (
-            'PILIH SALAH SATU TEMPO KETUKAN UNTUK MEMULAI KETUKAN AUDIO TAKTIS.'
+            'PILIH SALAH SIJI KETUKAN BEN LANGKAH PASUKAN RAMPAG ORA KESUSU REK!'
           )}
         </p>
       </div>

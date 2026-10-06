@@ -7,5 +7,8 @@ export default defineConfig({
   server: {
     port: 1918,
     strictPort: true,
+    watch: {
+      ignored: ['**/*.svg', '**/*.pdf']
+    }
   },
 });

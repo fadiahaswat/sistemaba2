@@ -6,10 +6,10 @@ export const BottomNav = () => {
   const { currentPage, setCurrentPage } = usePlan();
 
   const navs = [
-    { id: 'beranda', label: 'Beranda', icon: Home },
-    { id: 'viewer', label: 'Baca', icon: BookOpen },
-    { id: 'editor', label: 'Editor', icon: Edit3 },
-    { id: 'riwayat', label: 'Riwayat', icon: History },
+    { id: 'beranda', label: 'Omah', icon: Home },
+    { id: 'viewer', label: 'Woco', icon: BookOpen },
+    { id: 'editor', label: 'Racik', icon: Edit3 },
+    { id: 'riwayat', label: 'Lawas', icon: History },
     { id: 'tempo', label: 'Tempo', icon: Volume2 }
   ];
 
@@ -18,13 +18,22 @@ export const BottomNav = () => {
       <div className="flex justify-around items-center h-16">
         {navs.map(({ id, label, icon: Icon }) => {
           const isActive = currentPage === id;
+
+          const activeMobileColorMap = {
+            beranda: 'text-rose-500 border-rose-500',
+            viewer: 'text-cyan-400 border-cyan-400',
+            editor: 'text-amber-400 border-amber-400',
+            riwayat: 'text-blue-500 border-blue-500',
+            tempo: 'text-purple-400 border-purple-400'
+          };
+
           return (
             <button
               key={id}
               onClick={() => setCurrentPage(id)}
               className={`flex flex-col items-center justify-center w-full h-full transition-all ${
                 isActive
-                  ? 'bg-zinc-900 text-theme-focus border-t-2 border-theme-focus font-bold'
+                  ? `bg-zinc-900 ${activeMobileColorMap[id] || 'text-amber-400 border-amber-400'} border-t-2 font-bold`
                   : 'text-zinc-400 hover:text-white'
               }`}
             >

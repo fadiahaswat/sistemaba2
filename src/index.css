@@ -19,6 +19,10 @@
   --theme-color-hex: #ff2a5f;
   --theme-color-focus: #ff0055;
 }
+.theme-viewer, .theme-viewer-cta {
+  --theme-color-hex: #06b6d4;
+  --theme-color-focus: #22d3ee;
+}
 .theme-editor, .theme-editor-cta {
   --theme-color-hex: #ff9800;
   --theme-color-focus: #ffab00;

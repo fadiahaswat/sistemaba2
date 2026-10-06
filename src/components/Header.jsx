@@ -5,12 +5,12 @@ export const Header = () => {
   const { currentPage, setCurrentPage } = usePlan();
 
   const navItems = [
-    { id: 'beranda', label: 'Beranda' },
-    { id: 'viewer', label: 'Mode Baca' },
-    { id: 'editor', label: 'Editor' },
-    { id: 'riwayat', label: 'Riwayat' },
-    { id: 'tempo', label: 'Tempo' },
-    { id: 'visualisasi', label: 'Dokumen Perpang' }
+    { id: 'beranda', label: 'Omah' },
+    { id: 'viewer', label: 'Woco & Hafalno' },
+    { id: 'editor', label: 'Racik Aba-aba' },
+    { id: 'riwayat', label: 'Sajian Lawas' },
+    { id: 'tempo', label: 'Ketukan Tempo' },
+    { id: 'visualisasi', label: 'Pangan Perpang' }
   ];
 
   return (
@@ -21,12 +21,14 @@ export const Header = () => {
             <img src="./logo-tonti-muallimin.png" alt="Logo Tonti Mu'allimin" className="w-10 h-10 object-contain drop-shadow" />
             <div>
               <h1 className="text-xl font-extrabold text-white tracking-tight uppercase group-hover:text-theme-focus transition-colors">mangan perpunk!</h1>
-              <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-400 block -mt-1 font-bold">BRUTALIST EDITION</span>
+              <span className="text-[10px] uppercase font-mono tracking-wider text-amber-400 block -mt-1 font-bold">BEN DADI SI PALING PERPUNK!</span>
             </div>
           </button>
           <div className="flex items-center gap-2 md:hidden">
             <img src="./logo-tonti-muallimin.png" alt="Logo" className="w-8 h-8 object-contain drop-shadow" />
-            <h2 className="text-base font-black text-white uppercase tracking-wider">{currentPage === 'visualisasi' ? 'Baca Perpang' : currentPage}</h2>
+            <h2 className="text-base font-black text-white uppercase tracking-wider">
+              {currentPage === 'visualisasi' ? 'Pangan Perpang' : currentPage === 'viewer' ? 'Woco & Hafalno' : currentPage === 'editor' ? 'Racik Aba-aba' : currentPage === 'riwayat' ? 'Sajian Lawas' : currentPage === 'tempo' ? 'Ketukan Tempo' : 'Omah'}
+            </h2>
           </div>
         </div>
 
@@ -34,13 +36,24 @@ export const Header = () => {
           <nav className="hidden md:flex items-center gap-2 text-xs font-black uppercase tracking-wider">
             {navItems.map((item) => {
               const isActive = currentPage === item.id;
+
+              // Warna unik khas untuk tiap halaman saat aktif
+              const activeColorMap = {
+                beranda: 'bg-rose-500 text-white shadow-[2px_2px_0px_#000]',
+                viewer: 'bg-cyan-400 text-black shadow-[2px_2px_0px_#000]',
+                editor: 'bg-amber-400 text-black shadow-[2px_2px_0px_#000]',
+                riwayat: 'bg-blue-500 text-black shadow-[2px_2px_0px_#000]',
+                tempo: 'bg-purple-400 text-black shadow-[2px_2px_0px_#000]',
+                visualisasi: 'bg-emerald-400 text-black shadow-[2px_2px_0px_#000]'
+              };
+
               return (
                 <button
                   key={item.id}
                   onClick={() => setCurrentPage(item.id)}
                   className={`px-3.5 py-1.5 border-2 border-black transition-transform ${
                     isActive
-                      ? 'bg-theme text-black font-extrabold shadow-[2px_2px_0px_#000000] -translate-y-0.5'
+                      ? `${activeColorMap[item.id] || 'bg-amber-400 text-black'} font-extrabold -translate-y-0.5`
                       : 'bg-zinc-900 text-zinc-300 hover:bg-zinc-800 hover:text-white hover:-translate-y-0.5 shadow-[2px_2px_0px_#000000]'
                   }`}
                 >

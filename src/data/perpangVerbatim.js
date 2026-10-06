@@ -242,7 +242,7 @@ export const PERPANG_VERBATIM = {
         ]
       },
       {
-        "lead": "b. Setelah lurus, maka komandan pasukan memberi aba- aba “TEGAK = GERAK” dan semua anggota secara serentak kembali ke sikap sempurna. Bagian Ketiga Berhitung",
+        "lead": "b. Setelah lurus, maka komandan pasukan memberi aba- aba “TEGAK = GERAK” dan semua anggota secara serentak kembali ke sikap sempurna.",
         "subitems": []
       }
     ]
@@ -345,14 +345,10 @@ export const PERPANG_VERBATIM = {
     ]
   },
   "periksa_kerapian_mulai": {
-    "pasal": "Pasal 22",
+    "pasal": "Pasal 22 Ayat (1)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan periksa kerapian biasa diatur sebagai berikut:",
     "paragraphs": [
-      {
-        "lead": "(1) Pelaksanaan periksa kerapian biasa dilaksanakan sebagai berikut:",
-        "subitems": []
-      },
       {
         "lead": "a. saat aba-aba “PERIKSA KERAPIAN” pasukan melaksanakan sikap sempurna;",
         "subitems": []
@@ -406,67 +402,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "(2) Pelaksanaan periksa kerapian parade dilaksanakan sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. pada aba-aba peringatan melaksanakan sikap sempurna;",
-        "subitems": []
-      },
-      {
-        "lead": "b. saat aba-aba pelaksanaan “MULAI”;",
-        "subitems": []
-      },
-      {
-        "lead": "c. badan dibungkukkan 900, kaki lurus;",
-        "subitems": []
-      },
-      {
-        "lead": "d. kedua telapak tangan membuka, kelima jari rapat dan tangan kanan menyilang diatas punggung tangan kiri menepuk dari bagian bawah secara berurutan;",
-        "subitems": []
-      },
-      {
-        "lead": "e. dimulai dari menepuk kaki kiri dan kaki kanan pada lipatan celana bagian bawah;",
-        "subitems": []
-      },
-      {
-        "lead": "f. menepuk saku celana sebelah kiri dan kanan bagian lutut;",
-        "subitems": []
-      },
-      {
-        "lead": "g. bersamaan badan ditegakkan, menarik ujung baju bagian bawah depan;",
-        "subitems": []
-      },
-      {
-        "lead": "h. menarik ujung baju bagian bawah belakang;",
-        "subitems": []
-      },
-      {
-        "lead": "i. menepuk lidah/tutup saku dada bagian kiri dan kanan;",
-        "subitems": []
-      },
-      {
-        "lead": "j. menepuk kerah baju bagian kiri dan kanan’",
-        "subitems": []
-      },
-      {
-        "lead": "k. membetulkan tutup kepala (topi/baret);",
-        "subitems": []
-      },
-      {
-        "lead": "l. selanjutnya tangan kembali ke sikap sempurna;",
-        "subitems": []
-      },
-      {
-        "lead": "m. setelah ada aba-aba “SELESAI” kembali ke sikap istirahat; dan",
-        "subitems": []
-      },
-      {
-        "lead": "n. tiap bagian yang ditepuk selalu diikuti pandangan mata.",
-        "subitems": []
-      },
-      {
-        "lead": "(3) Pada pelaksanaan membetulkan tutup kepala topi kedua tangan memegang pinggiran klep dengan ujung jari dari samping ke depan bersamaan, sedangkan baret kedua telapak tangan membuka, kelima jari rapat dan tangan kanan menyilang diatas tangan kiri, diletakkan di atas kepala dan diluncurkan sesuai kemiringan baret. Bagian Kelima Buka dan TutupBarisan",
+        "lead": "(3) Pada pelaksanaan membetulkan tutup kepala topi kedua tangan memegang pinggiran klep dengan ujung jari dari samping ke depan bersamaan, sedangkan baret kedua telapak tangan membuka, kelima jari rapat dan tangan kanan menyilang diatas tangan kiri, diletakkan di atas kepala dan diluncurkan sesuai kemiringan baret.",
         "subitems": []
       }
     ]
@@ -483,70 +419,10 @@ export const PERPANG_VERBATIM = {
     ]
   },
   "parade_periksa_kerapian_mulai": {
-    "pasal": "Pasal 22",
+    "pasal": "Pasal 22 Ayat (2)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan periksa kerapian parade diatur sebagai berikut:",
     "paragraphs": [
-      {
-        "lead": "(1) Pelaksanaan periksa kerapian biasa dilaksanakan sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. saat aba-aba “PERIKSA KERAPIAN” pasukan melaksanakan sikap sempurna;",
-        "subitems": []
-      },
-      {
-        "lead": "b. saat aba-aba “MULAI” pasukan membungkukkan badan 900 dengan kaki lurus;",
-        "subitems": []
-      },
-      {
-        "lead": "c. kedua tangan tergantung lurus kebawah, kelima jari dibuka;",
-        "subitems": []
-      },
-      {
-        "lead": "d. selanjutnya merapikan bagian bawah secara berurutan;",
-        "subitems": []
-      },
-      {
-        "lead": "e. dimulai dari kaki kiri dan kaki kanan bagian tali sepatu;",
-        "subitems": []
-      },
-      {
-        "lead": "f. dilanjutkan merapikan saku celana bagian lutut sebelah kiri dan kanan (bila menggunakan PDL);",
-        "subitems": []
-      },
-      {
-        "lead": "g. berikutnya menarik ujung baju bagian bawah depan;",
-        "subitems": []
-      },
-      {
-        "lead": "h. menarik ujung baju bagian bawah belakang;",
-        "subitems": []
-      },
-      {
-        "lead": "i. merapikan lidah/tutup saku dada bagian kiri dan kanan;",
-        "subitems": []
-      },
-      {
-        "lead": "j. merapikan kerah baju bagian kiri dan kanan.",
-        "subitems": []
-      },
-      {
-        "lead": "k. membetulkan tutup kepala (topi/baret);",
-        "subitems": []
-      },
-      {
-        "lead": "l. selanjutnya tangan kembali ke sikap sempurna; dan",
-        "subitems": []
-      },
-      {
-        "lead": "m. setelah ada aba-aba “SELESAI” pasukan kembali ke sikap istirahat.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan periksa kerapian parade dilaksanakan sebagai berikut:",
-        "subitems": []
-      },
       {
         "lead": "a. pada aba-aba peringatan melaksanakan sikap sempurna;",
         "subitems": []
@@ -584,7 +460,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "j. menepuk kerah baju bagian kiri dan kanan’",
+        "lead": "j. menepuk kerah baju bagian kiri dan kanan;",
         "subitems": []
       },
       {
@@ -604,52 +480,40 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "(3) Pada pelaksanaan membetulkan tutup kepala topi kedua tangan memegang pinggiran klep dengan ujung jari dari samping ke depan bersamaan, sedangkan baret kedua telapak tangan membuka, kelima jari rapat dan tangan kanan menyilang diatas tangan kiri, diletakkan di atas kepala dan diluncurkan sesuai kemiringan baret. Bagian Kelima Buka dan TutupBarisan",
+        "lead": "(3) Pada pelaksanaan membetulkan tutup kepala topi kedua tangan memegang pinggiran klep dengan ujung jari dari samping ke depan bersamaan, sedangkan baret kedua telapak tangan membuka, kelima jari rapat dan tangan kanan menyilang diatas tangan kiri, diletakkan di atas kepala dan diluncurkan sesuai kemiringan baret.",
         "subitems": []
       }
     ]
   },
   "buka_barisan_jalan": {
-    "pasal": "Pasal 24",
+    "pasal": "Pasal 24 Ayat (1)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan buka barisan diatur sebagai berikut:",
     "paragraphs": [
       {
-        "lead": "(1) Pelaksanaan buka barisan diatur dengan ketentuan yaitu pada saat aba-aba pelaksanaan “JALAN”, banjar kanan melangkah satu langkah ke kanan dan banjar kiri melangkah satu langkah ke kiri, sedangkan banjar tengah tetap ditempat.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan tutup barisan diatur dengan ketentuan yaitu pada saat pelaksanaan “JALAN”, banjar kanan melangkah satu langkah ke kiri dan banjar kiri melangkah satu langkah ke kanan, sedangkan banjar tengah tetap di tempat. Bagian Keenam Perubahan Arah",
+        "lead": "Pelaksanaan buka barisan diatur dengan ketentuan yaitu pada saat aba-aba pelaksanaan “JALAN”, banjar kanan melangkah satu langkah ke kanan dan banjar kiri melangkah satu langkah ke kiri, sedangkan banjar tengah tetap ditempat.",
         "subitems": []
       }
     ]
   },
   "tutup_barisan_jalan": {
-    "pasal": "Pasal 24",
+    "pasal": "Pasal 24 Ayat (2)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan tutup barisan diatur sebagai berikut:",
     "paragraphs": [
       {
-        "lead": "(1) Pelaksanaan buka barisan diatur dengan ketentuan yaitu pada saat aba-aba pelaksanaan “JALAN”, banjar kanan melangkah satu langkah ke kanan dan banjar kiri melangkah satu langkah ke kiri, sedangkan banjar tengah tetap ditempat.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan tutup barisan diatur dengan ketentuan yaitu pada saat pelaksanaan “JALAN”, banjar kanan melangkah satu langkah ke kiri dan banjar kiri melangkah satu langkah ke kanan, sedangkan banjar tengah tetap di tempat. Bagian Keenam Perubahan Arah",
+        "lead": "Pelaksanaan tutup barisan diatur dengan ketentuan yaitu pada saat pelaksanaan “JALAN”, banjar kanan melangkah satu langkah ke kiri dan banjar kiri melangkah satu langkah ke kanan, sedangkan banjar tengah tetap di tempat.",
         "subitems": []
       }
     ]
   },
   "hadap_kanan_gerak": {
-    "pasal": "Pasal 26",
+    "pasal": "Pasal 26 Ayat (1)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan kegiatan hadap kanan diatur sebagai berikut:",
     "paragraphs": [
       {
-        "lead": "(1) Pelaksanaan kegiatan hadap kanan diatur sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. aba-aba “HADAP KANAN = GERAK”.",
+        "lead": "a. aba-aba “HADAP KANAN = GERAK”;",
         "subitems": []
       },
       {
@@ -662,61 +526,17 @@ export const PERPANG_VERBATIM = {
       },
       {
         "lead": "d. tumit kaki kiri dirapatkan kembali ke tumit kaki kanan dengan tidak diangkat.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan kegiatan hadap kiri diatur sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. aba-aba “HADAP KIRI = GERAK”.",
-        "subitems": []
-      },
-      {
-        "lead": "b. saat aba-aba pelaksanaan kaki kanan dimajukan melintang di depan kaki kiri, lekukan kaki kanan berada di ujung kaki kiri dengan jarak satu kepalan tangan, berat badan berpindah ke kaki kiri, badan dan pandangan mata tetap lurus kedepan;",
-        "subitems": []
-      },
-      {
-        "lead": "c. tumit kaki kiri dan badan diputar ke kiri 90º dengan poros tumit kaki kiri; dan",
-        "subitems": []
-      },
-      {
-        "lead": "d. tumit kaki kanan dirapatkan kembali ke tumit kaki kiri dengan tidak diangkat.",
         "subitems": []
       }
     ]
   },
   "hadap_kiri_gerak": {
-    "pasal": "Pasal 26",
+    "pasal": "Pasal 26 Ayat (2)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan kegiatan hadap kiri diatur sebagai berikut:",
     "paragraphs": [
       {
-        "lead": "(1) Pelaksanaan kegiatan hadap kanan diatur sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. aba-aba “HADAP KANAN = GERAK”.",
-        "subitems": []
-      },
-      {
-        "lead": "b. saat aba-aba pelaksanaan kaki kiri dimajukan melintang di depan kaki kanan, lekukan kaki kiri berada di ujung kaki kanan dengan jarak satu kepalan tangan, berat badan berpindah ke kaki kanan, badan dan pandangan mata tetap lurus kedepan;",
-        "subitems": []
-      },
-      {
-        "lead": "c. tumit kaki kanan dan badan diputar ke kanan 90º dengan poros tumit kaki kanan; dan",
-        "subitems": []
-      },
-      {
-        "lead": "d. tumit kaki kiri dirapatkan kembali ke tumit kaki kanan dengan tidak diangkat.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan kegiatan hadap kiri diatur sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. aba-aba “HADAP KIRI = GERAK”.",
+        "lead": "a. aba-aba “HADAP KIRI = GERAK”;",
         "subitems": []
       },
       {
@@ -734,14 +554,10 @@ export const PERPANG_VERBATIM = {
     ]
   },
   "hadap_serong_kanan_gerak": {
-    "pasal": "Pasal 27",
+    "pasal": "Pasal 27 Ayat (1)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan kegiatan hadap serong kanan diatur dengan ketentuan sebagai berikut:",
     "paragraphs": [
-      {
-        "lead": "(1) Pelaksanaan kegiatan hadap serong kanan diatur dengan ketentuan sebagai berikut:",
-        "subitems": []
-      },
       {
         "lead": "a. aba-aba “HADAP SERONG KANAN = GERAK”;",
         "subitems": []
@@ -756,61 +572,17 @@ export const PERPANG_VERBATIM = {
       },
       {
         "lead": "d. tumit kaki kiri dirapatkan ke tumit kaki kanan dengan tidak diangkat.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan kegiatan hadap serong kiri diatur dengan ketentuan sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. aba-aba “HADAP SERONG KIRI = GERAK”",
-        "subitems": []
-      },
-      {
-        "lead": "b. pada aba-aba pelaksanaan kaki kanan dimajukan sejajar dengan kaki kiri, berjarak 20 cm atau selebar bahu, posisi badan dan pandangan mata tetap lurus kedepan;",
-        "subitems": []
-      },
-      {
-        "lead": "c. kaki kiri dan badan diputar ke kiri 45º dengan poros tumit kaki kiri; dan",
-        "subitems": []
-      },
-      {
-        "lead": "d. tumit kaki kanan dirapatkan ke tumit kaki kiri dengan tidak diangkat.",
         "subitems": []
       }
     ]
   },
   "hadap_serong_kiri_gerak": {
-    "pasal": "Pasal 27",
+    "pasal": "Pasal 27 Ayat (2)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan kegiatan hadap serong kiri diatur dengan ketentuan sebagai berikut:",
     "paragraphs": [
       {
-        "lead": "(1) Pelaksanaan kegiatan hadap serong kanan diatur dengan ketentuan sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. aba-aba “HADAP SERONG KANAN = GERAK”;",
-        "subitems": []
-      },
-      {
-        "lead": "b. pada aba-aba pelaksanaan kaki kiri dimajukan sejajar dengan kaki kanan, berjarak 20 cm atau selebar bahu, posisi badan dan pandangan mata tetap lurus kedepan;",
-        "subitems": []
-      },
-      {
-        "lead": "c. kaki kanan dan badan diputar ke kanan 45º dengan poros tumit kaki kanan; dan",
-        "subitems": []
-      },
-      {
-        "lead": "d. tumit kaki kiri dirapatkan ke tumit kaki kanan dengan tidak diangkat.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan kegiatan hadap serong kiri diatur dengan ketentuan sebagai berikut:",
-        "subitems": []
-      },
-      {
-        "lead": "a. aba-aba “HADAP SERONG KIRI = GERAK”",
+        "lead": "a. aba-aba “HADAP SERONG KIRI = GERAK”;",
         "subitems": []
       },
       {
@@ -845,7 +617,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "d. tumit kaki kiri dirapatkan ke tumit kaki kanan tidak diangkat. Bagian Ketujuh Bubar Jalan",
+        "lead": "d. tumit kaki kiri dirapatkan ke tumit kaki kanan tidak diangkat.",
         "subitems": []
       }
     ]
@@ -884,20 +656,16 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "h. pelaksanaan bubar jalan dilaksanakan mulai tingkat kelompok sampai tingkat peleton. Bagian Kedelapan Jalan ditempat",
+        "lead": "h. pelaksanaan bubar jalan dilaksanakan mulai tingkat kelompok sampai tingkat peleton.",
         "subitems": []
       }
     ]
   },
   "jalan_ditempat_gerak": {
-    "pasal": "Pasal 31",
+    "pasal": "Pasal 31 Ayat (1)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan jalan ditempat diatur dengan ketentuan:",
     "paragraphs": [
-      {
-        "lead": "(1) Pelaksanaan jalan ditempat diatur dengan ketentuan:",
-        "subitems": []
-      },
       {
         "lead": "a. pada aba-aba pelaksanaan, kaki kiri dan kanan diangkat secara bergantian dimulai dari kaki kiri;",
         "subitems": []
@@ -916,59 +684,15 @@ export const PERPANG_VERBATIM = {
       },
       {
         "lead": "e. lengan lurus dirapatkan pada badan dengan tidak dilenggangkan.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan berhenti dari jalan ditempat diatur dengan ketentuan:",
-        "subitems": []
-      },
-      {
-        "lead": "a. aba-aba pelaksanaan diberikan pada waktu kaki kanan atau kaki kiri jatuh ditanah kemudian ditambah satu Langkah;",
-        "subitems": []
-      },
-      {
-        "lead": "b. selanjutnya kaki kanan atau kaki kiri dirapatkan; dan",
-        "subitems": []
-      },
-      {
-        "lead": "c. kembali kesikap sempurna. BAB IV GERAKAN BERJALAN ATAU BERLARI TANPA SENJATA Bagian Kesatu Umum",
         "subitems": []
       }
     ]
   },
   "henti_gerak_ditempat": {
-    "pasal": "Pasal 31",
+    "pasal": "Pasal 31 Ayat (2)",
     "source": "Perpang TNI No. 58 Tahun 2018",
-    "heading": "Ketentuan pelaksanaan diatur sebagai berikut:",
+    "heading": "Pelaksanaan berhenti dari jalan ditempat diatur dengan ketentuan:",
     "paragraphs": [
-      {
-        "lead": "(1) Pelaksanaan jalan ditempat diatur dengan ketentuan:",
-        "subitems": []
-      },
-      {
-        "lead": "a. pada aba-aba pelaksanaan, kaki kiri dan kanan diangkat secara bergantian dimulai dari kaki kiri;",
-        "subitems": []
-      },
-      {
-        "lead": "b. posisi paha dan badan membentuk sudut 90º (horizontal);",
-        "subitems": []
-      },
-      {
-        "lead": "c. ujung kaki yang diangkat menuju kebawah, ujung sepatu kaki yang diangkat tidak lebih kedepan atau lebih ke belakang;",
-        "subitems": []
-      },
-      {
-        "lead": "d. badan tegak pandangan mata lurus ke depan; dan",
-        "subitems": []
-      },
-      {
-        "lead": "e. lengan lurus dirapatkan pada badan dengan tidak dilenggangkan.",
-        "subitems": []
-      },
-      {
-        "lead": "(2) Pelaksanaan berhenti dari jalan ditempat diatur dengan ketentuan:",
-        "subitems": []
-      },
       {
         "lead": "a. aba-aba pelaksanaan diberikan pada waktu kaki kanan atau kaki kiri jatuh ditanah kemudian ditambah satu Langkah;",
         "subitems": []
@@ -978,7 +702,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "c. kembali kesikap sempurna. BAB IV GERAKAN BERJALAN ATAU BERLARI TANPA SENJATA Bagian Kesatu Umum",
+        "lead": "c. kembali kesikap sempurna.",
         "subitems": []
       }
     ]
@@ -1266,7 +990,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "c. lengan tidak melenggang dan sikap badan seperti dalam sikap sempurna. Paragraf 2 Gerakan dari Berhenti ke Berlari",
+        "lead": "c. lengan tidak melenggang dan sikap badan seperti dalam sikap sempurna.",
         "subitems": []
       }
     ]
@@ -1390,7 +1114,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "c. lengan tidak melenggang dan sikap badan seperti dalam sikap sempurna. Paragraf 2 Gerakan dari Berhenti ke Berlari",
+        "lead": "c. lengan tidak melenggang dan sikap badan seperti dalam sikap sempurna.",
         "subitems": []
       }
     ]
@@ -1514,7 +1238,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "c. lengan tidak melenggang dan sikap badan seperti dalam sikap sempurna. Paragraf 2 Gerakan dari Berhenti ke Berlari",
+        "lead": "c. lengan tidak melenggang dan sikap badan seperti dalam sikap sempurna.",
         "subitems": []
       }
     ]
@@ -1638,7 +1362,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "c. lengan tidak melenggang dan sikap badan seperti dalam sikap sempurna. Paragraf 2 Gerakan dari Berhenti ke Berlari",
+        "lead": "c. lengan tidak melenggang dan sikap badan seperti dalam sikap sempurna.",
         "subitems": []
       }
     ]
@@ -1800,7 +1524,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” tidak dapat dilaksanakan dari posisi langkah tegap. Paragraf 2 Gerakan dari Berjalan ke Berjalan",
+        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” tidak dapat dilaksanakan dari posisi langkah tegap.",
         "subitems": []
       }
     ]
@@ -1831,7 +1555,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” tidak dapat dilaksanakan dari posisi langkah tegap. Paragraf 2 Gerakan dari Berjalan ke Berjalan",
+        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” tidak dapat dilaksanakan dari posisi langkah tegap.",
         "subitems": []
       }
     ]
@@ -1970,7 +1694,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” tidak dapat dilaksanakan dari posisi langkah tegap. Paragraf 2 Gerakan dari Berjalan ke Berjalan",
+        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” tidak dapat dilaksanakan dari posisi langkah tegap.",
         "subitems": []
       }
     ]
@@ -2001,7 +1725,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” tidak dapat dilaksanakan dari posisi langkah tegap. Paragraf 2 Gerakan dari Berjalan ke Berjalan",
+        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” tidak dapat dilaksanakan dari posisi langkah tegap.",
         "subitems": []
       }
     ]
@@ -2032,7 +1756,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "d. pada aba-aba pelaksanaan, kaki kiri dihentakkan selanjutnya lari dengan sedikit melayang dan telapak kaki diletakkan dengan ujung telapak kaki menapak terlebih dahulu, serta lengan dilenggangkan. Paragraf 3 Gerakan dari Berjalan ke Berjalan",
+        "lead": "d. pada aba-aba pelaksanaan, kaki kiri dihentakkan selanjutnya lari dengan sedikit melayang dan telapak kaki diletakkan dengan ujung telapak kaki menapak terlebih dahulu, serta lengan dilenggangkan.",
         "subitems": []
       }
     ]
@@ -2055,7 +1779,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "d. aba-aba pelaksanaan diberikan pada waktu kaki kanan/kiri jatuh ketanah kemudian ditambah 1 (satu) langkah selanjutnya berlari dengan langkah pertama dihentakkan. Paragraf 6 Gerakan dari Berlari ke Berjalan",
+        "lead": "d. aba-aba pelaksanaan diberikan pada waktu kaki kanan/kiri jatuh ketanah kemudian ditambah 1 (satu) langkah selanjutnya berlari dengan langkah pertama dihentakkan.",
         "subitems": []
       }
     ]
@@ -2078,7 +1802,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. selanjutnya kaki kiri/kanan dirapatkan kemudian kedua kepalan tangan diturunkan dan mengambil sikap sempurna. Bagian Ketiga Perubahan Arah Berjalan dan Berlari",
+        "lead": "b. selanjutnya kaki kiri/kanan dirapatkan kemudian kedua kepalan tangan diturunkan dan mengambil sikap sempurna.",
         "subitems": []
       }
     ]
@@ -2177,7 +1901,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "d. pasukan melaksanakan langkah biasa dengan langkah pertama dihentakkan. Paragraf 4 Gerakan dari Berjalan ke Berhenti",
+        "lead": "d. pasukan melaksanakan langkah biasa dengan langkah pertama dihentakkan.",
         "subitems": []
       }
     ]
@@ -2276,7 +2000,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "d. pasukan melaksanakan langkah biasa dengan langkah pertama dihentakkan. Paragraf 4 Gerakan dari Berjalan ke Berhenti",
+        "lead": "d. pasukan melaksanakan langkah biasa dengan langkah pertama dihentakkan.",
         "subitems": []
       }
     ]
@@ -2375,7 +2099,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "d. pasukan melaksanakan langkah biasa dengan langkah pertama dihentakkan. Paragraf 4 Gerakan dari Berjalan ke Berhenti",
+        "lead": "d. pasukan melaksanakan langkah biasa dengan langkah pertama dihentakkan.",
         "subitems": []
       }
     ]
@@ -2474,7 +2198,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "d. pasukan melaksanakan langkah biasa dengan langkah pertama dihentakkan. Paragraf 4 Gerakan dari Berjalan ke Berhenti",
+        "lead": "d. pasukan melaksanakan langkah biasa dengan langkah pertama dihentakkan.",
         "subitems": []
       }
     ]
@@ -2505,7 +2229,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "d. tangan tidak dilenggangkan namun tidak dirapatkan pada badan. Bagian Kelima Haluan dan Melintang Paragraf 1 Haluan",
+        "lead": "d. tangan tidak dilenggangkan namun tidak dirapatkan pada badan.",
         "subitems": []
       }
     ]
@@ -2779,7 +2503,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” dapat dilaksanakan dari posisi langkah tegap. Paragraf 3 Gerakan dari Berjalan ke Berhenti",
+        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” dapat dilaksanakan dari posisi langkah tegap.",
         "subitems": []
       }
     ]
@@ -2810,7 +2534,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” dapat dilaksanakan dari posisi langkah tegap. Paragraf 3 Gerakan dari Berjalan ke Berhenti",
+        "lead": "f. pelaksanaan “TIAP-TIAP BANJAR DUA KALI BELOK KANAN/KIRI” dapat dilaksanakan dari posisi langkah tegap.",
         "subitems": []
       }
     ]
@@ -2945,7 +2669,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "e. kaki kanan/kiri dirapatkan dan mengambil sikap sempurna. Paragraf 4 Gerakan dari Berlari ke Berlari",
+        "lead": "e. kaki kanan/kiri dirapatkan dan mengambil sikap sempurna.",
         "subitems": []
       }
     ]
@@ -3215,7 +2939,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "e. kaki kiri dirapatkan dan mengambil sikap sempurna. Bagian Keempat Gerakan Ganti Langkah",
+        "lead": "e. kaki kiri dirapatkan dan mengambil sikap sempurna.",
         "subitems": []
       }
     ]
@@ -3369,7 +3093,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. apabila gerakan haluan dilanjutkan dengan berjalan maka aba-aba “HALUAN KANAN/KIRI MAJU” = JALAN dan aba-aba selanjutnya MAJU = JALAN. Paragraf 2 Melintang",
+        "lead": "b. apabila gerakan haluan dilanjutkan dengan berjalan maka aba-aba “HALUAN KANAN/KIRI MAJU” = JALAN dan aba-aba selanjutnya MAJU = JALAN.",
         "subitems": []
       }
     ]
@@ -3408,7 +3132,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. apabila gerakan haluan dilanjutkan dengan berjalan maka aba-aba “HALUAN KANAN/KIRI MAJU” = JALAN dan aba-aba selanjutnya MAJU = JALAN. Paragraf 2 Melintang",
+        "lead": "b. apabila gerakan haluan dilanjutkan dengan berjalan maka aba-aba “HALUAN KANAN/KIRI MAJU” = JALAN dan aba-aba selanjutnya MAJU = JALAN.",
         "subitems": []
       }
     ]
@@ -3447,7 +3171,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. apabila gerakan haluan dilanjutkan dengan berjalan maka aba-aba “HALUAN KANAN/KIRI MAJU” = JALAN dan aba-aba selanjutnya MAJU = JALAN. Paragraf 2 Melintang",
+        "lead": "b. apabila gerakan haluan dilanjutkan dengan berjalan maka aba-aba “HALUAN KANAN/KIRI MAJU” = JALAN dan aba-aba selanjutnya MAJU = JALAN.",
         "subitems": []
       }
     ]
@@ -3486,7 +3210,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. apabila gerakan haluan dilanjutkan dengan berjalan maka aba-aba “HALUAN KANAN/KIRI MAJU” = JALAN dan aba-aba selanjutnya MAJU = JALAN. Paragraf 2 Melintang",
+        "lead": "b. apabila gerakan haluan dilanjutkan dengan berjalan maka aba-aba “HALUAN KANAN/KIRI MAJU” = JALAN dan aba-aba selanjutnya MAJU = JALAN.",
         "subitems": []
       }
     ]
@@ -3517,7 +3241,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. apabila gerakan melintang dilanjutkan dengan berjalan maka aba-aba “MELINTANG KANAN/KIRI MAJU = JALAN” dan aba-aba selanjutnya “MAJU = JALAN”. Bagian Keenam Berhimpun dan Berkumpul Paragraf 1 Berhimpun",
+        "lead": "b. apabila gerakan melintang dilanjutkan dengan berjalan maka aba-aba “MELINTANG KANAN/KIRI MAJU = JALAN” dan aba-aba selanjutnya “MAJU = JALAN”.",
         "subitems": []
       }
     ]
@@ -3548,7 +3272,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. apabila gerakan melintang dilanjutkan dengan berjalan maka aba-aba “MELINTANG KANAN/KIRI MAJU = JALAN” dan aba-aba selanjutnya “MAJU = JALAN”. Bagian Keenam Berhimpun dan Berkumpul Paragraf 1 Berhimpun",
+        "lead": "b. apabila gerakan melintang dilanjutkan dengan berjalan maka aba-aba “MELINTANG KANAN/KIRI MAJU = JALAN” dan aba-aba selanjutnya “MAJU = JALAN”.",
         "subitems": []
       }
     ]
@@ -3579,7 +3303,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. apabila gerakan melintang dilanjutkan dengan berjalan maka aba-aba “MELINTANG KANAN/KIRI MAJU = JALAN” dan aba-aba selanjutnya “MAJU = JALAN”. Bagian Keenam Berhimpun dan Berkumpul Paragraf 1 Berhimpun",
+        "lead": "b. apabila gerakan melintang dilanjutkan dengan berjalan maka aba-aba “MELINTANG KANAN/KIRI MAJU = JALAN” dan aba-aba selanjutnya “MAJU = JALAN”.",
         "subitems": []
       }
     ]
@@ -3610,7 +3334,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "b. apabila gerakan melintang dilanjutkan dengan berjalan maka aba-aba “MELINTANG KANAN/KIRI MAJU = JALAN” dan aba-aba selanjutnya “MAJU = JALAN”. Bagian Keenam Berhimpun dan Berkumpul Paragraf 1 Berhimpun",
+        "lead": "b. apabila gerakan melintang dilanjutkan dengan berjalan maka aba-aba “MELINTANG KANAN/KIRI MAJU = JALAN” dan aba-aba selanjutnya “MAJU = JALAN”.",
         "subitems": []
       }
     ]
@@ -3660,7 +3384,7 @@ export const PERPANG_VERBATIM = {
         "subitems": []
       },
       {
-        "lead": "g. bentuk susunan berhimpun pada lampiran I. Paragraf 2 Berkumpul",
+        "lead": "g. bentuk susunan berhimpun pada lampiran I.",
         "subitems": []
       }
     ]

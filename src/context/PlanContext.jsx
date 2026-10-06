@@ -301,6 +301,79 @@ export const PlanProvider = ({ children }) => {
     }));
   };
 
+  const toggleMovementTimerMarker = (postId, matId, movIndex) => {
+    setPlan(prev => ({
+      ...prev,
+      posts: prev.posts.map(p => {
+        if (p.id !== postId) return p;
+
+        // Cari tahu apakah sudah ada start dan stop di pos ini
+        let existingStartLoc = null; // { matId, movIdx }
+        let existingStopLoc = null;  // { matId, movIdx }
+
+        p.materials.forEach(m => {
+          (m.movements || []).forEach((mv, idx) => {
+            if (mv.timerMarker === 'start') existingStartLoc = { matId: m.id, movIdx: idx };
+            if (mv.timerMarker === 'stop') existingStopLoc = { matId: m.id, movIdx: idx };
+          });
+        });
+
+        const isCurrentlyStart = existingStartLoc?.matId === matId && existingStartLoc?.movIdx === movIndex;
+        const isCurrentlyStop = existingStopLoc?.matId === matId && existingStopLoc?.movIdx === movIndex;
+
+        let nextAction = 'set_start';
+
+        if (isCurrentlyStart) {
+          // Jika gerakan ini sudah START dan diklik lagi -> hapus START
+          nextAction = 'clear';
+        } else if (isCurrentlyStop) {
+          // Jika gerakan ini sudah STOP dan diklik lagi -> hapus STOP
+          nextAction = 'clear';
+        } else {
+          // Gerakan ini belum punya status:
+          // Jika belum ada START sama sekali -> pasang START
+          if (!existingStartLoc) {
+            nextAction = 'set_start';
+          } 
+          // Jika sudah ada START, maka pilihan berikutnya HANYA STOP
+          else {
+            nextAction = 'set_stop';
+          }
+        }
+
+        return {
+          ...p,
+          materials: p.materials.map(m => {
+            return {
+              ...m,
+              movements: (m.movements || []).map((mv, idx) => {
+                const isTarget = m.id === matId && idx === movIndex;
+
+                if (isTarget) {
+                  if (nextAction === 'clear') return { ...mv, timerMarker: 'none' };
+                  if (nextAction === 'set_start') return { ...mv, timerMarker: 'start' };
+                  if (nextAction === 'set_stop') return { ...mv, timerMarker: 'stop' };
+                }
+
+                // Jika memasang START baru, pastikan START lama di tempat lain di pos ini dihapus
+                if (nextAction === 'set_start' && mv.timerMarker === 'start') {
+                  return { ...mv, timerMarker: 'none' };
+                }
+
+                // Jika memasang STOP baru, pastikan STOP lama di tempat lain di pos ini dihapus
+                if (nextAction === 'set_stop' && mv.timerMarker === 'stop') {
+                  return { ...mv, timerMarker: 'none' };
+                }
+
+                return mv;
+              })
+            };
+          })
+        };
+      })
+    }));
+  };
+
   const deleteMovementFromMaterial = (postId, matId, movIndex) => {
     setPlan(prev => ({
       ...prev,
@@ -389,6 +462,7 @@ export const PlanProvider = ({ children }) => {
       updateMaterialSettings,
       addMovementToMaterial,
       updateMovementCount,
+      toggleMovementTimerMarker,
       deleteMovementFromMaterial,
       savePlanToHistory,
       loadPlan,

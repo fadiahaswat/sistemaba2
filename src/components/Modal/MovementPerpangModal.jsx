@@ -292,22 +292,27 @@ export const MovementPerpangModal = ({ isOpen, onClose, movementId, movementText
         </div>
 
         {/* Footer navigasi selaras dengan tema web */}
-        <div className="p-3.5 border-t border-zinc-800/80 bg-zinc-950/70 flex items-center justify-between">
-          <button
-            onClick={() => {
-              onClose();
-              if (onOpenFullPdf) onOpenFullPdf();
-            }}
-            className="text-xs text-theme-focus hover:underline flex items-center gap-1.5 font-semibold"
-          >
-            <ExternalLink className="w-3.5 h-3.5" /> Buka Seluruh Buku Dokumen PDF
-          </button>
-          <button
-            onClick={onClose}
-            className="btn btn-primary px-5 py-2 rounded-lg text-xs font-semibold"
-          >
-            Tutup
-          </button>
+        <div className="p-3.5 border-t-2 border-black bg-zinc-950 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+          <div className="text-[11px] font-mono text-zinc-400 italic">
+            💡 <span className="text-amber-400 font-bold">Ojo lali:</span> Gerakane kudu persis aturan iki rek, ngko diprotes wong kae!
+          </div>
+          <div className="flex items-center gap-3 self-end sm:self-auto">
+            <button
+              onClick={() => {
+                onClose();
+                if (onOpenFullPdf) onOpenFullPdf();
+              }}
+              className="text-xs text-emerald-400 hover:underline flex items-center gap-1.5 font-bold"
+            >
+              <ExternalLink className="w-3.5 h-3.5" /> Buka PDF Asli
+            </button>
+            <button
+              onClick={onClose}
+              className="btn btn-primary px-4 py-1.5 text-xs font-black"
+            >
+              Tutup
+            </button>
+          </div>
         </div>
       </div>
     </div>

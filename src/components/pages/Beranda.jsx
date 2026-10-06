@@ -7,20 +7,24 @@ export const Beranda = () => {
 
   return (
     <div className="page-content anim-fade-in space-y-12">
-      <section className="text-center py-10 md:py-14">
-        <img
-          src="./logo-tonti-muallimin.png"
-          alt="Logo Tonti Mu'allimin"
-          className="w-24 h-24 mx-auto mb-5 object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
-        />
-        <div className="inline-block mb-3">
-          <span className="brutal-badge bg-yellow-400 text-black">TONTI MU'ALLIMIN // MILITARY PRECISION</span>
+      <section className="text-center py-8 md:py-12 flex flex-col items-center">
+        <div className="relative mb-5 group cursor-default">
+          <img
+            src="./manganperpunk.svg"
+            alt="Mangan Perpunk Mascot"
+            className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 mx-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)] group-hover:scale-105 transition-transform duration-300"
+          />
         </div>
-        <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase">
-          PRESISI DALAM <span className="text-theme-focus underline decoration-4 decoration-black">SETIAP RENCANA</span>
+        <div className="mb-4">
+          <span className="brutal-badge bg-yellow-400 text-black text-xs md:text-sm px-3.5 py-1">
+            TONTI MU'ALLIMIN // PANGANEN PERPUNKMU!
+          </span>
+        </div>
+        <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase max-w-4xl leading-tight">
+          OJO LALI <span className="text-theme-focus underline decoration-4 decoration-black">MANGAN PERPUNK</span> REK!
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-base md:text-lg text-zinc-300 font-medium">
-          Alat bantu taktis untuk merancang, mengompilasi, dan membagikan skenario aba-aba baris-berbaris dengan akurasi dan ketepatan tinggi.
+          Kudu siap sakdurunge mudhun lapangan, rek! Racik urutan aba-aba, pangan aturan Perpang nganti khatam, ben ora grogi lan presisi pol!
         </p>
 
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto text-left">
@@ -34,8 +38,8 @@ export const Beranda = () => {
               </div>
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase text-amber-400 tracking-wider">WORKSPACE</span>
-                <h3 className="text-lg font-black text-white uppercase leading-tight">Buka Editor</h3>
-                <p className="text-xs text-zinc-300 mt-0.5">Rancang formasi & pos aba-aba.</p>
+                <h3 className="text-lg font-black text-white uppercase leading-tight">Racik Aba-aba</h3>
+                <p className="text-xs text-zinc-300 mt-0.5">Tata pos, materi & formasi lapangan.</p>
               </div>
             </div>
           </button>
@@ -50,8 +54,8 @@ export const Beranda = () => {
               </div>
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase text-cyan-400 tracking-wider">HAFALAN</span>
-                <h3 className="text-lg font-black text-white uppercase leading-tight">Baca Aba-aba</h3>
-                <p className="text-xs text-zinc-300 mt-0.5">Mode baca & latihan per pos.</p>
+                <h3 className="text-lg font-black text-white uppercase leading-tight">Woco & Hafalno</h3>
+                <p className="text-xs text-zinc-300 mt-0.5">Latihan ngapalke aba-aba saben pos.</p>
               </div>
             </div>
           </button>
@@ -66,8 +70,8 @@ export const Beranda = () => {
               </div>
               <div>
                 <span className="text-[10px] font-mono font-bold uppercase text-emerald-400 tracking-wider">REGULASI</span>
-                <h3 className="text-lg font-black text-white uppercase leading-tight">Baca Perpang</h3>
-                <p className="text-xs text-zinc-300 mt-0.5">Buka dokumen resmi PBB & PPM.</p>
+                <h3 className="text-lg font-black text-white uppercase leading-tight">Pangan Perpang</h3>
+                <p className="text-xs text-zinc-300 mt-0.5">Buka dokumen asli PBB & PPM TNI.</p>
               </div>
             </div>
           </button>
@@ -79,13 +83,13 @@ export const Beranda = () => {
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 bg-theme-focus border border-black inline-block"></span>
-              <h2 className="text-xl font-black uppercase tracking-wider text-white">Riwayat Terakhir</h2>
+              <h2 className="text-xl font-black uppercase tracking-wider text-white">Sajian Terakhir</h2>
             </div>
             <button
               onClick={() => setCurrentPage('riwayat')}
               className="btn btn-secondary text-xs px-3 py-1.5 flex items-center gap-1.5"
             >
-              Lihat Semua ({history.length}) <ArrowRight className="w-3.5 h-3.5" />
+              Delok Kabeh ({history.length}) <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 

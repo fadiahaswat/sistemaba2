@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { ChevronUp, ChevronDown, Plus, MoreHorizontal, Trash2, X, HelpCircle } from 'lucide-react';
+import { ChevronUp, ChevronDown, Plus, MoreHorizontal, Trash2, X, HelpCircle, Timer, Play, Flag } from 'lucide-react';
 import { usePlan, ALL_COMMANDS_FLAT } from '../../../context/PlanContext';
 import { CommandSelectorModal } from '../../Modal/CommandSelectorModal';
 import { MaterialSettingsModal } from '../../Modal/MaterialSettingsModal';
 
 export const MaterialRow = ({ postId, material, index, total, numCounter }) => {
   const {
+    plan,
     deleteMaterialRow,
     toggleMaterialNumbering,
     moveMaterial,
     updateMaterialSettings,
     addMovementToMaterial,
     updateMovementCount,
+    toggleMovementTimerMarker,
     deleteMovementFromMaterial,
     setCurrentPage
   } = usePlan();
@@ -69,6 +71,22 @@ export const MaterialRow = ({ postId, material, index, total, numCounter }) => {
 
       {/* Chip Aba-aba Horizontal dengan Tombol Sisip (+) */}
       <div className="movements-display flex-grow flex flex-wrap items-center gap-2">
+        {/* Badge Penanda Stopwatch jika disetel */}
+        {material.timerMarker === 'start' && (
+          <span className="brutal-badge bg-emerald-400 text-black text-[10px] py-0.5 px-2 font-black border border-black shadow-[1px_1px_0px_#000]">
+            ▶ MULAI WAKTU
+          </span>
+        )}
+        {material.timerMarker === 'stop' && (
+          <span className="brutal-badge bg-red-500 text-black text-[10px] py-0.5 px-2 font-black border border-black shadow-[1px_1px_0px_#000]">
+            ⏹ SELESAI WAKTU
+          </span>
+        )}
+        {material.commanderExecutes && (
+          <span className="brutal-badge bg-rose-500 text-black text-[10px] py-0.5 px-1.5 font-bold">
+            DANPAS
+          </span>
+        )}
         {material.movements.length === 0 ? (
           <button
             onClick={() => openInsertModal(0)}
@@ -79,12 +97,66 @@ export const MaterialRow = ({ postId, material, index, total, numCounter }) => {
         ) : (
           material.movements.map((mov, movIndex) => {
             const cmd = ALL_COMMANDS_FLAT.find(i => i.id === mov.id);
-            if (!cmd) return null;
+            const isStartMarker = mov.timerMarker === 'start';
+            const isStopMarker = mov.timerMarker === 'stop';
+
+            // Hitung apakah pos sudah ada START atau STOP
+            const currentPost = plan.posts.find(p => p.id === postId);
+            let hasPostStart = false;
+            let hasPostStop = false;
+            currentPost?.materials?.forEach(m => {
+              (m.movements || []).forEach(mv => {
+                if (mv.timerMarker === 'start') hasPostStart = true;
+                if (mv.timerMarker === 'stop') hasPostStop = true;
+              });
+            });
 
             return (
               <React.Fragment key={movIndex}>
                 <div className="movement-chip-wrapper relative group/chip flex items-center">
-                  <span className="bg-zinc-800 border-2 border-black px-2.5 py-1 shadow-[2px_2px_0px_#000] flex items-center gap-2 text-xs font-bold text-zinc-100">
+                  <span className={`border-2 border-black px-2.5 py-1 shadow-[2px_2px_0px_#000] flex items-center gap-2 text-xs font-bold transition-all ${
+                    isStartMarker 
+                      ? 'bg-emerald-950 text-emerald-200 border-emerald-400 shadow-[2px_2px_0px_#34d399]' 
+                      : isStopMarker 
+                        ? 'bg-red-950 text-red-200 border-red-500 shadow-[2px_2px_0px_#ef4444]' 
+                        : 'bg-zinc-800 text-zinc-100'
+                  }`}>
+                    {/* Tombol Timer: Jika sudah START atau STOP tampil jelas. Jika belum, hanya muncul saat di-hover agar bersih tidak penuh tombol */}
+                    <button
+                      type="button"
+                      onClick={() => toggleMovementTimerMarker(postId, material.id, movIndex)}
+                      className={`p-1 border border-black text-[10px] flex items-center gap-0.5 transition-all ${
+                        isStartMarker
+                          ? 'bg-emerald-400 text-black font-black'
+                          : isStopMarker
+                            ? 'bg-red-500 text-black font-black'
+                            : 'opacity-0 group-hover/chip:opacity-100 bg-zinc-900 text-zinc-400 hover:text-amber-400 hover:bg-black'
+                      }`}
+                      title={
+                        isStartMarker 
+                          ? 'Penanda Mulai Waktu Pos (Klik untuk batalkan)' 
+                          : isStopMarker 
+                            ? 'Penanda Selesai Waktu Pos (Klik untuk batalkan)' 
+                            : !hasPostStart
+                              ? 'Tetapkan sebagai Titik Mulai Waktu (START)'
+                              : 'Tetapkan sebagai Titik Selesai Waktu (STOP)'
+                      }
+                    >
+                      {isStartMarker ? (
+                        <>
+                          <Play className="w-2.5 h-2.5 fill-current" />
+                          <span className="text-[9px]">START</span>
+                        </>
+                      ) : isStopMarker ? (
+                        <>
+                          <Flag className="w-2.5 h-2.5 fill-current" />
+                          <span className="text-[9px]">STOP</span>
+                        </>
+                      ) : (
+                        <Timer className="w-3 h-3" />
+                      )}
+                    </button>
+
                     {cmd.isCustomText ? (
                       <span className="flex items-center gap-1">
                         {cmd.text.split('(...)')[0]}

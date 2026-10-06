@@ -17,7 +17,7 @@ const MainLayout = () => {
   const getThemeClass = () => {
     switch (currentPage) {
       case 'beranda': return 'theme-beranda';
-      case 'viewer': return 'theme-editor';
+      case 'viewer': return 'theme-viewer';
       case 'editor': return 'theme-editor';
       case 'riwayat': return 'theme-riwayat';
       case 'tempo': return 'theme-tempo';
