@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #121212;
+  --bg-card: #1c1c1e;
+  --border-brutal: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --theme-color-hex: #f43f5e;
+  --theme-color-focus: #ff0055;
+  --brutal-shadow: 4px 4px 0px #000000;
+  --brutal-shadow-sm: 2px 2px 0px #000000;
+  --brutal-shadow-lg: 6px 6px 0px #000000;
+}
+
+.theme-beranda, .theme-beranda-cta {
+  --theme-color-hex: #ff2a5f;
+  --theme-color-focus: #ff0055;
+}
+.theme-editor, .theme-editor-cta {
+  --theme-color-hex: #ff9800;
+  --theme-color-focus: #ffab00;
+}
+.theme-riwayat, .theme-riwayat-cta {
+  --theme-color-hex: #2563eb;
+  --theme-color-focus: #3b82f6;
+}
+.theme-tempo, .theme-tempo-cta {
+  --theme-color-hex: #a855f7;
+  --theme-color-focus: #c084fc;
+}
+.theme-visualisasi, .theme-visualisasi-cta {
+  --theme-color-hex: #10b981;
+  --theme-color-focus: #00e676;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #121214;
+  color: #ffffff;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(#27272a 1px, transparent 1px),
+    radial-gradient(#1e1e24 1px, #121214 1px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+}
+
+/* Brutalist Cards */
+.glass-card {
+  background-color: #18181b;
+  border: 2px solid #000000;
+  border-radius: 4px !important;
+  box-shadow: 4px 4px 0px #000000;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.glass-card:hover {
+  border-color: #000000;
+  box-shadow: 6px 6px 0px #000000;
+}
+
+/* Brutalist Form Inputs */
+.form-input {
+  background-color: #09090b;
+  border: 2px solid #27272a;
+  border-radius: 3px !important;
+  box-shadow: 2px 2px 0px #000000;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--theme-color-focus);
+  background-color: #09090b;
+  box-shadow: 4px 4px 0px #000000;
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* Brutalist Buttons */
+.btn {
+  border: 2px solid #000000 !important;
+  border-radius: 4px !important;
+  box-shadow: 3px 3px 0px #000000;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px #000000;
+}
+.btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000000;
+}
+.btn-primary {
+  background-color: var(--theme-color-focus);
+  color: #000000 !important;
+}
+.btn-secondary {
+  background-color: #27272a;
+  color: #ffffff !important;
+}
+.btn:disabled {
+  background-color: #27272a;
+  color: #71717a;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 2px 2px 0px #000000;
+  opacity: 0.6;
+}
+
+/* Modal Backdrops & Cards */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Drag & Drop */
+.material-row.dragging {
+  opacity: 0.7;
+  border: 2px dashed var(--theme-color-focus) !important;
+  background: #27272a;
+}
+.material-row.drag-over {
+  border-top: 3px solid var(--theme-color-focus);
+}
+
+/* Neo-Brutalist Badges and Utilities */
+.brutal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0px #000000;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+}
+
+.text-theme {
+  color: var(--theme-color-focus);
+}
+.bg-theme-20 {
+  background-color: var(--theme-color-focus);
+  color: #000000 !important;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0px #000000;
+}
+.text-theme-focus {
+  color: var(--theme-color-focus);
+}
+.border-theme-focus {
+  border-color: var(--theme-color-focus) !important;
+}
+.gradient-theme {
+  color: #ffffff;
+  text-shadow: 3px 3px 0px #000000;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.96) translateY(6px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.anim-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+.anim-pop-in { animation: popIn 0.2s cubic-bezier(0, 0, 0.2, 1) forwards; }
+
