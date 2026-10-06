@@ -88,34 +88,12 @@ export const PdfViewerModal = ({ isOpen, onClose, pdfUrl, txtUrl, pdfTitle }) =>
 
         <div className="flex-grow w-full h-full bg-zinc-900 overflow-hidden relative">
           {activeTab === 'pdf' ? (
-            <object
-              data={embedUrl}
-              type="application/pdf"
-              className="w-full h-full"
-            >
-              <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-zinc-300 gap-4">
-                <p className="font-mono text-sm max-w-md">
-                  Browser tidak mendukung tampilan langsung PDF ini atau plugin PDF dinonaktifkan.
-                </p>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  {txtUrl && (
-                    <button
-                      onClick={() => setActiveTab('text')}
-                      className="btn px-4 py-2 text-xs font-black bg-emerald-400 text-black border-2 border-black shadow-[3px_3px_0px_#000]"
-                    >
-                      BACA VERSI TEKS
-                    </button>
-                  )}
-                  <a
-                    href={pdfUrl}
-                    download
-                    className="btn px-4 py-2 text-xs font-black bg-purple-400 text-black border-2 border-black shadow-[3px_3px_0px_#000] flex items-center gap-2"
-                  >
-                    <Download className="w-4 h-4" /> UNDUH PDF
-                  </a>
-                </div>
-              </div>
-            </object>
+            <iframe
+              src={embedUrl}
+              title={pdfTitle}
+              className="w-full h-full border-0"
+              allow="autoplay"
+            />
           ) : (
             <div className="w-full h-full p-4 sm:p-6 overflow-y-auto bg-zinc-950 text-zinc-200 font-mono text-xs sm:text-sm leading-relaxed whitespace-pre-wrap select-text">
               {loadingText ? (

@@ -9,8 +9,8 @@ export const BacaPerpang = () => {
     {
       title: 'Perpang TNI No. 3 Th 2025',
       desc: 'Tentang Perubahan atas Perpang TNI No. 58 Th 2018 (PBB TNI - Perubahan Tempo Langkah Tegap 116 BPM).',
-      url: './perpang/PERPANG_TNI_NO_3_TAHUN_2025.pdf',
-      txtUrl: './perpang/PERPANG_TNI_NO_3_TAHUN_2025.txt',
+      url: './perpang/PERPANG TNI NO 3 TAHUN 2025.pdf',
+      txtUrl: './perpang/PERPANG TNI NO 3 TAHUN 2025.txt',
       badge: 'TERBARU 2025'
     },
     {
