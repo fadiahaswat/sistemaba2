@@ -68,11 +68,34 @@ export const getMetronomeState = () => ({
   currentBpm,
 });
 
+// Getaran Haptik HP (Vibration API) untuk Smartphone Android / Browser pendukung
+export const triggerHapticVibrate = (pattern = 200) => {
+  try {
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      navigator.vibrate(pattern);
+    }
+  } catch (e) {
+    console.warn('Vibration API not supported or blocked:', e);
+  }
+};
+
 // Suara Peringatan Timer Lapangan Menggunakan Web Audio API (Sangat ringan dan tidak delay)
 let sharedAudioCtx = null;
 
 export const playAlertSound = (type = 'beep') => {
   try {
+    // Jalankan getaran haptik HP
+    if (type === 'beep') {
+      // Getar sekali 250ms saat 60s, 30s, 15s
+      triggerHapticVibrate(250);
+    } else if (type === 'countdown') {
+      // Getar cepat tegas 150ms saat 3, 2, 1
+      triggerHapticVibrate(150);
+    } else if (type === 'timesup') {
+      // Pola getar panjang berturut-turut saat Waktu Habis: getar 400ms, jeda 100ms, getar 400ms, jeda 100ms, getar 600ms
+      triggerHapticVibrate([400, 100, 400, 100, 600]);
+    }
+
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
 

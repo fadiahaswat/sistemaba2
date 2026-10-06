@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BookOpen, Edit3, Clock, Maximize2, ShieldCheck, HelpCircle, Play, Pause, RotateCcw, Timer, ArrowUp, ArrowDown, CheckCircle2, Flag, Volume2, VolumeX, AlertTriangle } from 'lucide-react';
 import { usePlan, ALL_COMMANDS_FLAT } from '../../context/PlanContext';
 import { MovementPerpangModal, hasPerpangDoc } from '../Modal/MovementPerpangModal';
-import { playAlertSound } from '../../utils/metronome';
+import { playAlertSound, triggerHapticVibrate } from '../../utils/metronome';
 
 export const ViewerPage = () => {
   const { plan, setCurrentPage } = usePlan();
@@ -85,18 +85,22 @@ export const ViewerPage = () => {
   }, [seconds, isRunning, targetSeconds, isAudioEnabled]);
 
   const toggleStopwatch = () => {
+    triggerHapticVibrate(80);
     setIsRunning(!isRunning);
   };
 
   const startStopwatch = () => {
+    triggerHapticVibrate(100);
     setIsRunning(true);
   };
 
   const stopStopwatch = () => {
+    triggerHapticVibrate([120, 80, 120]);
     setIsRunning(false);
   };
 
   const resetStopwatch = () => {
+    triggerHapticVibrate(50);
     setIsRunning(false);
     setSeconds(0);
     setActiveAlertMsg(null);

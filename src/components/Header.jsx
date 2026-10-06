@@ -1,8 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Download } from 'lucide-react';
 import { usePlan } from '../context/PlanContext';
 
 export const Header = () => {
   const { currentPage, setCurrentPage } = usePlan();
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setIsInstallable(false);
+      setDeferredPrompt(null);
+    }
+  };
 
   const navItems = [
     { id: 'beranda', label: 'Omah' },
@@ -21,7 +48,7 @@ export const Header = () => {
             <img src="./logo-tonti-muallimin.png" alt="Logo Tonti Mu'allimin" className="w-10 h-10 object-contain drop-shadow" />
             <div>
               <h1 className="text-xl font-extrabold text-white tracking-tight uppercase group-hover:text-theme-focus transition-colors">mangan perpunk!</h1>
-              <span className="text-[10px] uppercase font-mono tracking-wider text-amber-400 block -mt-1 font-bold">BEN DADI SI PALING PERPUNK!</span>
+              <span className="text-[10px] font-mono tracking-wider text-amber-400 block -mt-1 font-bold">BEN DADI SI PALING PERPUNK!</span>
             </div>
           </button>
           <div className="flex items-center gap-2 md:hidden">
@@ -32,7 +59,18 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          {isInstallable && (
+            <button
+              onClick={handleInstallClick}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs uppercase border-2 border-black shadow-[2px_2px_0px_#000] -translate-y-0.5 transition-all"
+              title="Pasang aplikasi di perangkat"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Install App</span>
+            </button>
+          )}
+
           <nav className="hidden md:flex items-center gap-2 text-xs font-black uppercase tracking-wider">
             {navItems.map((item) => {
               const isActive = currentPage === item.id;

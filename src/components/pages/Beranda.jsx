@@ -10,7 +10,7 @@ export const Beranda = () => {
       <section className="text-center py-8 md:py-12 flex flex-col items-center">
         <div className="relative mb-5 group cursor-default">
           <img
-            src="./manganperpunk.svg"
+            src="./manganperpunknew.svg"
             alt="Mangan Perpunk Mascot"
             className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 mx-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)] group-hover:scale-105 transition-transform duration-300"
           />
