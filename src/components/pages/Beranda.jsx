@@ -9,7 +9,7 @@ export const Beranda = () => {
     <div className="page-content anim-fade-in space-y-12">
       <section className="text-center py-10 md:py-14">
         <img
-          src="/logo-tonti-muallimin.png"
+          src="./logo-tonti-muallimin.png"
           alt="Logo Tonti Mu'allimin"
           className="w-24 h-24 mx-auto mb-5 object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
         />

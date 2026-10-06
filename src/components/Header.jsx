@@ -18,14 +18,14 @@ export const Header = () => {
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between h-16">
         <div className="flex items-center gap-3">
           <button onClick={() => setCurrentPage('beranda')} className="hidden md:flex items-center gap-3 focus:outline-none group text-left">
-            <img src="/logo-tonti-muallimin.png" alt="Logo Tonti Mu'allimin" className="w-10 h-10 object-contain drop-shadow" />
+            <img src="./logo-tonti-muallimin.png" alt="Logo Tonti Mu'allimin" className="w-10 h-10 object-contain drop-shadow" />
             <div>
               <h1 className="text-xl font-extrabold text-white tracking-tight uppercase group-hover:text-theme-focus transition-colors">mangan perpunk!</h1>
               <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-400 block -mt-1 font-bold">BRUTALIST EDITION</span>
             </div>
           </button>
           <div className="flex items-center gap-2 md:hidden">
-            <img src="/logo-tonti-muallimin.png" alt="Logo" className="w-8 h-8 object-contain drop-shadow" />
+            <img src="./logo-tonti-muallimin.png" alt="Logo" className="w-8 h-8 object-contain drop-shadow" />
             <h2 className="text-base font-black text-white uppercase tracking-wider">{currentPage === 'visualisasi' ? 'Baca Perpang' : currentPage}</h2>
           </div>
         </div>
